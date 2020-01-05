@@ -1,0 +1,65 @@
+.faq-wrap {
+    margin-bottom: 15px;
+}
+
+#faq-accordion .faq-panel {
+    background-color: #ffffff;
+    padding: 30px;
+    margin-bottom: 15px;
+}
+
+#faq-accordion .faq-panel h5 {
+    margin-bottom: 0px;
+    font-size: 18px;
+}
+
+#faq-accordion .faq-panel h5 a {
+    color: #1e1000;
+    display: block;
+    position: relative;
+    padding-right: 20px;
+}
+
+#faq-accordion .faq-panel h5 a:after {
+    content: "\f107";
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    color: inherit;
+    font-size: 33px;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+}
+
+#faq-accordion .faq-panel h5 a[aria-expanded="true"]:after {
+    content: '\f106';
+}
+
+#faq-accordion .faq-panel h5 a:hover,
+#faq-accordion .faq-panel h5 a:focus,
+#faq-accordion.collapse.in .faq-panel h5 a,
+#faq-accordion .faq-panel h5 a[aria-expanded="true"] {
+    color: #ff0000;
+}
+
+#faq-accordion .faq-panel .collapse {
+    padding-top: 20px;
+    transition: all 100ms ease;
+}
+
+
+.faq-panel p {
+    line-height: 1.7;
+    margin-bottom: 0;
+}
+
+@media (min-width: 1024px) {
+    .faq-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+}

@@ -1,0 +1,123 @@
+.inner-header .overlay {
+    background: rgba(33, 36, 44, 0.7);
+    padding-top: 5%;
+    padding-bottom: 5%;
+    text-align: center;
+}
+.inner-header .page-title {
+    color: #fff;
+}
+.breadcrumb {
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+}
+.breadcrumb li a {
+    font-weight: 600;
+}
+.breadcrumb>li+li:before {
+    content: "\f105" !important;
+    padding: 0 5px;
+    color: #ccc;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    width: auto !important;
+    height: auto !important;
+    background-color: transparent;
+    top: 2px;
+}
+.breadcrumb li {
+    padding-left: 0px;
+}
+.breadcrumb>li+li {
+    padding-left: 20px;
+}
+.breadcrumb li:before {
+    content: none !important;
+}
+.breadcrumb li.active a {
+    color: #fff;
+}
+/*default table css start*/
+.styled-table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 30px;
+}
+
+.styled-table thead {
+    background-color: #1b1e27;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.styled-table thead tr th {
+    font-weight: 500;
+    transition: all 600ms ease;
+}
+
+.styled-table>tbody>tr {
+    background-color: rgba(245,247,248,0.2);
+}
+.styled-table>tbody>tr:hover {
+    background-color: #ebebeb;
+    transition: all 600ms ease;
+    color: #ff0000;
+}
+
+.styled-table>tbody>tr>td,
+.styled-table>tbody>tr>th,
+.styled-table>thead>tr>td,
+.styled-table>thead>tr>th {
+    padding: 1.3em;
+    line-height: 1.5;
+    vertical-align: middle;    
+    border: 1px solid rgba(255,255,255,0.2);
+}
+.styled-table>thead>tr>th {
+    color: #fff;
+}
+/*default table css end*/
+img {
+    max-width: 100%;
+    height: auto;
+}
+blockquote {
+    position: relative;
+    margin: 30px auto;
+    max-width: 992px;
+    color: #ffffff;
+    background-color: #1b1e27;
+    padding: 5%;
+}
+
+blockquote p {
+    font-weight: 300;
+    font-size: 18px;
+    font-style: italic;
+    position: relative;
+}
+
+blockquote:before {
+    content: "“";
+    left: 2vw;
+    top: -2vw;
+    position: absolute;
+    font-size: 13vw;
+    font-weight: bold;
+    color: rgba(255,255,255,0.1);
+    font-family: 'Catamaran', sans-serif;
+}
+
+blockquote footer {
+    font-weight: 600;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: #ff0000;
+    letter-spacing: 1px;
+    border: none;
+    background-color: transparent;
+    padding: 0;
+}

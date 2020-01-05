@@ -1,0 +1,73 @@
+.about-wrap h6 {
+    position: relative;
+    margin-bottom: 30px;
+    font-weight: 500;
+}
+.about-wrap h6:after {
+    content: '';
+    display: inline-block;
+    width: 110px;
+    height: 2px;
+    background: #ff0000;
+    margin-left: 30px;
+    top: -2px;
+}
+.about-wrap p {
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+.fetaure-wrap {
+    position: relative;
+}
+.fetaure-wrap:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #383838;
+    opacity: 0.975;
+}
+.fetaure-wrap h1 {
+    margin-bottom: 30px;
+}
+.feature-list-wrap {
+    background-color: #353535;
+    border: 1px solid #565656;
+    padding: 60px 20%;
+    transition: all 600ms ease;
+    height: 100%;
+}
+.feature-list-wrap:hover, .feature-list-wrap:focus {
+    background-color: #000000;
+    border-color: #000000;
+    transition: all 600ms ease;
+}
+.feature-list-wrap img {
+    margin-bottom: 30%;
+}
+.feature-list-wrap h6 {
+    color: #fff;
+    line-height: 1.5;
+}
+.service-tab .nav li a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-transform: capitalize;
+    font-weight: 600;
+    color: #1b1b1b;
+}
+.service-tab .nav li a img {
+    margin-bottom: 10px;
+}
+.service-tab .nav li.active a {
+    color: #ff0000;
+    background-color: #eee;
+}
+.service-tab .tab-content {
+    padding: 20px 4%;
+    background-color: #eee;
+}

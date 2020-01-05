@@ -1,0 +1,498 @@
+@extends('front.master')
+
+@section('bodycontent')
+
+ <!-- *************** Start Hero Banner *************** -->
+
+ <section id="heroSlide" class="master-slider">
+  <div class="ms-slide">
+
+    <img src="img/service/cruise/cruise-2.jpg" alt="">
+
+    <div class="ms-layer desc-box" data-ease="easeOutBack" data-effect="skewbottom(-30,50,0,50)"
+
+      data-duration="1800" data-delay="0" data-hide-effect="skewbottom(0,180,0,0,l)" data-parallax="3">
+
+      <h1>Do you need a ride?</h1>
+
+      <p>The Shelly Touring Company gives door-to-door cruise transport hire service </p>
+
+      <a class="btn btn-danger" href="#">How it Works <i class="fa fa-angle-right"></i></a>
+
+    </div>
+
+  </div>
+{{--     
+    <div class="ms-slide">
+
+      <img src="img/service/night/night-party-3.jpg " alt="">
+
+      <div class="ms-layer desc-box" data-ease="easeOutBack" data-effect="skewbottom(-30,50,0,50)"
+
+        data-duration="1800" data-delay="0" data-hide-effect="skewbottom(0,180,0,0,l)" data-parallax="3">
+
+        <h1>Do you need a ride?</h1>
+
+        <p>The Shelly Touring Company provides car rental for late night party</p>
+
+        <a class="btn btn-danger" href="#">How it Works <i class="fa fa-angle-right"></i></a>
+
+      </div>
+
+    </div> --}}
+
+
+
+  </section>
+
+  <!-- *************** End Hero Banner *************** -->
+
+  <section class="section-pad-top section-pad-bottom">
+
+    <div class="container">
+
+      <div class="row">
+
+        <div class="col-lg-3">
+
+          <div class="offer-wrap">
+
+            <h6>View offer</h6>
+
+            <h1>Check out available packages</h1>
+
+            <a class="btn btn-danger" href="#">View full list of offers</a>
+
+          </div>
+
+        </div>
+
+        <div class="col-lg-9">
+
+          <div class="row">
+
+            <div class="col-md-4">
+
+              <div class="offer-thumb">
+
+                <div class="offer-caption">
+
+                  <h5>VEHICLES TO MEET THE DEMANDS</h5>
+
+                  <p>Camry Hybrid for Interstate Travel and.Saves $$ on fuel
+
+                    Tarago is ideal when you need more seats, space, and comfort</p>
+
+                  <a href="#">Rent Car <i class="fa fa-angle-right"></i></a>
+
+                </div>
+
+                <img src="img/groupcars.jpg" class="img-responsive"
+
+                  alt="VEHICLES TO MEET THE DEMANDS">
+
+              </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+              <div class="offer-thumb">
+
+                <div class="offer-caption">
+
+                  <h5>ONLY CLEAN AND RELIABLE VEHICLES</h5>
+
+                  <p>Clean and reliable Toyota Vehicle
+
+                    FREE Ambipur Car scent,
+
+                    FREE Bottle of water,
+
+                    FREE Baby Board,
+
+                    FREE mints</p>
+
+                  <a href="#">Rent Car <i class="fa fa-angle-right"></i></a>
+
+                </div>
+
+                <img src="img/Toyota-Hiace-clean.jpg" class="img-responsive" alt="CLEAN AND RELIABLE VEHICLES">
+
+              </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+              <div class="offer-thumb">
+
+                <div class="offer-caption">
+
+                  <h5>FREE DROP OFF & PICK UP AREAS</h5>
+
+                  <p> Free dropoff and pickup on these areas Hurstville, Sth Hurstville, Allawah, Carlton, Kogarah,
+
+                    Oatley, Penshurst.
+
+                  </p>
+
+                  <a href="#">Rent Car <i class="fa fa-angle-right"></i></a>
+
+                </div>
+
+                <img src="img/pickupplace.jpg" class="img-responsive"
+
+                  alt="DROP OFF & PICK UP AREA">
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="section-pad-top section-pad-bottom img-pos fetaure-wrap"
+
+    style="background-image: url('img/t1.jpg');">
+
+    <div class="container">
+
+      <h1 class="text-center section-title colorWhite">Why chooose Shelly Touring Company</h1>
+
+      <div class="row flex-row">
+
+        <div class="col-md-3 col-sm-6 col-xs-12 mb-30">
+
+          <div class="feature-list-wrap">
+
+            <img src="img/ico-2.png" alt="" />
+
+            <h6>Vehicles To Meet Demands</h6>
+
+          </div>
+
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12 mb-30">
+
+          <div class="feature-list-wrap">
+
+            <img src="img/ico-3.png" alt="" />
+
+            <h6>Great Daily And Weekly Rates</h6>
+
+          </div>
+
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12 mb-30">
+
+          <div class="feature-list-wrap">
+
+            <img src="img/ico-4.png" alt="" />
+
+            <h6>96% Happy Traveller</h6>
+
+          </div>
+
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12 mb-30">
+
+          <div class="feature-list-wrap">
+
+            <img src="img/ico-1.png" alt="" />
+
+            <h6>Real Time Online Booking</h6>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="featured-product-slide">
+
+    <div class="product-wrap">
+
+      <img src="img/prortraiteImage/airport.jpg" alt="" />
+
+      <div class="featured-product-content">
+
+        <div class="featured-product-content-inner">
+
+          <span class="featured-product-number">01</span>
+
+          <h5><a href="#">Door-to-door airport service</a></h5>
+
+          <div class="featured-product-text">
+
+            <p>Service to the Sydney International and Domestic Airports.</p>
+
+          </div>
+
+        </div>
+
+        <a class="featured-product-link" href="#">more info</a>
+
+      </div>
+
+    </div>
+
+    <div class="product-wrap">
+
+      <img src="img/prortraiteImage/cruise.jpg" alt="" />
+
+      <div class="featured-product-content">
+
+        <div class="featured-product-content-inner">
+
+          <span class="featured-product-number">02</span>
+
+          <h5><a href="#">Door-to-door transport to cruise</a></h5>
+
+          <div class="featured-product-text">
+
+            <p>Service to the Sydney Cruise Terminals at Circular Quay or White Bay</p>
+
+          </div>
+
+        </div>
+
+        <a class="featured-product-link" href="#">more info</a>
+
+      </div>
+
+    </div>
+
+    <div class="product-wrap">
+
+      <img src="img/prortraiteImage/wedding.jpg" alt="" />
+
+      <div class="featured-product-content">
+
+        <div class="featured-product-content-inner">
+
+          <span class="featured-product-number">03</span>
+
+          <h5><a href="#">Wedding Hire</a></h5>
+
+          <div class="featured-product-text">
+
+            <p>Take the stress out of transporting your wedding party!</p>
+
+          </div>
+
+        </div>
+
+        <a class="featured-product-link" href="#">more info</a>
+
+      </div>
+
+    </div>
+
+    <div class="product-wrap">
+
+      <img src="img/prortraiteImage/hens.jpg" alt="" />
+
+      <div class="featured-product-content">
+
+        <div class="featured-product-content-inner">
+
+          <span class="featured-product-number">04</span>
+
+          <h5><a href="#">Hens Party hire</a></h5>
+
+          <div class="featured-product-text">
+
+            <p>Take the stress out of transporting your friends to your special function</p>
+
+          </div>
+
+        </div>
+
+        <a class="featured-product-link" href="#">more info</a>
+
+      </div>
+
+    </div>
+
+    <div class="product-wrap">
+
+      <img src="img/prortraiteImage/night.jpg" alt="" />
+
+      <div class="featured-product-content">
+
+        <div class="featured-product-content-inner">
+
+          <span class="featured-product-number">05</span>
+
+          <h5><a href="#">Sydney by night hire</a></h5>
+
+          <div class="featured-product-text">
+
+            <p>Experience Australia's iconic city with us!</p>
+
+          </div>
+
+        </div>
+
+        <a class="featured-product-link" href="#">more info</a>
+
+      </div>
+
+    </div>
+
+    <div class="product-wrap">
+
+      <img src="img/prortraiteImage/private-function.jpg" alt="" />
+
+      <div class="featured-product-content">
+
+        <div class="featured-product-content-inner">
+
+          <span class="featured-product-number">06</span>
+
+          <h5><a href="#">Private or corporate function hire</a></h5>
+
+          <div class="featured-product-text">
+
+            <p>Attending a Private, Corporate, Sporting or Social Function?</p>
+
+          </div>
+
+        </div>
+
+        <a class="featured-product-link" href="#">more info</a>
+
+      </div>
+
+    </div>
+
+    <!-- <div class="product-wrap">
+
+      <img src="img/service-1.jpg" alt="" />
+
+      <div class="featured-product-content">
+
+        <div class="featured-product-content-inner">
+
+          <span class="featured-product-number">07</span>
+
+          <h5><a href="#">Product title here</a></h5>
+
+          <div class="featured-product-text">
+
+            <p>Product description here</p>
+
+          </div>
+
+        </div>
+
+        <a class="featured-product-link" href="#">more info</a>
+
+      </div>
+
+    </div>
+
+    <div class="product-wrap">
+
+      <img src="img/service-3.jpg" alt="" />
+
+      <div class="featured-product-content">
+
+        <div class="featured-product-content-inner">
+
+          <span class="featured-product-number">08</span>
+
+          <h5><a href="#">Product title here</a></h5>
+
+          <div class="featured-product-text">
+
+            <p>Product description here</p>
+
+          </div>
+
+        </div>
+
+        <a class="featured-product-link" href="#">more info</a>
+
+      </div>
+
+    </div>
+
+    <div class="product-wrap">
+
+      <img src="img/service-4.jpg" alt="" />
+
+      <div class="featured-product-content">
+
+        <div class="featured-product-content-inner">
+
+          <span class="featured-product-number">09</span>
+
+          <h5><a href="#">Product title here</a></h5>
+
+          <div class="featured-product-text">
+
+            <p>Product description here</p>
+
+          </div>
+
+        </div>
+
+        <a class="featured-product-link" href="#">more info</a>
+
+      </div>
+
+    </div> -->
+
+  </section>
+
+  <section class="bgWhite section-pad-top section-pad-bottom">
+
+    <div class="container">
+
+      <div class="row">
+
+        <div class="col-md-8 mb-30">
+
+          <div class="about-wrap">
+
+            <h6>About</h6>
+
+            <h1>A <strong>Touring</strong> company </h1>
+
+            <p>We warmly welcome you to <strong>Shelly Touring Company</strong>. Shelly touring company is dedicated to provide admirable and personalized service. We plan together with you and supply you with all information necessary for your security, luxury and happiness. Our goal is to make your holiday better with us.</p>
+
+            <a class="btn btn-danger" href="about.html">Discover More</a>
+
+          </div>
+
+        </div>
+
+        <div class="col-md-4 mb-30">
+
+          <img src="img/about.jpg" class="img-responsive" alt="" />
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+@endsection
