@@ -69,15 +69,19 @@ Route::get('/admin/dashboard', [
 ]);
 
 Route::resource('/admin/trip','admin\menuController');
-Route::resource('/admin/trip/{id}/fix-departure','admin\menuController');
+//Route::resource('/admin/trip/{id}/fix-departure','admin\menuController');
 
-// Route::get('/admin/trip/departure/{id}', [
-//     'as' => 'admin.fix-departure', 'uses' => 'admin\fixdepartureController@index',
-//  ]);
-//  Route::post('/admin/trip/departure/{id}', 'admin\fixdepartureController@getcalenderData');
+Route::get('/admin/departure', [
+    'as' => 'admin.fix-departures', 'uses' => 'admin\fixdepartureController@showalltours']);
 
-//  Route::get('/admin/trip/departure/{id}/add', [
-//     'as' => 'admin.fix-departure.add', 'uses' => 'admin\fixdepartureController@index_add',
-//  ]);
-//  Route::post('/admin/trip/departure/{id}/add', 'admin\fixdepartureController@updateEventInfo');
+Route::get('/admin/departure/{id}', [
+    'as' => 'admin.fix-departure', 'uses' => 'admin\fixdepartureController@index',
+ ]);
+ Route::post('/admin/departure/{id}', 'admin\fixdepartureController@getcalenderData');
 
+ Route::get('/admin/departure/{id}/add', [
+    'as' => 'admin.fix-departure.add', 'uses' => 'admin\fixdepartureController@index_add',
+ ]);
+ Route::post('/admin/departure/{id}/add', 'admin\fixdepartureController@updateEventInfo');
+
+//Route::middleware('auth')->group(function () {

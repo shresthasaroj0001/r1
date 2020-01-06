@@ -1,17 +1,25 @@
 @extends('admin.master')
-@section('b_body')
+@section('f_scripts')
+<script src="/plugins/jquery/jquery.min.js"></script>
+<script>
+$(function(){
+    var table;
+});
+</script>
+@endsection
 
+@section('b_body')
 <!-- Content Header (Page header) -->
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Menu</h1>
+                <h1 class="m-0 text-dark">Tours</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}'">Home</a></li>
-                    <li class="breadcrumb-item active">Menu</li>
+                    <li class="breadcrumb-item active">Tours</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -54,9 +62,8 @@
                                     <td>{{ strlen(strip_tags($item->descriptions)) > 10 ? "...":"" }}</td>
                                     <td>{{$item->days}}</td>
                                     <td>
-                                        <a href="{{route('trip.edit',[$item->id])}}">
-                                            <button class="btn btn-primary">Edit</button></a>
-                            <button type="button" class="btn btn-danger btn-sm action-delete" rowid="{{$item->id}}"> Delete </button>
+                                        <a href="{{route('admin.fix-departure',[$item->id])}}">
+                                            <button class="btn btn-primary">View</button></a>
                                     </td>
                                 </tr>  
                                 @endforeach
@@ -73,43 +80,4 @@
 <!-- /.content -->
 <input type="hidden" name="_token" id="tokken" value="{{ csrf_token() }}">
 
-@endsection
-@section('f_scripts')
-<script src="/plugins/jquery/jquery.min.js"></script>
-<script src="/plugins/datatables/jquery.dataTables.js"></script>
-<script>
-$(function(){
-    var table;
-        table = $("#mytbl").DataTable({});
-
-    $(".action-delete").click(function(){
-        button = null;
-        button = $(this);
-        //(button.attr('rowid'));
-
-        var result = confirm("Are You Sure You want to delete ?");
-        if (result) {
-            var i = window.location.href+"/"+(button.attr('rowid'));
-            $.ajax({
-                headers: {
-                'X-CSRF-TOKEN': $("#tokken").val()},
-                url:i,
-                type: 'Delete',
-                success: function (ddata) {
-                    if(ddata==0){
-                        alert('Internal Error');
-                        return false;
-                    }
-                    
-                    if(ddata==1){
-                        button.closest('tr').addClass('Row4Delete');
-                        $('.Row4Delete').remove();
-                    }
-                }
-            });
-        }
-    });
-
-});
-</script>
 @endsection

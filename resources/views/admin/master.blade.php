@@ -25,6 +25,8 @@
   <link rel="stylesheet" href="/plugins/summernote/summernote-bs4.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+  @yield('fstylesheet')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -226,6 +228,15 @@
             </a>
           </li>
 
+          <li class="nav-item">
+            <a href="{{ route('admin.fix-departures')}}" class="nav-link">
+              <i class="nav-icon far fa-calendar-alt"></i>
+              <p>
+                Departure
+              </p>
+            </a>
+          </li>
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -254,9 +265,14 @@
 </div>
 <!-- ./wrapper -->
 
-@yield('f_scripts')
 <!-- jQuery -->
-{{-- <script src="/plugins/jquery/jquery.min.js"></script> --}}
+<script src="/plugins/jquery/jquery.min.js"></script>
+{{-- <script src="/js/calender/fullcalendar.js"></script> --}}
+{{-- <script src="/plugins/fullcalendar/main.min.js"></script> --}}
+{{-- <script type="text/javascript" src="/js/picker/jquery-ui.multidatespicker.js"></script> --}}
+@yield('f_scripts')
+
+
 <!-- jQuery UI 1.11.4 -->
 {{-- <script src="/plugins/jquery-ui/jquery-ui.min.js"></script> --}}
 <!-- Bootstrap 4 -->
