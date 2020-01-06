@@ -44,12 +44,32 @@
                 <div class="col-lg-4 col-md-4">
                     <div class="package-detail-wrap bgWhite">
                         <h3>Start Booking now</h3>
-
-                        <ul class="list-unstyled iti-list">
-
-                            <li>
-                                Adult: 395.00
-                                <select>
+                        <div class="row">
+                            <div class="col-md-3">Adult</div>
+                            <div class="col-md-3">
+                                <p id="AdultRate">123</p>
+                            </div>
+                            <div class="col-md-3">
+                                <select name="" class="changeqty"  id="adultqty">
+                                    <option value="0">0</option>
+                                    <option value="1" selected>1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3"><p id="adultfinalr"></p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">Child</div>
+                            <div class="col-md-3">
+                                <p id="ChildRate">123</p>
+                            </div>
+                            <div class="col-md-3">
+                                <select name="" class="changeqty" id="childqty">
+                                    <option value="0">0</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -57,33 +77,43 @@
                                     <option value="5">5</option>
                                     <option value="6">6</option>
                                 </select>
-                            </li>
-                            <li>
-                                Child: 195.00
-                                <select>
-                                    <option value="1">1</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
+                            </div>
+                            <div class="col-md-3"><p id="childfinalr"></p></div>
+                        </div>
+                        <br>
+                        {{-- <input type="text" hidden value="{{ csrf_token()}}" id="tokenn">
+                        <input type="text" hidden value="{{$menu_id}}" id="product-id"> --}}
+
+                        <div class="row">
+                            <div id="datepicker" class="col-md-12"></div>
+                           
+                        </div>
+                        <div class="row" style="margin-top: 0.5em;">
+                            <div class="col-md-12">
+                                <select name="t" id="bookingtimeselection" class="form-control">
+                                    <option value="0">Select Time</option>
+                                    <option value=""></option>
                                 </select>
-                            </li>
-                            <li>
-                                <strong>Choose a Date</strong>
-                                <input type="date">
-                            </li>
-                            <li>
-                                <strong>Choose a Time</strong>
-                                <select>
-                                    <option value="8">8:00 AM - 12 Available</option>
-                                </select>
-                            </li>
-                            <li>
-                                Price (AUD): $395:00
-                            </li>
-                        </ul>
+                                <br>
+                                <div class="">
+                                    <label for="">Total</label>
+                                    <p id="totalprice"></p>
+                                </div>
+                                <br>
+                                <div id="sa" class="">
+                                    <div id="bookingbtnDiv" style="display: none"><button id="" class="btn btn-success">Book Now</button></div>
+                                    <div id="bookingnotAvailable" style="display: none">
+                                        <button disabled="disabled" class="btn btn-danger">Booking Not Available</button>
+                                    </div>
+                                    <div id="bookingExced" style="display: none">
+                                        <button disabled="disabled" class="btn btn-danger">Booking Exceed</button>
+                                    </div>
+                                    <div id="bookingtimeNotselected">
+                                        <div class="alert alert-danger">Please Select Time</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <a href="/booking" class="btn btn-danger mgbottom15">Book Now</a>
                     </div>
                 </div>
@@ -256,5 +286,10 @@
             </div>
         </div>
     </section>
+
+@endsection
+
+@section('fscripts')
+<script type="text/javascript" src="/js/pages/booking.js"></script>
 
 @endsection

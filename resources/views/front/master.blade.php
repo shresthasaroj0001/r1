@@ -18,6 +18,9 @@
     <link href="fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <!-- *************** Bootstrap *************** -->
     <link rel="stylesheet" href="js/vendor/bootstrap/bootstrap.min.css"/>
+    {{-- datepicker --}}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+
     <!-- *************** Navigation *************** -->
     <link rel="stylesheet" href="js/vendor/navigation/webslidemenu.css"/>
     <!-- *************** Master Slider *************** -->
@@ -241,8 +244,9 @@
 
 <!--==== Script start ====-->
 
-<script src="js/vendor/jquery-1.11.3.min.js" type="text/javascript"></script>
-
+{{-- <script src="js/vendor/jquery-1.11.3.min.js" type="text/javascript"></script> --}}
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="js/vendor/bootstrap/bootstrap.min.js" type="text/javascript"></script>
 
 <script src="js/vendor/navigation/webslidemenu.js" type="text/javascript"></script>
