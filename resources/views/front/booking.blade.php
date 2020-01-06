@@ -9,10 +9,10 @@
 <section class="inner-header img-pos" style="background-image: url('img/contact.jpg');">
     <div class="overlay">
         <div class="container">
-            <h1 class="page-title">Enquiry</h1>
+            <h1 class="page-title">Booking</h1>
             <ul class="breadcrumb">
-                <li> <a href="#">Home</a> </li>
-                <li class="active"> <a href="#">Enquiry</a> </li>
+                <li> <a href="/">Home</a> </li>
+                <li class="active"> <a>Booking</a> </li>
             </ul>
         </div>
     </div>
@@ -38,7 +38,7 @@
                   {{session('success')}}
                 </div>
                 @endif
-        
+
                 @if(session('error'))
                 <div class="alert alert-danger">
                   {{session('error')}}
@@ -108,7 +108,7 @@
                         <input type="radio" name="triptype" value="Return Trip"> Return Trip
                     </label>
                     <div>
-                       <span class="form_error" id="invalid_triptype" style="display:none">Please Specify Trip type</span> 
+                       <span class="form_error" id="invalid_triptype" style="display:none">Please Specify Trip type</span>
                     </div>
                 </div>
 
@@ -163,7 +163,7 @@
                         <input type="radio" name="privatecharter" value="0"> No
                     </label>
                     <div>
-                        <span class="form_error" id="invalid_privatecharter" style="display:none">Please charter</span> 
+                        <span class="form_error" id="invalid_privatecharter" style="display:none">Please charter</span>
                      </div>
                 </div>
 
