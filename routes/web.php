@@ -56,3 +56,28 @@ Route::get('/privatehire', function () {
 //send email
 
 Route::post('/contactus', 'SendEnquiryController@store')->name('contactus');
+
+// Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/admin', function () {
+    return redirect()->route('admin.dashboard');
+});
+Route::get('/admin/dashboard', [
+   'as' => 'admin.dashboard', 'uses' => 'admin\dashboardController@index',
+]);
+
+Route::resource('/admin/trip','admin\menuController');
+Route::resource('/admin/trip/{id}/fix-departure','admin\menuController');
+
+// Route::get('/admin/trip/departure/{id}', [
+//     'as' => 'admin.fix-departure', 'uses' => 'admin\fixdepartureController@index',
+//  ]);
+//  Route::post('/admin/trip/departure/{id}', 'admin\fixdepartureController@getcalenderData');
+
+//  Route::get('/admin/trip/departure/{id}/add', [
+//     'as' => 'admin.fix-departure.add', 'uses' => 'admin\fixdepartureController@index_add',
+//  ]);
+//  Route::post('/admin/trip/departure/{id}/add', 'admin\fixdepartureController@updateEventInfo');
+
