@@ -27,6 +27,23 @@ Route::get('/contact', function () {
 Route::get('/enquiry', function () {
     return view('front/booking')->with('activevar','booking');
 });
+
+Route::get('/tours', function () {
+    return view('front/tour/tours')->with('activevar','tours');
+});
+
+Route::get('/sydney', function () {
+    return view('front/tour/sydney')->with('activevar','tours');
+});
+
+Route::get('/booknow', function () {
+    return view('front/tour/booknow')->with('activevar','tours');
+});
+
+Route::get('/booking', function () {
+    return view('front/booking')->with('activevar','tours');
+});
+
 Route::post('/enquiry', 'bookingController@store')->name('enquirysubmit');
 
 // Route::get('/', function () {

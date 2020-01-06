@@ -48,4 +48,21 @@ $(document).ready(function () {
             }
         ]
     });
+
+    $('.destination-big').slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+        fade: true,
+        asNavFor: '.destination-thumb'
+    });
+    $('.destination-thumb').slick({
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        asNavFor: '.destination-big',
+        dots: true,
+        centerMode: true,
+        focusOnSelect: true
+    });
+
 });

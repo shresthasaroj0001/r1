@@ -1,0 +1,146 @@
+.product-wrap {
+	position: relative;
+	overflow: hidden;
+}
+.product-wrap:before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.3);
+}
+.product-wrap img {
+	width: 100%;
+}
+.product-wrap .featured-product-content {
+	position: absolute;
+	bottom: 40px;
+	left: 0;
+	padding: 0 3.5em 0 3.5em;
+	z-index: 2;
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	-ms-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+.product-wrap:hover .featured-product-content {
+	bottom: 60px;
+}
+.featured-product-content-inner h5 {
+	font-size: 16px;
+}
+.featured-product-content-inner h5 a {
+	color: #fff;
+}
+.featured-product-text {
+	margin-bottom: 40px;
+	color: #fff;
+}
+.featured-product-content .featured-product-link {
+	font-weight: 700;
+	letter-spacing: 1px;
+	border-bottom: 2px solid #f20000;
+	padding: 0 0 0.25em 0;
+	color: #ffffff;
+	text-transform: uppercase;
+	font-size: 13px;
+}
+@media (min-width: 1024px) {
+	.featured-product-content-inner h5 {
+			font-size: 21px;
+	}
+}
+
+.package-detail-wrap {
+	padding: 20px;
+}
+.destination-big img {
+	width: 100%;
+}
+.price-tag {
+	font-weight: 600;
+	font-size: 18px;
+	color: #eb0017;
+}
+.iti-list li {
+	margin-bottom: 10px;
+}
+.detail-tab {
+	border: none;
+	background-color: #ff0000;
+}
+.detail-tab li {
+	margin-bottom: 0px;
+}
+.detail-tab li a {
+	font-size: 15px;
+	border: none !important;
+	border-radius: 0px;
+	background-color: #ff0000;
+	color: #fff;
+	margin-right: 0px;
+	border-right: 1px solid #de0303 !important;
+	padding: 15px 20px;
+}
+.detail-tab>li.active>a, .detail-tab>li.active>a:focus, .detail-tab>li.active>a:hover {
+	color: #ff0000;
+	background-color: #fff;
+}
+.detail-tab>li>a:focus, .detail-tab>li>a:hover {
+	color: #fff;
+	background-color: #de0303;
+}
+.detail-content {
+	padding: 15px;
+}
+.icon-list ul li {
+	list-style: none;
+	position: relative;
+	line-height: 24px;
+	margin-bottom: 10px;
+	font-size: 15px;
+}
+.icon-list ul {
+	padding-left: 30px;
+}
+.icon-list ul li:before {
+	font-family: 'FontAwesome';
+	margin-right: 10px;
+	position: absolute;
+	top: 0px;
+	left: -30px;
+}
+.included ul li:before {
+	content: '\f00c';
+	color: #49ae25;
+}
+.not-included ul li:before {
+	content: '\f00d';
+	color: #ff0000;
+}
+
+.contact-panel {
+	background-color: #21242c;
+	color: #fff;
+	padding: 20px;
+}
+.contact-panel p {
+	position: relative;
+	padding-left: 40px;
+}
+.contact-panel p i {
+	font-size: 24px;
+	color: #ff0000;
+	margin-right: 10px;
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	left: 0;
+	top: 0;
+}
+.contact-panel p a {
+	color: #fff;
+}
