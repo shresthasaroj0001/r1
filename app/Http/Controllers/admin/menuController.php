@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use DateTime;
 use Validator;
 use App\menu;
+use Purifier;
 
 class menuController extends Controller
 {
@@ -40,7 +41,7 @@ class menuController extends Controller
 
     public function index()
     {
-        $responses = DB::select("SELECT id,title,DATE_FORMAT(menus.updated_at,'%Y-%b-%d') days FROM menus WHERE menus.isdeleted=0 ORDER BY menus.orderb ASC");
+        $responses = DB::select("SELECT id,title,DATE_FORMAT(menus.updated_at,'%Y-%b-%d') days,descriptions FROM menus WHERE menus.isdeleted=0 ORDER BY menus.orderb ASC");
         return view('admin.menu.index')->with('datas',$responses);
     }
 
@@ -67,10 +68,10 @@ class menuController extends Controller
         $menus = new menu();
         $menus->title = $request->title;
         $menus->slug = $this->slugify($request->title);
-        $menus->descriptions = $request->descriptions;
-        $menus->inclusionlist = $request->inclusionlist;
-        $menus->exclusionlist = $request->exclusionlist;
-        $menus->infos = $request->infos;
+        $menus->descriptions = Purifier::clean($request->descriptions);
+        $menus->inclusionlist = Purifier::clean($request->inclusionlist);
+        $menus->exclusionlist = Purifier::clean($request->exclusionlist);
+        $menus->infos = Purifier::clean($request->infos);
         $menus->stats = $request->stats;
         $menus->parent_id = 0;
         $menus->isdeleted = 0;
@@ -145,10 +146,10 @@ class menuController extends Controller
                 $menus = new menu();
                 $menus->title = $request->title;
                 $menus->slug = $this->slugify($request->title);
-                $menus->descriptions = $request->descriptions;
-                $menus->inclusionlist = $request->inclusionlist;
-                $menus->exclusionlist = $request->exclusionlist;
-                $menus->infos = $request->infos;
+                $menus->descriptions = Purifier::clean($request->descriptions);
+                $menus->inclusionlist = Purifier::clean($request->inclusionlist);
+                $menus->exclusionlist = Purifier::clean($request->exclusionlist);
+                $menus->infos = Purifier::clean($request->infos);
                 $menus->stats = $request->stats;
                 $menus->parent_id = 0;
                 $menus->isdeleted = 0;

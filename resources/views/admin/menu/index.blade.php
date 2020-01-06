@@ -39,6 +39,8 @@
                                 <tr>
                                     <th>S N</th>
                                     <th>Title</th>
+                                    <th>Description</th>
+                                    <th></th>
                                     <th>Date</th>
                                     <th>Action</th>
                                 </tr>
@@ -48,6 +50,8 @@
                                   <tr>
                                     <td>{{++$key}}</td>
                                     <td>{{$item->title}}</td>
+                                    <td>{{ substr(strip_tags($item->descriptions),0,10) }}</td>
+                                    <td>{{ strlen(strip_tags($item->descriptions)) > 10 ? "...":"" }}</td>
                                     <td>{{$item->days}}</td>
                                     <td>
                                         <a href="{{route('trip.edit',[$item->id])}}">
