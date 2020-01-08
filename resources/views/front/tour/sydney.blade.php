@@ -75,6 +75,8 @@
 								data-toggle="tab" aria-expanded="false">Package Includes</a></li>
 						<li role="presentation" class=""><a href="#videos" aria-controls="videos" role="tab" data-toggle="tab"
 								aria-expanded="false">Duration & Departure</a></li>
+						<li role="presentation" class=""><a href="#gallery" aria-controls="gallery" role="tab" data-toggle="tab"
+									aria-expanded="false">Gallery</a></li>
 					</ul>
 					<!-- Tab panes -->
 					<div class="tab-content detail-content">
@@ -155,6 +157,15 @@
 							<p>
 								We pick guests up from your requested location in Sydney including hotels, cruise terminals, airport 
 							</p>
+						</div>
+						<div role="tabpanel" class="tab-pane" id="gallery">
+							<div class="col-md-4">
+								<img src="img/tours/sydney-full-day/1.jpg" class="img-responsive" style="height: 150px"/>
+							</div>
+							<div class="col-md-4">
+								<img src="img/tours/sydney-full-day/2.jpg" class="img-responsive" style="height: 150px"/>
+							</div>
+							<div class="clearfix"></div>
 						</div>
 					</div>
 				</div>
