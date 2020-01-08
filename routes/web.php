@@ -101,4 +101,7 @@ Route::get('/admin/departure/{id}', [
  ]);
  Route::post('/admin/departure/{id}/add', 'admin\fixdepartureController@updateEventInfo');
 
+ Route::resource('/admin/departure/{id}/gallery','admin\galleryController');
+ Route::post('/admin/departure/{id}/gallerys', 'admin\galleryController@getPicsForAjax');
+ 
 //Route::middleware('auth')->group(function () {

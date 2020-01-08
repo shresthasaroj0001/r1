@@ -41,7 +41,7 @@ class menuController extends Controller
 
     public function index()
     {
-        $responses = DB::select("SELECT id,title,DATE_FORMAT(menus.updated_at,'%Y-%b-%d') days,descriptions FROM menus WHERE menus.isdeleted=0 ORDER BY menus.orderb ASC");
+        $responses = DB::select("SELECT id,title,DATE_FORMAT(menus.updated_at,'%Y-%b-%d') days,stats FROM menus WHERE menus.isdeleted=0 ORDER BY menus.orderb ASC");
         return view('admin.menu.index')->with('datas',$responses);
     }
 
@@ -53,9 +53,9 @@ class menuController extends Controller
     public function store (Request $request){
         $Validator = Validator::make($request->all(), [
             'title' => 'required',
-            'descriptions' => 'required',
-            'inclusionlist' => 'required',
-            'exclusionlist' => 'required',
+            'itinerary' => 'required',
+            'packageincludes' => 'required',
+            'durationdetail' => 'required',
             'infos' => 'required',
             'stats' => 'required',
             'orderb' => 'required|numeric',
@@ -68,9 +68,9 @@ class menuController extends Controller
         $menus = new menu();
         $menus->title = $request->title;
         $menus->slug = $this->slugify($request->title);
-        $menus->descriptions = Purifier::clean($request->descriptions);
-        $menus->inclusionlist = Purifier::clean($request->inclusionlist);
-        $menus->exclusionlist = Purifier::clean($request->exclusionlist);
+        $menus->itinerary = Purifier::clean($request->itinerary);
+        $menus->packageincludes = Purifier::clean($request->packageincludes);
+        $menus->durationdetail = Purifier::clean($request->durationdetail);
         $menus->infos = Purifier::clean($request->infos);
         $menus->stats = $request->stats;
         $menus->parent_id = 0;
@@ -84,18 +84,20 @@ class menuController extends Controller
     public function show($id)
     {
         if($id > 0){
-            $responses = DB::select('SELECT title,slug,descriptions,inclusionlist,exclusionlist,infos,parent_id,orderb,stats FROM menus WHERE menus.isdeleted=0 and menus.id=?',$id);
-            if($responses != null){
+            $responses = DB::select('SELECT title,slug,itinerary,packageincludes,durationdetail,infos,parent_id,orderb,stats FROM menus WHERE menus.isdeleted=0 and menus.id=?',[$id]);
+            if($responses != null) {
                 $menus = new menu();
+                $menus->id = $id;
                 $menus->title = $responses[0]->title;
                 $menus->slug = $responses[0]->slug;
-                $menus->descriptions = $responses[0]->descriptions;
-                $menus->inclusionlist = $responses[0]->inclusionlist;
-                $menus->exclusionlist = $responses[0]->exclusionlist;
+                $menus->itinerary = $responses[0]->itinerary;
+                $menus->packageincludes = $responses[0]->packageincludes;
+                $menus->durationdetail = $responses[0]->durationdetail;
                 $menus->infos = $responses[0]->infos;
                 $menus->parent_id = $responses[0]->parent_id;
                 $menus->orderb = $responses[0]->orderb;
                 $menus->stats = $responses[0]->stats;
+                return view('admin.menu.edit')->with('menu',$menus);
             }
         }else{
             return view('admin.404');
@@ -104,15 +106,15 @@ class menuController extends Controller
 
     public function edit($id){
         if($id > 0){
-            $responses = DB::select('SELECT title,slug,descriptions,inclusionlist,exclusionlist,infos,parent_id,orderb,stats FROM menus WHERE menus.isdeleted=0 and menus.id=?',[$id]);
+            $responses = DB::select('SELECT title,slug,itinerary,packageincludes,durationdetail,infos,parent_id,orderb,stats FROM menus WHERE menus.isdeleted=0 and menus.id=?',[$id]);
             if($responses != null) {
                 $menus = new menu();
                 $menus->id = $id;
                 $menus->title = $responses[0]->title;
                 $menus->slug = $responses[0]->slug;
-                $menus->descriptions = $responses[0]->descriptions;
-                $menus->inclusionlist = $responses[0]->inclusionlist;
-                $menus->exclusionlist = $responses[0]->exclusionlist;
+                $menus->itinerary = $responses[0]->itinerary;
+                $menus->packageincludes = $responses[0]->packageincludes;
+                $menus->durationdetail = $responses[0]->durationdetail;
                 $menus->infos = $responses[0]->infos;
                 $menus->parent_id = $responses[0]->parent_id;
                 $menus->orderb = $responses[0]->orderb;
@@ -131,9 +133,9 @@ class menuController extends Controller
             if ($response != null) {
                 $Validator = Validator::make($request->all(), [
                     'title' => 'required',
-                    'descriptions' => 'required',
-                    'inclusionlist' => 'required',
-                    'exclusionlist' => 'required',
+                    'itinerary' => 'required',
+                    'packageincludes' => 'required',
+                    'durationdetail' => 'required',
                     'infos' => 'required',
                     'stats' => 'required',
                     'orderb' => 'required|numeric',
@@ -146,18 +148,18 @@ class menuController extends Controller
                 $menus = new menu();
                 $menus->title = $request->title;
                 $menus->slug = $this->slugify($request->title);
-                $menus->descriptions = Purifier::clean($request->descriptions);
-                $menus->inclusionlist = Purifier::clean($request->inclusionlist);
-                $menus->exclusionlist = Purifier::clean($request->exclusionlist);
+                $menus->itinerary = Purifier::clean($request->itinerary);
+                $menus->packageincludes = Purifier::clean($request->packageincludes);
+                $menus->durationdetail = Purifier::clean($request->durationdetail);
                 $menus->infos = Purifier::clean($request->infos);
                 $menus->stats = $request->stats;
                 $menus->parent_id = 0;
                 $menus->isdeleted = 0;
                 $menus->orderb = $request->orderb;
 
-                $rows= DB::update('update menus set title=?,slug=?,descriptions=?,inclusionlist=?,exclusionlist=?,infos=?,stats=?,parent_id=?,isdeleted=?,orderb=?,updated_at=? where id=?',[$menus->title,$menus->slug,$menus->descriptions,$menus->inclusionlist,$menus->exclusionlist,$menus->infos,$menus->stats,$menus->parent_id,$menus->isdeleted,$menus->orderb,new DateTime(),$id]);
+                $rows= DB::update('update menus set title=?,slug=?,itinerary=?,packageincludes=?,durationdetail=?,infos=?,stats=?,parent_id=?,isdeleted=?,orderb=?,updated_at=? where id=?',[$menus->title,$menus->slug,$menus->itinerary,$menus->packageincludes,$menus->durationdetail,$menus->infos,$menus->stats,$menus->parent_id,$menus->isdeleted,$menus->orderb,new DateTime(),$id]);
                 if($rows == 1)
-                    return redirect()->route('trip.index')->with('success', 'Trip Updated Successfully');
+                    return redirect()->route('trip.index')->with('success', 'Updated Successfully');
                 return redirect()->route('trip.index')->with('error', 'Update Failed');
             }
         }

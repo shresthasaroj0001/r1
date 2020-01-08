@@ -12,7 +12,7 @@ class fixdepartureController extends Controller
 {
     public function showalltours()
     {
-        $responses = DB::select("SELECT id,title,DATE_FORMAT(menus.updated_at,'%Y-%b-%d') days,descriptions FROM menus WHERE menus.isdeleted=0 ORDER BY menus.orderb ASC");
+        $responses = DB::select("SELECT id,title,DATE_FORMAT(menus.updated_at,'%Y-%b-%d') days,infos as descriptions FROM menus WHERE menus.isdeleted=0 ORDER BY menus.orderb ASC");
         return view('admin.departure.allmenus')->with('datas',$responses);
     }
 

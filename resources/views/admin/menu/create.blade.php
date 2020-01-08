@@ -49,27 +49,27 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="descriptions" class="col-sm-2 col-form-label">Description <span
+                                    <label for="itinerary" class="col-sm-2 col-form-label">Itinerary <span
                                             style="color: red">*</span></label>
                                     <div class="col-sm-10">
-                                        <textarea name="descriptions" required id="descriptions"
-                                            cols="30">{{ old('descriptions') }}</textarea>
+                                        <textarea name="itinerary" required id="itinerary"
+                                            cols="30">{{ old('itinerary') }}</textarea>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="inclusionlist" class="col-sm-2 col-form-label">Inclusions <span
+                                    <label for="packageincludes" class="col-sm-2 col-form-label">Inclusions <span
                                             style="color: red">*</span></label>
                                     <div class="col-sm-10">
-                                        <textarea name="inclusionlist" required id="inclusionlist"
-                                            cols="30">{{ old('inclusionlist') }}</textarea>
+                                        <textarea name="packageincludes" required id="packageincludes"
+                                            cols="30">{{ old('packageincludes') }}</textarea>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="exclusionlist" class="col-sm-2 col-form-label">Exclusions <span
+                                    <label for="durationdetail" class="col-sm-2 col-form-label">Duration & Departure <span
                                             style="color: red">*</span></label>
                                     <div class="col-sm-10">
-                                        <textarea name="exclusionlist" required id="exclusionlist"
-                                            cols="30">{{ old('exclusionlist') }}</textarea>
+                                        <textarea name="durationdetail" required id="durationdetail"
+                                            cols="30">{{ old('durationdetail') }}</textarea>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -122,9 +122,9 @@
 @section('f_scripts')
 <script src='https://cdn.tiny.cloud/1/{{env('TINY_API_KEY')}}/tinymce/5/tinymce.min.js'> </script>
 <script>
-    tinymce.init({ selector: '#descriptions',plugins:'link' });
-    tinymce.init({ selector: '#inclusionlist',plugins:'link' });
-    tinymce.init({ selector: '#exclusionlist',plugins:'link' });
+    tinymce.init({ selector: '#itinerary',plugins:'link' });
+    tinymce.init({ selector: '#packageincludes',plugins:'link,lists' });
+    tinymce.init({ selector: '#durationdetail',plugins:'link' });
     tinymce.init({ selector: '#infos',plugins:'link' });
 </script>
 <script src="/plugins/jquery/jquery.min.js"></script>
@@ -137,19 +137,19 @@ $(function(){
             return;
         }
 
-        var editorContent = tinyMCE.get('descriptions').getContent();
+        var editorContent = tinyMCE.get('itinerary').getContent();
         if (editorContent == '')
         {
             alert('Please Write descriptions');
             return;
         }
        
-        if(tinyMCE.get('inclusionlist').getContent() == ''){
-            alert('Please Write inclusionlist');
+        if(tinyMCE.get('packageincludes').getContent() == ''){
+            alert('Please Write Package Inclusion');
             return;
         }
-        if(tinyMCE.get('exclusionlist').getContent() == ''){
-            alert('Please Write exclusionlist');
+        if(tinyMCE.get('durationdetail').getContent() == ''){
+            alert('Please Write About Duration and Departure');
             return;
         }
         if(tinyMCE.get('infos').getContent() == ''){

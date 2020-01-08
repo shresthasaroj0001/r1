@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMenusTable extends Migration
+class CreateGalleriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,14 @@ class CreateMenusTable extends Migration
      */
     public function up()
     {
-        Schema::create('menus', function (Blueprint $table) {
+        Schema::create('galleries', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('menu_id')->unsigned()->default(0);
             $table->string('title');
-            $table->string('slug');
-            $table->string('itinerary')->nullable();
-            $table->string('packageincludes')->nullable();
-            $table->string('durationdetail')->nullable();
-            $table->string('infos')->nullable();
-            $table->integer('parent_id')->unsigned()->nullable();
-            $table->integer('orderb')->unsigned()->default(0);
+            $table->boolean('isfeatureimg')->default(0); 
             $table->boolean('stats')->default(1); 
             $table->boolean('isdeleted')->default(0); 
+            $table->integer('orderb')->unsigned()->default(0);
             $table->timestamps();
         });
     }
@@ -36,6 +32,6 @@ class CreateMenusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('menus');
+        Schema::dropIfExists('galleries');
     }
 }

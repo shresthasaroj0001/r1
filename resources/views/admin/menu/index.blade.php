@@ -39,9 +39,10 @@
                                 <tr>
                                     <th>S N</th>
                                     <th>Title</th>
-                                    <th>Description</th>
-                                    <th></th>
+                                    {{-- <th>Description</th> --}}
+                                    {{-- <th></th> --}}
                                     <th>Date</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -50,10 +51,19 @@
                                   <tr>
                                     <td>{{++$key}}</td>
                                     <td>{{$item->title}}</td>
-                                    <td>{{ substr(strip_tags($item->descriptions),0,10) }}</td>
-                                    <td>{{ strlen(strip_tags($item->descriptions)) > 10 ? "...":"" }}</td>
+                                    {{-- <td>{{ substr(strip_tags($item->descriptions),0,10) }}</td> --}}
+                                    {{-- <td>{{ strlen(strip_tags($item->descriptions)) > 10 ? "...":"" }}</td> --}}
                                     <td>{{$item->days}}</td>
                                     <td>
+                                        @if ($item->stats ==1)
+                                        <span class="label label-success">Active</span>
+                                @else
+                                <span class="label label-danger">In-Active</span>
+                                @endif
+                                    </td>
+                                    <td>
+                                        <a href="{{route('gallery.index',[$item->id])}}">
+                                            <button class="btn btn-success">Gallery</button></a>
                                         <a href="{{route('trip.edit',[$item->id])}}">
                                             <button class="btn btn-primary">Edit</button></a>
                             <button type="button" class="btn btn-danger btn-sm action-delete" rowid="{{$item->id}}"> Delete </button>
@@ -74,6 +84,11 @@
 <input type="hidden" name="_token" id="tokken" value="{{ csrf_token() }}">
 
 @endsection
+
+@section('fstylesheet')
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">    
+@endsection
+
 @section('f_scripts')
 <script src="/plugins/jquery/jquery.min.js"></script>
 <script src="/plugins/datatables/jquery.dataTables.js"></script>
