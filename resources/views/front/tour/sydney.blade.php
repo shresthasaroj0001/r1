@@ -2,6 +2,7 @@
 
 @section('fcss')
 <link rel="stylesheet" href="css/pages/destination.css" type="text/css" />
+<link rel="stylesheet" href="plugins/imageViewer/viewer.min.css">
 	
 @endsection
 
@@ -159,13 +160,11 @@
 							</p>
 						</div>
 						<div role="tabpanel" class="tab-pane" id="gallery">
-							<div class="col-md-4">
-								<img src="img/tours/sydney-full-day/1.jpg" class="img-responsive" style="height: 150px"/>
-							</div>
-							<div class="col-md-4">
-								<img src="img/tours/sydney-full-day/2.jpg" class="img-responsive" style="height: 150px"/>
-							</div>
-							<div class="clearfix"></div>
+							<ul id="images">
+                <li><img src="img/destination.jpg" alt="Picture 1"></li>
+                <li><img src="img/destination.jpg" alt="Picture 2"></li>
+                <li><img src="img/destination.jpg" alt="Picture 3"></li>
+              </ul>
 						</div>
 					</div>
 				</div>
@@ -184,4 +183,16 @@
 	</div>
 </section>
 		
+@endsection
+
+@section('fscripts')
+	<script src="plugins/imageViewer/viewer.min.js"></script>
+  <script src="plugins/imageViewer/jquery-viewer.js"></script>
+
+  <!-- <script src="dist/jquery-viewer.min.js"></script> -->
+  <script type="text/javascript">
+    $('#images').viewer({
+    // options here
+    });
+  </script>
 @endsection
