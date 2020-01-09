@@ -88,42 +88,49 @@ function loadData() {
     }); //ajax ending
 }
 
-var rowId=0;
-var rowIdName,titlename;
+var rowId = 0;
+var rowIdName, titlename;
 $('#closeModalBtn').click(function () {
     var OrrderNo = $('#OrderNoId').val();
-    var IsFeatureIMGS =  $('#isFeatureImgs').val();
-    var StatusO =  $('#statsOption').val();
+    var IsFeatureIMGS = $('#isFeatureImgs').val();
+    var StatusO = $('#statsOption').val();
 
-    if( parseInt(OrrderNo) <= 0 ){
+    if (parseInt(OrrderNo) <= 0) {
         alert("Validation Error");
         return false;
     }
-    if( parseInt(IsFeatureIMGS) == 0 || parseInt(IsFeatureIMGS) == 1){
-    }else{
+    if (parseInt(IsFeatureIMGS) == 0 || parseInt(IsFeatureIMGS) == 1) {} else {
         alert("Validation Error");
         return false;
     }
-    if( parseInt(StatusO) == 0 || parseInt(StatusO) == 1){
-    }else{
+    if (parseInt(StatusO) == 0 || parseInt(StatusO) == 1) {} else {
         alert("Validation Error");
         return false;
     }
-    var obj = { id:rowId, isfeatureimg:IsFeatureIMGS, stats:StatusO, orderb:OrrderNo};
+    var obj = {
+        id: rowId,
+        isfeatureimg: IsFeatureIMGS,
+        stats: StatusO,
+        orderb: OrrderNo
+    };
 
     $.ajax({
         headers: {
             'X-CSRF-TOKEN': $('#tokken').val()
         },
         data: obj,
-        url: window.location.href + "/"+rowId,
+        url: window.location.href + "/" + rowId,
         type: 'PUT',
-        beforeSend: function(){
+        beforeSend: function () {
+            $("#modalsss").LoadingOverlay("show", {
+                background: "rgba(165, 190, 100, 0.5)"
+            });
+            $("#modalsss").LoadingOverlay("show");
         },
         success: function (datas) {
-            if(parseInt(datas)==1){
-                table.row('#mytbl .' + rowIdName).remove().draw( false );
-            }else{
+            if (parseInt(datas) == 1) {
+                table.row('#mytbl .' + rowIdName).remove().draw(false);
+            } else {
                 console.log("error");
             }
             //monthdatas = datas;
@@ -133,7 +140,9 @@ $('#closeModalBtn').click(function () {
 
         },
         complete: function () {
-        }
+            $("#modalsss").LoadingOverlay("hide");
+            $('#modal-overlays').modal('hide');
+        },
     }); //ajax ending
 });
 
@@ -161,37 +170,41 @@ $('#mytbl').on("click", ".edit-modal", function () {
 
 $('#mytbl').on("click", ".action-delete", function () {
     button = null;
-        button = $(this);
-        //(button.attr('rowid'));
+    button = $(this);
+    //(button.attr('rowid'));
 
-        var result = confirm("Are You Sure You want to delete ?");
-        if (result) {
-            var datas = table.row($(this).closest('tr')).data();
-            rowIdName += "rowid" + datas.id;
-            $(this).closest('tr').addClass(rowIdName);
-            
-            var i = "/admin/inquiry/"+(button.attr('rowid'));
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('#tokken').val()
-                },
-                url: window.location.href + "/"+datas.id,
-                type: 'Delete',
-                beforeSend: function(){
-                    $('#closeModalBtn').attr("disabled");
-                    $('#closeModalBtn').prop("disabled",true);
-                },
-                success: function (ddata) {
-                    if(ddata==0){
-                        alert('Internal Error');
-                        return false;
-                    }
-                    
-                    if(ddata==1){
-                        button.closest('tr').addClass('Row4Delete');
-                        $('.Row4Delete').remove();
-                    }
+    var result = confirm("Are You Sure You want to delete ?");
+    if (result) {
+        var datas = table.row($(this).closest('tr')).data();
+        rowIdName += "rowid" + datas.id;
+        $(this).closest('tr').addClass(rowIdName);
+
+        var i = window.location.href + "/" + (button.attr('rowid'));
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('#tokken').val()
+            },
+            url: window.location.href + "/" + datas.id,
+            type: 'Delete',
+            beforeSend: function () {
+                $('#closeModalBtn').attr("disabled");
+                $('#closeModalBtn').prop("disabled", true);
+            },
+            success: function (ddata) {
+                if (!(ddata)) {
+                    alert('Internal Error');
+                    return false;
                 }
-            });
-        }
+
+                if (ddata == 1) {
+                    button.closest('tr').addClass('Row4Delete');
+                    $('.Row4Delete').remove();
+                }
+            },
+            complete: function () {
+                $('#closeModalBtn').prop("disabled", false);
+                $('#closeModalBtn').removeAttr("disabled");
+            }
+        });
+    }
 });

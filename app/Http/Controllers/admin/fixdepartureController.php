@@ -56,7 +56,7 @@ class fixdepartureController extends Controller
     }
 
     public function updateEventInfo(Request $request)
-    {
+    {   
         $events = $request->all();
         $now = new DateTime();
         $data = array();

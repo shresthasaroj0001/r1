@@ -64,7 +64,7 @@
     </div><!-- /.container-fluid -->
     <div class="modal fade" id="modal-overlays">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content" id="modalsss">
                 <div class="modal-header">
                     <h4 class="modal-title">Change Image Settings</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -132,9 +132,11 @@
 @section('f_scripts')
 <script src="/plugins/jquery/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.js"></script>
+
 <script src="/plugins/datatables/jquery.dataTables.js"></script>
 
 <script src="/myjs/gallery.js"></script>
 <script src="/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.6/dist/loadingoverlay.min.js">
 
 @endsection
