@@ -70,10 +70,10 @@
 
     </section>
 
-
+    <input type="text" hidden value="{{ csrf_token()}}" id="tokken">
     <section class="bgWhite section-pad-bottom">
         <div class="container">
-            <div class="row">
+            <div class="row" id="tourss">
                 <div class="col-md-4 mb-30">
                     <div class="product-wrap">
                         <img src="img/destination.jpg" alt="">
@@ -147,3 +147,10 @@
         </div>
     </section>
 @endsection
+
+@section('fscripts')
+    <script src="/myjs/f/tours.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.6/dist/loadingoverlay.min.js"></script>
+@endsection
+
+

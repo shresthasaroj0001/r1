@@ -137,6 +137,5 @@
 
 <script src="/myjs/gallery.js"></script>
 <script src="/plugins/bootstrap/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.6/dist/loadingoverlay.min.js">
-
+<script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.6/dist/loadingoverlay.min.js"></script>
 @endsection

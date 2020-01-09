@@ -31,6 +31,7 @@ Route::get('/enquiry', function () {
 Route::get('/tours', function () {
     return view('front/tour/tours')->with('activevar','tours');
 });
+Route::post('/tours','HomeController@index');
 
 Route::get('/sydney', function () {
     return view('front/tour/sydney')->with('activevar','tours');
