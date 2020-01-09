@@ -144,3 +144,12 @@
 .contact-panel p a {
 	color: #fff;
 }
+#images {
+	list-style: none;
+	display: flex;
+	padding-left: 0;
+}
+
+#images li{
+	margin-right: .5em;
+}
