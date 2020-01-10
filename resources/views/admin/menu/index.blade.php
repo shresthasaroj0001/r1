@@ -6,12 +6,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Menu</h1>
+                <h1 class="m-0 text-dark">Tours</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}'">Home</a></li>
-                    <li class="breadcrumb-item active">Menu</li>
+                    <li class="breadcrumb-item active">Tour</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -26,7 +26,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Menu List</h3>
+                        <h3 class="card-title">Tour List</h3>
 
                         <div class="card-tools">
                             <a href="{{ route('trip.create') }}"><button type="button" class="btn btn-default">Add</button></a>
@@ -66,7 +66,7 @@
                                             <button class="btn btn-success">Gallery</button></a>
                                         <a href="{{route('trip.edit',[$item->id])}}">
                                             <button class="btn btn-primary">Edit</button></a>
-                            <button type="button" class="btn btn-danger btn-sm action-delete" rowid="{{$item->id}}"> Delete </button>
+                            <button type="button" class="btn btn-danger action-delete" rowid="{{$item->id}}"> Delete </button>
                                     </td>
                                 </tr>  
                                 @endforeach

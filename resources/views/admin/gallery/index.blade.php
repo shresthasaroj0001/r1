@@ -11,7 +11,7 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}'">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('trip.index') }}'">Menus</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('trip.index') }}'">Tourss</a></li>
                     <li class="breadcrumb-item active">Gallery</li>
                 </ol>
             </div><!-- /.col -->
@@ -27,8 +27,8 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <a href="{{ route('trip.index') }}"><button type="button" class="btn btn-default">Back TO
-                                menu</button></a>
+                        <a href="{{ route('trip.index') }}"><button type="button" class="btn btn-default">Back to
+                                tours</button></a>
 
                     </div>
                     <!-- /.card-header -->
