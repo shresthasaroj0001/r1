@@ -17,7 +17,7 @@ $(function () {
             if (datas != null) {
                 datas.forEach(function (item, index, array) {
                     i += '<div class="col-md-4 mb-30"><div class="product-wrap">';
-                    if (!item.title.trim()) {
+                    if ($.trim(item.featureimg).length > 0) {
                         i += '<img src="/uploads/' + item.featureimg + '" alt="' + item.title + '"> ';
                     } else {
                         i += '<img src = "img/destination.jpg" alt = "no image" >';

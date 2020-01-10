@@ -33,8 +33,12 @@ Route::get('/tours', function () {
 });
 Route::post('/tours','HomeController@index');
 
+Route::get('/tours/{tourname}', [
+    'as' => 'admin.fix-departure.add', 'uses' => 'HomeController@gettourdetail',
+ ]);
+
 Route::get('/sydney', function () {
-    return view('front/tour/sydney')->with('activevar','tours');
+    return view('front/tour/sydney123')->with('activevar','tours');
 });
 
 Route::get('/booknow', function () {

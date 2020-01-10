@@ -109,6 +109,7 @@ $('#closeModalBtn').click(function () {
     }
     var obj = {
         id: rowId,
+        title: titlename,
         isfeatureimg: IsFeatureIMGS,
         stats: StatusO,
         orderb: OrrderNo
@@ -128,13 +129,16 @@ $('#closeModalBtn').click(function () {
             $("#modalsss").LoadingOverlay("show");
         },
         success: function (datas) {
+            // console.log(datas);
+            $("#modalsss").LoadingOverlay("hide");
+
             if (parseInt(datas) == 1) {
                 table.row('#mytbl .' + rowIdName).remove().draw(false);
+                table.row.add(obj).draw(false);
+
             } else {
                 console.log("error");
             }
-            //monthdatas = datas;
-            console.log(datas);
         },
         error: function (eror) {
 
