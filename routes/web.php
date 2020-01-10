@@ -31,9 +31,14 @@ Route::get('/enquiry', function () {
 Route::get('/tours', function () {
     return view('front/tour/tours')->with('activevar','tours');
 });
+Route::post('/tours','HomeController@index');
+
+Route::get('/tours/{tourname}', [
+    'as' => 'admin.fix-departure.add', 'uses' => 'HomeController@gettourdetail',
+ ]);
 
 Route::get('/sydney', function () {
-    return view('front/tour/sydney')->with('activevar','tours');
+    return view('front/tour/sydney123')->with('activevar','tours');
 });
 
 Route::get('/booknow', function () {

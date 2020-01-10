@@ -17,10 +17,10 @@ class CreateMenusTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('slug');
-            $table->string('itinerary')->nullable();
-            $table->string('packageincludes')->nullable();
-            $table->string('durationdetail')->nullable();
-            $table->string('infos')->nullable();
+            $table->text('itinerary')->nullable();
+            $table->text('packageincludes')->nullable();
+            $table->text('durationdetail')->nullable();
+            $table->text('infos')->nullable();
             $table->integer('parent_id')->unsigned()->nullable();
             $table->integer('orderb')->unsigned()->default(0);
             $table->boolean('stats')->default(1); 

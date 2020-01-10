@@ -15,24 +15,24 @@
         href="https://fonts.googleapis.com/css?family=Biryani:300,700|Catamaran:100,300,400,600,700,800,900&display=swap"
         rel="stylesheet">
     <!-- *************** Font Awesome *************** -->
-    <link href="fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <!-- *************** Bootstrap *************** -->
-    <link rel="stylesheet" href="js/vendor/bootstrap/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/js/vendor/bootstrap/bootstrap.min.css"/>
     {{-- datepicker --}}
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 
     <!-- *************** Navigation *************** -->
-    <link rel="stylesheet" href="js/vendor/navigation/webslidemenu.css"/>
+    <link rel="stylesheet" href="/js/vendor/navigation/webslidemenu.css"/>
     <!-- *************** Master Slider *************** -->
-    <link href="js/vendor/masterslider/masterslider.css" rel="stylesheet" type="text/css"/>
-    <link href="js/vendor/masterslider/ms-layers-style.css" rel="stylesheet" type="text/css"/>
+    <link href="/js/vendor/masterslider/masterslider.css" rel="stylesheet" type="text/css"/>
+    <link href="/js/vendor/masterslider/ms-layers-style.css" rel="stylesheet" type="text/css"/>
     <!-- *************** Slick Slider *************** -->
-    <link rel="stylesheet" href="js/vendor/slick_slider/slick.css"/>
-    <link rel="stylesheet" href="js/vendor/slick_slider/slick-theme.css"/>
+    <link rel="stylesheet" href="/js/vendor/slick_slider/slick.css"/>
+    <link rel="stylesheet" href="/js/vendor/slick_slider/slick-theme.css"/>
     <!-- *************** Start Common CSS *************** -->
-    <link rel="stylesheet" href="css/common/inner-all.css" type="text/css"/>
-    <link rel="stylesheet" href="css/common/main.css" type="text/css"/>
-    <link rel="stylesheet" href="css/pages/home.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/common/inner-all.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/common/main.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/pages/home.css" type="text/css"/>
     @yield('fcss')
 </head>
 <body>
@@ -42,7 +42,7 @@
     <div class="wsmobileheader clearfix">
         <a id="wsnavtoggle" class="animated-arrow"><span></span></a>
         <a class="smallogo">
-            <img src="img/logo.png" width="87" alt=""/>
+            <img src="/img/logo.png" width="87" alt=""/>
         </a>
         <a class="cta-icon call" href="tel:123456789"><span class="fa fa-mobile-phone"></span></a>
         <a class="cta-icon book" type="button" href="/enquiry"><span
@@ -63,7 +63,7 @@
 
                     <a href="#">
 
-                        <img src="img/logo.png" alt=""/>
+                        <img src="/img/logo.png" alt=""/>
 
                     </a>
 
@@ -247,21 +247,21 @@
 {{-- <script src="js/vendor/jquery-1.11.3.min.js" type="text/javascript"></script> --}}
 <script src="//code.jquery.com/jquery-1.12.4.js"></script>
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="js/vendor/bootstrap/bootstrap.min.js" type="text/javascript"></script>
+<script src="/js/vendor/bootstrap/bootstrap.min.js" type="text/javascript"></script>
 
-<script src="js/vendor/navigation/webslidemenu.js" type="text/javascript"></script>
+<script src="/js/vendor/navigation/webslidemenu.js" type="text/javascript"></script>
 
 <!-- *************** Master Slider *************** -->
 
-<script src="js/vendor/masterslider/masterslider.min.js" type="text/javascript"></script>
+<script src="/js/vendor/masterslider/masterslider.min.js" type="text/javascript"></script>
 
 <!-- *************** Slick Slider *************** -->
 
-<script src="js/vendor/slick_slider/slick.min.js" type="text/javascript"></script>
+<script src="/js/vendor/slick_slider/slick.min.js" type="text/javascript"></script>
 
-<script src="js/common/main.js" type="text/javascript"></script>
+<script src="/js/common/main.js" type="text/javascript"></script>
 
-<script src="js/pages/home.js" type="text/javascript"></script>
+<script src="/js/pages/home.js" type="text/javascript"></script>
 
 @yield('fscripts')
 
