@@ -36,6 +36,7 @@
 			</div>
 			<div class="col-lg-4 col-md-4" style="" id="infosDiv">
 				<div class="package-detail-wrap bgWhite">
+					<h3>{{ $tour[0]->title }}</h3>
 					{!! $tour[0]->infos !!}
 					<button class="btn btn-danger mgbottom15" type="button">Book Now</button>
 					<button class="btn btn-danger mgbottom15" type="button">Check Availabiliy</button>
