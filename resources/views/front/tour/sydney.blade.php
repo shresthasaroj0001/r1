@@ -45,6 +45,7 @@
 			</div>
 			<div class="col-lg-4 col-md-4">
 				<div class="package-detail-wrap bgWhite">
+					<h3>{{ $tour[0]->title }}</h3>
 					{!! $tour[0]->infos !!}
 					{{-- <h3>SYDNEY FULL AND HALF DAY LUXURY PRIVATE TOURS</h3>
 					<p class="price-tag">$395.00 per Adult </p>
