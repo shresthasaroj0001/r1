@@ -15,6 +15,11 @@ class CreateEnquiriesTable extends Migration
     {
         Schema::create('enquiries', function (Blueprint $table) {
             $table->increments('id');
+            
+            $table->integer('calenderId');
+            $table->integer('adults');
+            $table->integer('childs');
+
             $table->string('firstname');
             $table->string('lastname');
             $table->string('mobilenos');
@@ -27,6 +32,7 @@ class CreateEnquiriesTable extends Migration
             $table->dateTime('traveldate');
             $table->string('pickupaddress');
             $table->integer('noofpassenger');
+           
             // $table->date('dropoffaddress');
             $table->string('flightinfo');
             $table->boolean('privatecharter');

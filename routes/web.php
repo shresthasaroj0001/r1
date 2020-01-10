@@ -36,10 +36,20 @@ Route::post('/tours','HomeController@index');
 Route::get('/tours/{tourname}', [
     'as' => 'admin.fix-departure.add', 'uses' => 'HomeController@gettourdetail',
  ]);
+Route::post('/tour/getmonthsdetail', 'HomeController@getMonthChange');
+Route::post('/tour/updaterate', 'HomeController@onDateSelected');
+Route::post('/book-now', 'HomeController@booknowRedirect');
+Route::get('/book-now', function () {
+    return redirect('/tours');
+});
+Route::post('/bookConfirm', 'HomeController@store')->name('bookSubmit');
+
 
 Route::get('/sydney', function () {
     return view('front/tour/sydney123')->with('activevar','tours');
 });
+
+
 
 Route::get('/booknow', function () {
     return view('front/tour/booknow')->with('activevar','tours');
