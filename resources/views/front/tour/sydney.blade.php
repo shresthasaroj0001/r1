@@ -16,8 +16,12 @@
 				<li class="active"> <a>{{ $tour[0]->title }}</a> </li>
 			</ul>
 		</div>
+		
 	</div>
 </section>
+
+@include('admin.messages')
+
 <section class="section-pad-top section-pad-bottom">
 	<div class="container">
 		<div class="row">
@@ -186,7 +190,6 @@
 			<button type="submit" id="redirectSubmit"></button>
 		</form>
 	</div>
-	
 </section>
 
 @endsection

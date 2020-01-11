@@ -46,7 +46,7 @@
                 @endif
             </div>
 
-            <form class="row flex-row" method="POST" id="bookingForm" action="{{route('enquirysubmit')}}">
+            <form class="row flex-row" method="POST" id="bookingForm" action="{{route('bookSubmit')}}">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                 <input type="hidden" name="calId" id="calId" value="{{ $ids }}">

@@ -8,7 +8,7 @@
     <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
             <td width="100%" cellpadding="0" cellspacing="0">
-                <h1 style="font-size: 20px;">A new Enquiry!</h1>
+                <h1 style="font-size: 20px;">New Booking</h1>
             </td>
         </tr>
         <tr>
@@ -29,6 +29,43 @@
                 </p>
                 <p><b>Message:</b></p>
                 <p>{{ $additionalinfo }}</p>
+                <br>
+                <br>
+                <hr>
+                <h3>TOUR: {{ $title}}</h3>
+                <table class="table table-bordered">
+                    <thead>
+                        <th>
+                            <tr>
+                                <td>Particular</td>
+                                <td>Rate</td>
+                                <td></td>
+                                <td>Qty</td>
+                                <td>Total</td>
+                            </tr>
+                        </th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> Adults </td>
+                             <td> $ {{ $rate_adult }} </td>
+                             <td> *</td>
+                             <td> {{ $adults }} </td>
+                            <td> $ {{ $adulttotal }} </td>
+                        </tr>
+                        <tr>
+                            <td> Child </td>
+                             <td> $ {{ $rate_children }} </td>
+                             <td> *</td>
+                             <td> {{ $childs }}</td>
+                            <td> $ {{ $childtotal }} </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"> Total </td>
+                            <td> $ {{ $finalTotals }} </td>
+                        </tr>
+                    </tbody>
+                </table>
             </td>
         </tr>
         <tr>

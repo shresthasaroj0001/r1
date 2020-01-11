@@ -29,7 +29,7 @@ Route::get('/enquiry', function () {
 });
 
 Route::get('/tours', function () {
-    return view('front/tour/tours')->with('activevar','tours');
+    return view('front/tour/tours')->with('activevar','tours')->with('email',"");
 });
 Route::post('/tours','HomeController@index');
 
@@ -40,24 +40,23 @@ Route::post('/tour/getmonthsdetail', 'HomeController@getMonthChange');
 Route::post('/tour/updaterate', 'HomeController@onDateSelected');
 Route::post('/book-now', 'HomeController@booknowRedirect');
 Route::get('/book-now', function () {
-    return redirect('/tours');
+    return redirect('/tours')->with('email',"");
 });
 Route::post('/bookConfirm', 'HomeController@store')->name('bookSubmit');
 
 
-Route::get('/sydney', function () {
-    return view('front/tour/sydney123')->with('activevar','tours');
-});
+// Route::get('/sydney', function () {
+//     return view('front/tour/sydney123')->with('activevar','tours');
+// });
 
 
+// Route::get('/booknow', function () {
+//     return view('front/tour/booknow')->with('activevar','tours');
+// });
 
-Route::get('/booknow', function () {
-    return view('front/tour/booknow')->with('activevar','tours');
-});
-
-Route::get('/booking', function () {
-    return view('front/booking')->with('activevar','tours');
-});
+// Route::get('/booking', function () {
+//     return view('front/booking')->with('activevar','tours');
+// });
 
 Route::post('/enquiry', 'bookingController@store')->name('enquirysubmit');
 

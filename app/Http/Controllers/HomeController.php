@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Validator;
+use App\Enquiry;
 
 class HomeController extends Controller
 {
@@ -26,7 +27,7 @@ class HomeController extends Controller
             IFNULL(( select galleries.title from galleries where isfeatureimg=1 and isdeleted=0 and stats=1 and menu_id=menus.id group by menu_id,title having max(updated_at) ), '') featureImg from menus where lower(menus.slug)=lower(?) and menus.isdeleted=0", [$tourname]);
             if ($tours != null) {
                 $galleries = DB::select("SELECT galleries.title,galleries.isfeatureimg from galleries WHERE galleries.isdeleted=0 and galleries.stats=1 and galleries.isfeatureimg=0 and galleries.menu_id=? ORDER by galleries.orderb", [$tours[0]->id]);
-                return view('front/tour/sydney')->with('activevar', 'tours')->with('tour', $tours)->with('galleries', $galleries);
+                return view('front/tour/sydney')->with('activevar', 'tours')->with('tour', $tours)->with('galleries', $galleries)->with('email',"");
             }
         }
         return view('404');
@@ -125,9 +126,9 @@ class HomeController extends Controller
         ], []);
 
         if ($Validator->fails()) {
-            dd($Validator);
+            // dd($Validator);
 
-            return redirect('/tours');
+            return redirect('/tours')->with('email',"");
         }
 
         $ids = $request->redirectFrmId;
@@ -139,7 +140,6 @@ class HomeController extends Controller
 
     public function store(Request $request)
     {
-       
         $validator = Validator::make($request->all(), [
             'calId' => 'required',
             'adults' => 'required',
@@ -184,87 +184,95 @@ class HomeController extends Controller
             return redirect()->back()->withInput($request->input())->withErrors($validator);
         }
 
-        
-        $res = DB::select("SELECT tour.id,tour.paxs,tour.rate_children,tour.rate_adult,tour.stats from tourcalenderdatetimeinfos as tour WHERE tour.tourdatetime=(SELECT tourcalenderdatetimeinfos.tourdatetime from tourcalenderdatetimeinfos WHERE tourcalenderdatetimeinfos.id=?) HAVING MAX(tour.created_at)",[$request->calId]);
-        if($res != null){
-            if( ($request->adults)+($request->childs) <= $res[0]->paxs){
-                if($res[0]->id != $request->calId)
-                {
-                    // rate id is changed
-                    return redirect()->back()->with('error', 'Tour Details is changed.. Please try again.');
-                }
+        //$res = DB::select("SELECT tour.id,tour.paxs,tour.rate_children,tour.rate_adult,tour.stats from tourcalenderdatetimeinfos as tour WHERE tour.tourdatetime=(SELECT tourcalenderdatetimeinfos.tourdatetime from tourcalenderdatetimeinfos WHERE tourcalenderdatetimeinfos.id=?) HAVING MAX(tour.created_at)",[$request->calId]);
+        //if($res != null){
+        // dd($res);
+        // if( ($request->adults)+($request->childs) <= $res[0]->paxs){
+        // if($res[0]->id != $request->calId)
+        // {
+        //     // rate id is changed
+        //     return redirect()->back()->with('error', 'Tour Details is changed.. Please try again.');
+        // }
 
-                $enquiryss = new Enquiry();
-                $enquiryss->calenderId=$res[0]->id;
-                $enquiryss->adults=$request->adults;
-                $enquiryss->childs=$request->childs;
-        
-                $enquiryss->firstname = $request->firstname;
-                $enquiryss->lastname = $request->lastname;
-                $enquiryss->mobilenos = $request->mobilenos;
-                $enquiryss->alt_mobilenos = $request->alt_mobilenos;
-                $enquiryss->email = $request->email;
-                $enquiryss->other = $request->other;
-                $enquiryss->cruiseterminal = $request->cruiseterminal;
-                $enquiryss->airport = $request->airport;
-        
-                $enquiryss->other = $request->other;
-        
-                $enquiryss->triptype = $request->triptype;
-                $enquiryss->traveldate = $request->traveldatetime;
-                $enquiryss->pickupaddress = $request->pickupaddress;
-                $enquiryss->noofpassenger = $request->noofpassenger;
-                $enquiryss->flightinfo = $request->flightinfo;
-                $enquiryss->privatecharter = $request->privatecharter;
-                $enquiryss->additionalinfo = $request->additionalinfo;
-                dd($enquiryss);
-                $varres = Input::get('childseats');
-                dd($enquiryss);
-                DB::beginTransaction();
-                $enquiryss->save();
-        
-                if (!(is_null($varres))) {
-                    $data = array();
-                    foreach ($varres as $value) {
-                        $tempModel = array('enquiryno' => $enquiryss->id, 'childSeatid' => $value, 'created_at' => new DateTime(), 'updated_at' => new DateTime());
-                        array_push($data, $tempModel);
-                    }
-                    DB::table('enquirychildseats')->insert($data);
-                }
-        
-                DB::commit();
-        
-                $tempo = "";
-                if (!(is_null($varres))) {
-                    $sql = "SELECT GROUP_CONCAT(child_seats.name SEPARATOR ' , ') as name FROM enquirychildseats INNER JOIN child_seats ON enquirychildseats.childSeatid=child_seats.id where enquirychildseats.enquiryno=" . $enquiryss->id;
-                    $res = DB::select($sql);
-                    if ($res == null) {
-                    } else {
-                        $tempo = $res[0]->name;
-                    }
-                }
-        
-                $data = array('from_email' => $enquiryss->email, 'from_name' => $enquiryss->firstname . ' ' . $enquiryss->lastname,
-                    'to_name' => 'Admin', 'subject' => 'New Enquiry', 'to_email' => 'admin@shellytours', 'mobilenos' => $enquiryss->mobilenos, 'alt_mobilenos' => $enquiryss->alt_mobilenos == null ? '' : $enquiryss->alt_mobilenos, 'cruiseterminal' => $enquiryss->cruiseterminal, 'airport' => $enquiryss->airport, 'other' => $enquiryss->other,
-                    'triptype' => $enquiryss->triptype,
-                    'traveldate' => $enquiryss->traveldate,
-                    'pickupaddress' => $enquiryss->pickupaddress,
-                    'noofpassenger' => $enquiryss->noofpassenger,
-                    'flightinfo' => $enquiryss->flightinfo,
-                    'privatecharter' => $enquiryss->privatecharter == 1 ? 'Yes' : 'No',
-                    'additionalinfo' => $enquiryss->additionalinfo,
-                );
-        
-                $job = (new SendMailJob($enquiryss, $tempo))->delay(Carbon::now()->addSeconds(3));
-                dispatch($job);
-        
-                return redirect()->back()->with('success', 'We will reply you very soon');
+        $enquiryss = new Enquiry();
+        // $enquiryss->calenderId = $res[0]-    >id;
+        $enquiryss->calenderId = $request->calId;
+        $enquiryss->adults = $request->adults;
+        $enquiryss->childs = $request->childs;
+
+        $enquiryss->firstname = $request->firstname;
+        $enquiryss->lastname = $request->lastname;
+        $enquiryss->mobilenos = $request->mobilenos;
+        $enquiryss->alt_mobilenos = $request->alt_mobilenos;
+        $enquiryss->email = $request->email;
+        $enquiryss->other = $request->other;
+        $enquiryss->cruiseterminal = $request->cruiseterminal;
+        $enquiryss->airport = $request->airport;
+
+        $enquiryss->other = $request->other;
+
+        $enquiryss->triptype = $request->triptype;
+        $enquiryss->traveldate = $request->traveldatetime;
+        $enquiryss->pickupaddress = $request->pickupaddress;
+        $enquiryss->noofpassenger = $request->noofpassenger;
+        $enquiryss->flightinfo = $request->flightinfo;
+        $enquiryss->privatecharter = $request->privatecharter;
+        $enquiryss->additionalinfo = $request->additionalinfo;
+        $varres = Input::get('childseats');
+        DB::beginTransaction();
+        $enquiryss->save();
+
+        if (!(is_null($varres))) {
+            $data = array();
+            foreach ($varres as $value) {
+                $tempModel = array('enquiryno' => $enquiryss->id, 'childSeatid' => $value, 'created_at' => new DateTime(), 'updated_at' => new DateTime());
+                array_push($data, $tempModel);
             }
-
-        return redirect()->back()->with('error', 'Booking Is Full');
-
+            DB::table('enquirychildseats')->insert($data);
         }
-        return redirect()->back()->with('error', 'Tour Package Not Found');
+
+        DB::commit();
+
+        // $tempo = "";
+        // if (!(is_null($varres))) {
+        //     $sql = "SELECT GROUP_CONCAT(child_seats.name SEPARATOR ' , ') as name FROM enquirychildseats INNER JOIN child_seats ON enquirychildseats.childSeatid=child_seats.id where enquirychildseats.enquiryno=" . $enquiryss->id;
+        //     $res = DB::select($sql);
+        //     if ($res == null) {
+        //     } else {
+        //         $tempo = $res[0]->name;
+        //     }
+        // }
+
+        // $data = array('from_email' => $enquiryss->email, 
+        // 'from_name' => $enquiryss->firstname . ' ' . $enquiryss->lastname,
+        //     'to_name' => 'Admin', 
+        //     'subject' => 'New Enquiry', 
+        //     'to_email' => 'admin@shellytours', 
+        //     'mobilenos' => $enquiryss->mobilenos, 
+        //     'alt_mobilenos' => $enquiryss->alt_mobilenos == null ? '' : $enquiryss->alt_mobilenos, 
+        //     'cruiseterminal' => $enquiryss->cruiseterminal, 
+        //     'airport' => $enquiryss->airport, 
+        //     'other' => $enquiryss->other,
+        //     'triptype' => $enquiryss->triptype,
+        //     'traveldate' => $enquiryss->traveldate,
+        //     'pickupaddress' => $enquiryss->pickupaddress,
+        //     'noofpassenger' => $enquiryss->noofpassenger,
+        //     'flightinfo' => $enquiryss->flightinfo,
+        //     'privatecharter' => $enquiryss->privatecharter == 1 ? 'Yes' : 'No',
+        //     'additionalinfo' => $enquiryss->additionalinfo,
+        // );
+
+        $job = (new SendMailJob($enquiryss->id))->delay(Carbon::now()->addSeconds(3));
+        // $job = (new SendMailJob($enquiryss, $tempo))->delay(Carbon::now()->addSeconds(3));
+        dispatch($job);
+
+        return redirect('/tours')->with('email',"$enquiryss->email");
     }
+
+    //     return redirect()->back()->with('error', 'Booking Is Full');
+
+    //     }
+    //     return redirect()->back()->with('error', 'Tour Package Not Found');
+    // }
 
 }
