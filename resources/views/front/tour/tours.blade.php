@@ -20,12 +20,11 @@
     </div>
 </section>
 
-@if ($email !="")
-<div class="alert alert-success">
-    Thank You for booking. We have sent your detail in email: {{$email}}
+@if ($msg !="")
+<div class="alert alert-info">
+    <h3>{{$msg}}</h3>
 </div>
 @endif
-
 
 <section class="bgWhite section-pad-top section-pad-bottom">
 
