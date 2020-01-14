@@ -280,7 +280,8 @@ class homeController extends Controller
             $transaction->setAmount($amount)
                 ->setItemList($itemList)
                 ->setDescription($ress[0]->title . " " . $ress[0]->tourdate)
-                ->setInvoiceNumber($enqId);
+                // ->setInvoiceNumber("R".$enqId);
+                ->setInvoiceNumber(uniqid());
 
             $redirectUrls = new \PayPal\Api\RedirectUrls();
             $redirectUrls->setReturnUrl("http://localhost:8000/execute-payment")
@@ -306,14 +307,16 @@ class homeController extends Controller
             } catch (\PayPal\Exception\PayPalConnectionException $ex) {
                 // This will print the detailed information on the exception.
                 //REALLY HELPFUL FOR DEBUGGING
-                dd($ex);
+               // echo $ex;
+                
                // echo $ex->getData();
-               // echo $ex->getData();
+               dd($ex->getData());
+               die($ex);
             }
-            return redirect('/');
+            return redirect('/')->with('activevar', 'tours')->with('msg', 'Error while storing data');
         }else{
         //   dd($ress);
-        return redirect('/tours');  
+        return redirect('/tours')->with('activevar', 'tours')->with('msg', 'Error while storing datas');  
         }
     }
 
@@ -358,15 +361,16 @@ class homeController extends Controller
             $payments->status =$result->state;
             $payments->save();
 
-            return redirect('/tours')->with('msg',"Thank You for booking");
-        } catch (Exception $ex) {
+            return redirect('/tours')->with('activevar', 'tours')->with('msg',"Thank You for booking");
+        } catch (\PayPal\Exception\PayPalConnectionException $ex) {
             //ResultPrinter::printError("Executed Payment", "Payment", null, null, $ex);
-           
+           dd($ex->getData());
+               die($ex);
         }
         //ResultPrinter::printResult("Get Payment", "Payment", $payment->getId(), null, $payment);
 
         //return $result;
-        return redirect('/tours')->with('msg',"Something Went Wrong");
+        return redirect('/tours')->with('activevar', 'tours')->with('msg',"Something Went Wrong");
         //http://localhost:8000/execute-payment?paymentId=PAYID-LYNJYJA4MB03793X2896534C&token=EC-0LB962779N900710S&PayerID=25R3LCAZHK63U
     }
 }

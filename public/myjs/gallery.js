@@ -157,7 +157,7 @@ function SuccessUpload(response) {
 $('#mytbl').on("click", ".edit-modal", function () {
     rowIdName = "";
     var datas = table.row($(this).closest('tr')).data();
-    rowIdName += "rowid" + datas.id;
+    rowIdName = "rowid" + datas.id;
     $(this).closest('tr').addClass(rowIdName);
 
     rowId = parseInt($(this).attr("data-id"));
@@ -179,9 +179,10 @@ $('#mytbl').on("click", ".action-delete", function () {
 
     var result = confirm("Are You Sure You want to delete ?");
     if (result) {
+        // rowIdName="";
         var datas = table.row($(this).closest('tr')).data();
-        rowIdName += "rowid" + datas.id;
-        $(this).closest('tr').addClass(rowIdName);
+        // rowIdName = "rowid" + datas.id;
+        // $(this).closest('tr').addClass(rowIdName);
 
         var i = window.location.href + "/" + (button.attr('rowid'));
         $.ajax({
@@ -200,7 +201,7 @@ $('#mytbl').on("click", ".action-delete", function () {
                     return false;
                 }
 
-                if (ddata == 1) {
+                if (parseInt(ddata) == 1) {
                     button.closest('tr').addClass('Row4Delete');
                     $('.Row4Delete').remove();
                 }

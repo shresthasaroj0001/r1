@@ -127,7 +127,6 @@ class galleryController extends Controller
         $rows = DB::select("select title from galleries where id=? and menu_id=?",[$galId,$id]);
         if($rows != null){
             $row = DB::update("update galleries set isdeleted=?,updated_at=? where id=? and menu_id=?",[1, new DateTime(),$galId,$id]);
-            dd($row);
             if($row==1){
                 return 1;
             }
