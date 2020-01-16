@@ -44,7 +44,79 @@
 
 
   </section>
-
+  <section class="bgWhite section-pad-top section-pad-bottom destination-section-wrap">
+    <div class="container">
+      <h1 class="text-center section-title">OUR MOST POPULAR TOURS</h1>
+      <div class="row">
+        <div class="col-md-4 mb-30">
+          <div class="product-wrap">
+            <img src="img/destination.jpg" alt="">
+            <div class="featured-product-content">
+              <div class="featured-product-content-inner">
+                <h5><a href="#" tabindex="0">Sydney</a></h5>
+              </div>
+              <a class="featured-product-link" href="#" tabindex="0">more info</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-30">
+          <div class="product-wrap">
+            <img src="img/destination.jpg" alt="">
+            <div class="featured-product-content">
+              <div class="featured-product-content-inner">
+                <h5><a href="#" tabindex="0">Sydney</a></h5>
+              </div>
+              <a class="featured-product-link" href="#" tabindex="0">more info</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-30">
+          <div class="product-wrap">
+            <img src="img/destination.jpg" alt="">
+            <div class="featured-product-content">
+              <div class="featured-product-content-inner">
+                <h5><a href="#" tabindex="0">Sydney</a></h5>
+              </div>
+              <a class="featured-product-link" href="#" tabindex="0">more info</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-30">
+          <div class="product-wrap">
+            <img src="img/destination.jpg" alt="">
+            <div class="featured-product-content">
+              <div class="featured-product-content-inner">
+                <h5><a href="#" tabindex="0">Sydney</a></h5>
+              </div>
+              <a class="featured-product-link" href="#" tabindex="0">more info</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-30">
+          <div class="product-wrap">
+            <img src="img/destination.jpg" alt="">
+            <div class="featured-product-content">
+              <div class="featured-product-content-inner">
+                <h5><a href="#" tabindex="0">Sydney</a></h5>
+              </div>
+              <a class="featured-product-link" href="#" tabindex="0">more info</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-30">
+          <div class="product-wrap">
+            <img src="img/destination.jpg" alt="">
+            <div class="featured-product-content">
+              <div class="featured-product-content-inner">
+                <h5><a href="#" tabindex="0">Sydney</a></h5>
+              </div>
+              <a class="featured-product-link" href="#" tabindex="0">more info</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
   <!-- *************** End Hero Banner *************** -->
 
   <section class="section-pad-top section-pad-bottom">
