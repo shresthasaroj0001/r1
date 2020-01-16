@@ -46,8 +46,8 @@
                 @endif
             </div>
 
-            <form class="row flex-row" method="POST" id="bookingForm" action="{{route('bookSubmit')}}">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <form class="row flex-row" method="POST" id="bookingForm" action="{{ route('bookingsubmit')}}">
+                <input type="hidden" name="_token" id="tokkken" value="{{ csrf_token() }}">
 
                 <input type="hidden" name="calId" id="calId" value="{{ $ids }}">
                 <input type="hidden" name="adults" id="adults" value="{{ $adults }}">
@@ -140,17 +140,6 @@
                 </div>
 
                 <div class="form-group col-xs-12 col-md-12">
-                    <label>Number of Passengers</label>
-                    <select name="noofpassenger" id="noofpassenger" class="form-control" required>
-                        <option value="">Select Passenger Number</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                    </select>
-                    <span class="form_error" id="invalid_noofpassenger" style="display:none">Passenger Number is
-                        required</span>
-                </div>
-
-                <div class="form-group col-xs-12 col-md-12">
                     <label>Flight Number/ Cruise Name</label>
                     <input type="text" name="flightinfo" id="flightinfo" class="form-control"
                         placeholder="flight number or cruise name">
@@ -186,11 +175,11 @@
 
                 <div class="form-group col-xs-12 col-md-12">
                     <label>Additional Info</label>
-                    <textarea name="additionalinfo" class="form-control" rows="5"></textarea>
+                    <textarea name="additionalinfo" class="form-control" id="adInfos" rows="5"></textarea>
                 </div>
 
                 <div class="form-group col-xs-12">
-                    <button type="button" class="submitbtn btn btn-danger btn-lg">Confirm & Submit</button>
+                    <button type="submit" class="submitbtn btn btn-danger btn-lg">Confirm & Submit</button>
                 </div>
             </form>
         </div>

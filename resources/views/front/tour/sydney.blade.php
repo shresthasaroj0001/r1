@@ -3,6 +3,7 @@
 @section('fcss')
 <link rel="stylesheet" href="/css/pages/destination.css" type="text/css" />
 <link rel="stylesheet" href="/plugins/imageViewer/viewer.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
 @endsection
 
@@ -181,23 +182,170 @@
 
 		</div>
 	</div>
-	<div style="display: none">
-		<form action="/book-now" id="redirectForm" method="post">
-			<input type="text" hidden value="{{ csrf_token()}}" name="_token" id="tokenn">
-			<input type="text" hidden id="redirectFrmId" value="" name="redirectFrmId">
-			<input type="text" hidden id="redirectFrmadults" value="" name="redirectFrmadults">
-			<input type="text" hidden id="redirectFrmchilds" value="" name="redirectFrmchilds">
-			<button type="submit" id="redirectSubmit"></button>
-		</form>
-	</div>
 </section>
+<div class="modal fade" id="modal-overlaysss">
+	<div class="modal-dialog">
+		<div class="modal-content" id="modales">
+			<div class="modal-header">
+				<h4 class="modal-title">Confirm Booking</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="row flex-row" method="POST" id="bookingForm" action="{{ route('bookingsubmit')}}">
+					<input type="text" hidden id="redirectFrmId" value="" name="calId">
+					<input type="text" hidden id="redirectFrmadults" value="" name="adults">
+					<input type="text" hidden id="redirectFrmchilds" value="" name="childs">
+					<input type="text" hidden value="0" name="noofpassenger ">
 
+					<input type="hidden" name="_token" id="tokenn" value="{{ csrf_token() }}">
+					<div class="form-group col-xs-12 col-md-6">
+						<label>First Name</label>
+						<input type="text" class="form-control" name="firstname" id="firstname" placeholder="First Name"
+							required>
+						<span class="form_error" id="invalid_firstname" style="display:none">First Name is required</span>
+					</div>
+					<div class="form-group col-xs-12 col-md-6">
+						<label>Last Name</label>
+						<input type="text" class="form-control" name="lastname" id="lastname" placeholder="Last Name"
+							required>
+						<span class="form_error" id="invalid_lastname" style="display:none">Last Name is required</span>
+					</div>
+					<div class="form-group col-xs-12 col-md-6">
+						<label>Mobile Number</label>
+						<input type="text" class="form-control" name="mobilenos" id="mobilenos" placeholder="phone number"
+							required>
+						<span class="form_error" id="invalid_mobilenos" style="display:none">Mobile Number is
+							required</span>
+					</div>
+					<div class="form-group col-xs-12 col-md-6">
+						<label>Alternate Mobile Number</label>
+						<input type="text" class="form-control" name="alt_mobilenos" id="alt_mobilenos"
+							placeholder="alternate phone number">
+					</div>
+					<div class="form-group col-xs-12 col-md-6">
+						<label>Email Address</label>
+						<input type="email" class="form-control" name="email" id="email" placeholder="email" required>
+						<span class="form_error" id="invalid_email" style="display:none">Email is required</span>
+						<span class="form_error" id="invalid_email_invalid" style="display:none">Email is invalid</span>
+					</div>
+					<div class="form-group col-xs-12 col-md-6">
+						<label>From / to which Cruise Terminal?</label>
+						<br>
+						<label class="radio-inline">
+							<input type="radio" name="cruiseterminal" value="circularQuay"> Circular Quay
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="cruiseterminal" value="whiteBay"> White Bay
+						</label>
+					</div>
+					<div class="form-group col-xs-12 col-md-6">
+						<label>From / to which Airport?</label>
+						<br>
+						<label class="radio-inline">
+							<input type="radio" name="airport" value="domestic"> Domestic
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="airport" value="international"> International
+						</label>
+					</div>
+					<div class="form-group col-xs-12 col-md-6">
+						<label>Other</label>
+						<input type="text" class="form-control" name="other">
+					</div>
+					<div class="form-group col-xs-12 col-md-6" id="triptypeDiv">
+						<label>Is this a Single or Return trip?</label>
+						<br>
+						<label class="radio-inline">
+							<input type="radio" id="triptyperdr" name="triptype" value="Single Trip"> Single Trip
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="triptype" value="Return Trip"> Return Trip
+						</label>
+						<div>
+							<span class="form_error" id="invalid_triptype" style="display:none">Please Specify Trip
+								type</span>
+						</div>
+					</div>
+	
+					<div class="form-group col-xs-12 col-md-6">
+						<label>Travel Date/ Time</label>
+						<input type="text" class="form-control" name="traveldate" required
+							placeholder="Travel Date and Time" readonly id="traveldate">
+						<input type="hidden" hidden readonly name="traveldatetime" id="traveldatetime">
+						<span class="form_error" id="invalid_traveldate" style="display:none">Travel Date Time is
+							required</span>
+					</div>
+	
+					<div class="form-group col-xs-12 col-md-6">
+						<label>Pickup/ Destination Address</label>
+						<input type="text" name="pickupaddress" id="pickupaddress" class="form-control"
+							placeholder="pickup or destination address" required>
+						<span class="form_error" id="invalid_pickupaddress" style="display:none">Pickup/Destination is
+							required</span>
+					</div>
+	
+					<div class="form-group col-xs-12 col-md-6">
+						<label>Flight Number/ Cruise Name</label>
+						<input type="text" name="flightinfo" id="flightinfo" class="form-control"
+							placeholder="flight number or cruise name">
+						<span class="form_error" id="invalid_flightinfo" style="display:none">Flight / Cruise Information is
+							required</span>
+					</div>
+	
+					<div class="form-group col-xs-12 col-md-6">
+						<label>Child Seats</label>
+						<br>
+	
+						<label class="checkbox-inline">
+							<input type="checkbox" name="childseats[]" value="1">Baby Seat Required
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" name="childseats[]" value="2"> Booster Seat Required
+						</label>
+					</div>
+	
+					<div class="form-group col-xs-12 col-md-6" id="privatecharterDiv">
+						<label>Private Charter</label>
+						<br>
+						<label class="radio-inline">
+							<input type="radio" id="pvtcharter" name="privatecharter" value="1"> Yes
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="privatecharter" value="0"> No
+						</label>
+						<div>
+							<span class="form_error" id="invalid_privatecharter" style="display:none">Please charter</span>
+						</div>
+					</div>
+	
+					<div class="form-group col-xs-12 col-md-12">
+						<label>Additional Info</label>
+						<textarea name="additionalinfo" class="form-control" id="adInfos" rows="5"></textarea>
+					</div>
+	
+				</form>
+			</div>
+			<div class="modal-footer justify-content-between">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				{{-- <button type="button" class="btn btn-primary" id="closeModalBtn">Save changes</button> --}}
+				<button type="button" class="submitbtn btn btn-danger btn-lg">Confirm & Submit</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
 @endsection
 
 @section('fscripts')
 <script src="/plugins/imageViewer/viewer.min.js"></script>
 <script src="/plugins/imageViewer/jquery-viewer.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script src="/myjs/f/booking.js"></script>
+{{-- <script type="text/javascript" src="/myjs/f/booknow.js"></script> --}}
 <!-- <script src="/dist/jquery-viewer.min.js"></script> -->
 <script type="text/javascript">
 	$('#images').viewer({

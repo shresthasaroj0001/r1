@@ -16,21 +16,69 @@ $(function () {
         $('#traveldatetime').val(r);
     });
 
-    $('#bookingForm').on('click', '.submitbtn', function (event) {
+    $('#modal-overlaysss').on('click', '.submitbtn', function (event) {
         var res = validateForm();
         console.log(res);
-        if (res) {
+        console.log(dayData[parseInt(finaltime)].ids);
+        console.log(adulttimes);
+        console.log(childtimes);
+
+        if (res == true) {
+            $('#redirectFrmId').val(dayData[parseInt(finaltime)].ids);
+            $('#redirectFrmadults').val(adulttimes);
+            $('#redirectFrmchilds').val(childtimes);
+            var obj = {
+                calId:$('#calId').val(),
+                adults:$('#adults').val(),
+                childs:$('#childs').val(),
+                firstname:$('#firstname').val(),
+                lastname:$('#lastname').val(),
+                mobilenos:$('#mobilenos').val(),
+                altmobilenumber:$('#alt_mobilenos').val(),
+                email:$('#email').val(),
+                cruiseterminal:$("input[name='cruiseterminal']:checked").val(),
+                airport:$("input[name='airport']:checked").val(),
+                triptype:$('input[name=triptype]:checked').val(),
+                traveldatetime:$('#traveldatetime').val(),
+                pickupaddress:$('#pickupaddress').val(),
+                flightinfo:$('#flightinfo').val(),
+                privatecharter:$('input[name=privatecharter]:checked').val(),
+                additionalinfo:$('#adInfos').val()
+            };
+
             $("#bookingForm .submitbtn").attr("disabled", true);
             $("#bookingForm .submitbtn").prop("disabled", true);
 
-            $('#bookingForm').submit();
+            // $('#bookingForm').submit();
+            // $.ajax({
+            //     headers: {
+            //         'X-CSRF-TOKEN': $('#tokkken').val()
+            //     },
+            //     // url: "/book-now-now",
+            //     url: window.location.href+"w",
+            //     type: 'POST',
+            //     data: obj,
+            //     beforeSend: function () {
+            //     },
+            //     success: function (datas) {
+            //         return datas;
+            //     },
+            //     error: function (eror) {
+        
+            //     },
+            //     complete: function () {
+            //         console.log("done");
+            //         // $("#tourss").LoadingOverlay("hide");
+            //     },
+            // }); //ajax ending
+
         }
     });
 
     function validateForm() {
         if ($('#calId').val() == '' || $('#adults').val() == '' || $('#childs').val() == '') {
             alert("Internal Error.. Please Report us");
-            window.location = "/tours";
+            window.location = "/toursss";
         }
 
         var isValid = true;
@@ -116,16 +164,16 @@ $(function () {
         }
 
         // if (($('#noofpassenger').val() == '') || (parseInt($('#noofpassenger').val()) != 1) || (parseInt($('#noofpassenger').val()) != 2)) 
-        if (!((parseInt($('#noofpassenger').val()) == 1) || (parseInt($('#noofpassenger').val()) == 2))) {
-            isValid = false;
-            $('#invalid_noofpassenger').show();
-            if (!isFocusSet) {
-                $('#noofpassenger').focus();
-            }
-            isFocusSet = true;
-        } else {
-            $('#invalid_noofpassenger').hide();
-        }
+        // if (!((parseInt($('#noofpassenger').val()) == 1) || (parseInt($('#noofpassenger').val()) == 2))) {
+        //     isValid = false;
+        //     $('#invalid_noofpassenger').show();
+        //     if (!isFocusSet) {
+        //         $('#noofpassenger').focus();
+        //     }
+        //     isFocusSet = true;
+        // } else {
+        //     $('#invalid_noofpassenger').hide();
+        // }
 
         if ($('#flightinfo').val() == '') {
             isValid = false;

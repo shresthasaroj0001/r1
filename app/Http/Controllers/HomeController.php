@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Enquiry;
+use App\payments;
 use App\Jobs\SendMailJob;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use PayPal\Api\Payment;
 use Validator;
-use App\Enquiry;
+use Session;
 
-class HomeController extends Controller
+class homeController extends Controller
 {
+
     public function index(Request $request)
     {
         $response = DB::Select("select m.title,m.slug,m.infos, IFNUll(c.title,'') as featureimg from menus as m  left join ( select galleries.title,galleries.menu_id from galleries where isfeatureimg=1 and isdeleted=0 and stats=1 group by menu_id,title having max(updated_at))  c on m.id =c.menu_id ORDER BY m.orderb ASC");
@@ -27,7 +30,7 @@ class HomeController extends Controller
             IFNULL(( select galleries.title from galleries where isfeatureimg=1 and isdeleted=0 and stats=1 and menu_id=menus.id group by menu_id,title having max(updated_at) ), '') featureImg from menus where lower(menus.slug)=lower(?) and menus.isdeleted=0", [$tourname]);
             if ($tours != null) {
                 $galleries = DB::select("SELECT galleries.title,galleries.isfeatureimg from galleries WHERE galleries.isdeleted=0 and galleries.stats=1 and galleries.isfeatureimg=0 and galleries.menu_id=? ORDER by galleries.orderb", [$tours[0]->id]);
-                return view('front/tour/sydney')->with('activevar', 'tours')->with('tour', $tours)->with('galleries', $galleries)->with('email',"");
+                return view('front/tour/sydney')->with('activevar', 'tours')->with('tour', $tours)->with('galleries', $galleries)->with('email', "");
             }
         }
         return view('404');
@@ -128,7 +131,7 @@ class HomeController extends Controller
         if ($Validator->fails()) {
             // dd($Validator);
 
-            return redirect('/tours')->with('email',"");
+            return redirect('/tourssssssss')->with('email', "");
         }
 
         $ids = $request->redirectFrmId;
@@ -138,7 +141,7 @@ class HomeController extends Controller
         return view('front.tour.fbooking')->with('ids', $ids)->with('adults', $adults)->with('childs', $childs)->with('activevar', 'tours');
     }
 
-    public function store(Request $request)
+    public function saveBooking(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'calId' => 'required',
@@ -154,52 +157,29 @@ class HomeController extends Controller
             'airport' => 'required',
 
             'triptype' => 'required|max:190',
-            // 'traveldatetime' => 'required|date|date_format:Y-m-d H:i:s',
             'traveldatetime' => 'required',
             'pickupaddress' => 'required|string|min:3|max:255',
-            "noofpassenger" => "required|numeric|not_in:''|min:1|max:2",
             'flightinfo' => 'required|max:190',
             'privatecharter' => 'required|boolean',
             'additionalinfo' => 'max:190',
-            // "additionalinfo" => "required|not_in:''|min:1|max:2"
         ], [
             "firstname.required" => trans('Full Name is required'),
         ]);
 
-        // $table->string('mobilenos');
-        // $table->string('alt_mobilenos')->nullable();
-        // $table->string('email');
-        // $table->string('cruiseterminal')->nullable();
-        // $table->string('airport')->nullable();
-        // $table->string('other');
-        // $table->string('triptype');
-        // $table->date('traveldate');
-        // $table->date('pickupaddress');
-        // $table->integer('noofpassenger');
-        // $table->string('flightinfo');
-        // $table->boolean('privatecharter');
-        // $table->string('additionalinfo');
-
         if ($validator->fails()) {
+            // return $validator;
+            // return redirect('/tourssssssss')->with('email', "");
+
             return redirect()->back()->withInput($request->input())->withErrors($validator);
         }
-
-        //$res = DB::select("SELECT tour.id,tour.paxs,tour.rate_children,tour.rate_adult,tour.stats from tourcalenderdatetimeinfos as tour WHERE tour.tourdatetime=(SELECT tourcalenderdatetimeinfos.tourdatetime from tourcalenderdatetimeinfos WHERE tourcalenderdatetimeinfos.id=?) HAVING MAX(tour.created_at)",[$request->calId]);
-        //if($res != null){
-        // dd($res);
-        // if( ($request->adults)+($request->childs) <= $res[0]->paxs){
-        // if($res[0]->id != $request->calId)
-        // {
-        //     // rate id is changed
-        //     return redirect()->back()->with('error', 'Tour Details is changed.. Please try again.');
-        // }
 
         $enquiryss = new Enquiry();
         // $enquiryss->calenderId = $res[0]-    >id;
         $enquiryss->calenderId = $request->calId;
         $enquiryss->adults = $request->adults;
         $enquiryss->childs = $request->childs;
-
+        $enquiryss->noofpassenger =  $enquiryss->adults + $enquiryss->childs;
+        
         $enquiryss->firstname = $request->firstname;
         $enquiryss->lastname = $request->lastname;
         $enquiryss->mobilenos = $request->mobilenos;
@@ -214,7 +194,6 @@ class HomeController extends Controller
         $enquiryss->triptype = $request->triptype;
         $enquiryss->traveldate = $request->traveldatetime;
         $enquiryss->pickupaddress = $request->pickupaddress;
-        $enquiryss->noofpassenger = $request->noofpassenger;
         $enquiryss->flightinfo = $request->flightinfo;
         $enquiryss->privatecharter = $request->privatecharter;
         $enquiryss->additionalinfo = $request->additionalinfo;
@@ -233,46 +212,165 @@ class HomeController extends Controller
 
         DB::commit();
 
-        // $tempo = "";
-        // if (!(is_null($varres))) {
-        //     $sql = "SELECT GROUP_CONCAT(child_seats.name SEPARATOR ' , ') as name FROM enquirychildseats INNER JOIN child_seats ON enquirychildseats.childSeatid=child_seats.id where enquirychildseats.enquiryno=" . $enquiryss->id;
-        //     $res = DB::select($sql);
-        //     if ($res == null) {
-        //     } else {
-        //         $tempo = $res[0]->name;
-        //     }
-        // }
-
-        // $data = array('from_email' => $enquiryss->email, 
-        // 'from_name' => $enquiryss->firstname . ' ' . $enquiryss->lastname,
-        //     'to_name' => 'Admin', 
-        //     'subject' => 'New Enquiry', 
-        //     'to_email' => 'admin@shellytours', 
-        //     'mobilenos' => $enquiryss->mobilenos, 
-        //     'alt_mobilenos' => $enquiryss->alt_mobilenos == null ? '' : $enquiryss->alt_mobilenos, 
-        //     'cruiseterminal' => $enquiryss->cruiseterminal, 
-        //     'airport' => $enquiryss->airport, 
-        //     'other' => $enquiryss->other,
-        //     'triptype' => $enquiryss->triptype,
-        //     'traveldate' => $enquiryss->traveldate,
-        //     'pickupaddress' => $enquiryss->pickupaddress,
-        //     'noofpassenger' => $enquiryss->noofpassenger,
-        //     'flightinfo' => $enquiryss->flightinfo,
-        //     'privatecharter' => $enquiryss->privatecharter == 1 ? 'Yes' : 'No',
-        //     'additionalinfo' => $enquiryss->additionalinfo,
-        // );
-
         $job = (new SendMailJob($enquiryss->id))->delay(Carbon::now()->addSeconds(3));
         // $job = (new SendMailJob($enquiryss, $tempo))->delay(Carbon::now()->addSeconds(3));
         dispatch($job);
 
-        return redirect('/tours')->with('email',"$enquiryss->email");
-    }
-
-    //     return redirect()->back()->with('error', 'Booking Is Full');
-
-    //     }
-    //     return redirect()->back()->with('error', 'Tour Package Not Found');
+        //return redirect('/tours')->with('email', "$enquiryss->email");
+        //return redirect()->route('payment.redirect',[$enquiryss->id]);
+    //     $this->RedirectToPays($enquiryss->id);
     // }
 
+    // public function RedirectToPays($enqId)
+    //{
+        $enqId = $enquiryss->id;
+        $ress = DB::select('call testprocedure(?)', [$enqId]);
+        // dd($ress);
+        if ($ress != null) {
+
+            $apiContext = new \PayPal\Rest\ApiContext(
+                new \PayPal\Auth\OAuthTokenCredential(
+                    'AUJin7vEgSZlC8O0UrSX8I_ERDJ0fzTVh06KylfamRKhYZ1QLcpYA8oHO2JtgW1vfsMVNKU367T4wID8', // ClientID
+                    'EMfaRm6NPn-t71p1IHg_W05GK3ZOsUguHPHLssAU-LuoKW7XdVihg3XneXOP0RB3myAIC2ylQXIQfyld' // ClientSecret
+                )
+            );
+
+            $payer = new \PayPal\Api\Payer();
+            $payer->setPaymentMethod('paypal');
+
+            $itemList = new \PayPal\Api\ItemList();
+            $temparray=array();
+            if ($ress[0]->adults > 0) {
+                $item1 = new \PayPal\Api\Item();
+                $item1->setName('Adult')
+                    ->setCurrency('AUD')
+                    ->setQuantity($ress[0]->adults)
+                    ->setSku($ress[0]->calenderId)
+                    ->setPrice($ress[0]->rate_adult);
+                    array_push($temparray,$item1);
+                // $itemList->setItems(array($item1));
+            }
+
+            if ($ress[0]->childs > 0) {
+                $item2 = new \PayPal\Api\Item();
+                $item2->setName('Children')
+                    ->setCurrency('AUD')
+                    ->setQuantity($ress[0]->childs)
+                    ->setSku($ress[0]->calenderId) // Similar to `item_number` in Classic API
+                    ->setPrice($ress[0]->rate_children);
+                    array_push($temparray,$item2);
+
+                // $itemList->setItems(array($item2));
+            }
+            $itemList->setItems($temparray);
+            $totalamt = 0;
+            $totalamt = ($ress[0]->adults * $ress[0]->rate_adult) + ($ress[0]->childs * $ress[0]->rate_children);
+
+            $details = new \PayPal\Api\Details();
+             $details->setShipping(0)
+                ->setTax(0)
+                ->setSubtotal($totalamt);
+            
+            $amount = new \PayPal\Api\Amount();
+            $amount->setCurrency("AUD")
+                ->setTotal($totalamt)
+                ->setDetails($details);
+            $transaction = new \PayPal\Api\Transaction();
+            // $transaction->setAmount($amount);
+            $transaction->setAmount($amount)
+                ->setItemList($itemList)
+                ->setDescription($ress[0]->title . " " . $ress[0]->tourdate)
+                // ->setInvoiceNumber("R".$enqId);
+                ->setInvoiceNumber(uniqid());
+
+            $redirectUrls = new \PayPal\Api\RedirectUrls();
+            $redirectUrls->setReturnUrl("http://localhost:8000/execute-payment")
+                ->setCancelUrl("http://localhost:8000/cancel");
+
+            $payment = new \PayPal\Api\Payment();
+            $payment->setIntent('sale')
+                ->setPayer($payer)
+                ->setTransactions(array($transaction))
+                ->setRedirectUrls($redirectUrls);
+
+            // After Step 3
+
+            try {
+                $payment->create($apiContext);
+                Session::put('id', $enqId);
+                $approvalUrl = $payment->getApprovalLink();
+
+                return redirect($approvalUrl);
+                // dd($payment);
+
+                //echo "\n\nRedirect user to approval_url: " . $payment->getApprovalLink() . "\n";
+            } catch (\PayPal\Exception\PayPalConnectionException $ex) {
+                // This will print the detailed information on the exception.
+                //REALLY HELPFUL FOR DEBUGGING
+               // echo $ex;
+                
+               // echo $ex->getData();
+               dd($ex->getData());
+               die($ex);
+            }
+            return redirect('/')->with('activevar', 'tours')->with('msg', 'Error while storing data');
+        }else{
+        //   dd($ress);
+        return redirect('/tours')->with('activevar', 'tours')->with('msg', 'Error while storing datas');  
+        }
+    }
+
+    public function executepayment()
+    {
+        $ids = Session::get('id');
+        $ress = DB::select('call testprocedure(?)', [$ids]);
+
+        $apiContext = new \PayPal\Rest\ApiContext(
+            new \PayPal\Auth\OAuthTokenCredential(
+                'AUJin7vEgSZlC8O0UrSX8I_ERDJ0fzTVh06KylfamRKhYZ1QLcpYA8oHO2JtgW1vfsMVNKU367T4wID8', // ClientID
+                'EMfaRm6NPn-t71p1IHg_W05GK3ZOsUguHPHLssAU-LuoKW7XdVihg3XneXOP0RB3myAIC2ylQXIQfyld' // ClientSecret
+            )
+        );
+        $paymenId = request('paymentId');
+        $payment = Payment::get($paymenId, $apiContext);
+
+        $execution = new \PayPal\Api\PaymentExecution();
+        // $execution->setPayerId($_GET['PayerID']);
+        $execution->setPayerId(request('PayerID'));
+
+        $transaction = new \PayPal\Api\Transaction();
+        $amount = new \PayPal\Api\Amount();
+        $details = new \PayPal\Api\Details();
+        $details->setShipping(0)
+           ->setTax(0)
+           ->setSubtotal(($ress[0]->adults * $ress[0]->rate_adult) + ($ress[0]->childs * $ress[0]->rate_children));
+
+        $amount->setCurrency('AUD');
+        $amount->setTotal(($ress[0]->adults * $ress[0]->rate_adult) + ($ress[0]->childs * $ress[0]->rate_children));
+        $amount->setDetails($details);
+        $transaction->setAmount($amount);
+
+        $execution->addTransaction($transaction);
+
+        try {
+            $result = $payment->execute($execution, $apiContext);
+
+            $payments = new \App\payment();
+            $payments->enq_id =$ids;
+            $payments->payId =$result->id;
+            $payments->status =$result->state;
+            $payments->save();
+
+            return redirect('/tours')->with('activevar', 'tours')->with('msg',"Thank You for booking");
+        } catch (\PayPal\Exception\PayPalConnectionException $ex) {
+            //ResultPrinter::printError("Executed Payment", "Payment", null, null, $ex);
+           dd($ex->getData());
+               die($ex);
+        }
+        //ResultPrinter::printResult("Get Payment", "Payment", $payment->getId(), null, $payment);
+
+        //return $result;
+        return redirect('/tours')->with('activevar', 'tours')->with('msg',"Something Went Wrong");
+        //http://localhost:8000/execute-payment?paymentId=PAYID-LYNJYJA4MB03793X2896534C&token=EC-0LB962779N900710S&PayerID=25R3LCAZHK63U
+    }
 }
