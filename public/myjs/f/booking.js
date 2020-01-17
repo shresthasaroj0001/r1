@@ -15,7 +15,7 @@ $(function () {
         // $(".sa123").eq(0).addClass('active'); 
     });
 
-
+    var initLoad = true;
     var productId = parseInt($('#product-id').val());
     var tooken = $('#tokenn').val();
     var d = new Date();
@@ -61,7 +61,13 @@ $(function () {
         return [false, "unavailable", "Not available"];
     }
 
-    monthchangeEvent(currentmonth);
+    var mnts = $('#mydates').val();
+    if(mnts == ""){
+        monthchangeEvent(currentmonth);
+    }else{
+        monthchangeEvent(mnts);
+    }
+    
 
     function monthchangeEvent(month) {
         $.ajax({
@@ -82,6 +88,10 @@ $(function () {
 
             },
             complete: function () {
+                if(initLoad){
+                    $("#datepicker").datepicker("setDate", mnts);
+                    initLoad=false;
+                }
                 $("#datepicker").datepicker('refresh');
                 if (monthdatas.find(x => x.tdate == $("#datepicker").val()) != undefined) {
                     DateSelectEvent($("#datepicker").val());
@@ -160,7 +170,7 @@ $(function () {
     function bookingTimechange() {
         var optionSelected = $("#bookingtimeselection option:selected").text();
         var valueSelected = $('#bookingtimeselection').val();
-        console.log(optionSelected, valueSelected);
+        //console.log(optionSelected, valueSelected);
 
         var parsedValue = parseInt(valueSelected);
         optionSelectedd = optionSelected;

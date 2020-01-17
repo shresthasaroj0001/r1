@@ -22,7 +22,6 @@
 </section>
 
 @include('admin.messages')
-
 <section class="section-pad-top section-pad-bottom">
 	<div class="container">
 		<div class="row">
@@ -181,6 +180,7 @@
 			</div>
 
 		</div>
+<input type="text" hidden value="{{ $dates }}" id="mydates">
 	</div>
 </section>
 <div class="modal fade" id="modal-overlaysss">

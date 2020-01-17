@@ -30,7 +30,13 @@ class homeController extends Controller
             IFNULL(( select galleries.title from galleries where isfeatureimg=1 and isdeleted=0 and stats=1 and menu_id=menus.id group by menu_id,title having max(updated_at) ), '') featureImg from menus where lower(menus.slug)=lower(?) and menus.isdeleted=0", [$tourname]);
             if ($tours != null) {
                 $galleries = DB::select("SELECT galleries.title,galleries.isfeatureimg from galleries WHERE galleries.isdeleted=0 and galleries.stats=1 and galleries.isfeatureimg=0 and galleries.menu_id=? ORDER by galleries.orderb", [$tours[0]->id]);
-                return view('front/tour/sydney')->with('activevar', 'tours')->with('tour', $tours)->with('galleries', $galleries)->with('email', "");
+                //geting most recent date of event
+                $res= DB::select("select date_format(t1.tourdatetime , '%Y-%m-%d') datess from ( select tourdatetime,max(id) as maxId,stats from tourcalenderdatetimeinfos where date_format(tourcalenderdatetimeinfos.tourdatetime , '%Y-%m-%d') >= CURRENT_DATE() and tourcalenderdatetimeinfos.tourdetails_id=? group by tourcalenderdatetimeinfos.tourdatetime,stats order by tourdatetime ) t1 where t1.stats=1 limit 1",[$tours[0]->id]);
+                $dates = "";
+                if (!(empty($res[0]->datess))) {
+                    $dates = $res[0]->datess;
+                }
+                return view('front/tour/sydney')->with('dates',$dates)->with('activevar', 'tours')->with('tour', $tours)->with('galleries', $galleries)->with('email', "");
             }
         }
         return view('404');
