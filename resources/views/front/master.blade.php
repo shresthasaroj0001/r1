@@ -92,38 +92,27 @@
 
                                 <ul class="wsmenu-submenu">
 
-                                    <li><a href="/airport"><i class="fa fa-angle-right"></i>Door-to-door airport hire
-                                        </a></li>
-
-                                    <li><a href="/cruise"><i class="fa fa-angle-right"></i>Door-to-door cruise hire</a>
+                                    <li><a href="#"><i class="fa fa-angle-right"></i>Airport Service
+                                        </a>
+                                        <ul class="wsmenu-submenu-sub">
+                                            <li><a href="/airport"><i class="fa fa-angle-right"></i>Door-to-door airport hire
+                                            </a></li>
+                                            <li><a href="/cruise"><i class="fa fa-angle-right"></i>Door-to-door cruise hire</a></li>
+                                          </ul>
                                     </li>
-
-                                    <li><a href="/wedding"><i class="fa fa-angle-right"></i>Wedding hire</a></li>
-
-                                    <li><a href="/hensparty"><i class="fa fa-angle-right"></i>Hens party hire</a></li>
-
-                                    <li><a href="/nighthire"><i class="fa fa-angle-right"></i>Sydney night party
-                                            hire</a></li>
-
-                                    <li><a href="/privatehire"><i class="fa fa-angle-right"></i>Private or corporate
-                                            function hire</a></li>
-
                                 </ul>
-
                             </li>
-
                             <!-- <li><a href="service"></a></li> -->
-                            <li><a href="/tours" class="@if( $activevar == 'tours' ) active @endif">Tours</a></li>
+                            <li><a href="/tours" class="@if( $activevar == 'tours' ) active @endif">Tours  <span class="arrow"></span></a>
+                                <ul class="wsmenu-submenu" id="tours-menu">
+                                </ul>
+                            </li>
 
                             <li><a href="/faq" class="@if( $activevar == 'faq' ) active @endif">FAQ</a></li>
 
                             <li><a href="/contact" class="@if( $activevar == 'contact' ) active @endif">Contact</a></li>
-
-
                         </ul>
-
                     </div>
-
                     <div class="hidden-xs hidden-sm rightnav">
 
                         <ul class="mobile-sub wsmenu-list">
@@ -135,33 +124,18 @@
                                         class="fa fa-calendar-o"></i>
 
                                     <span>Book Now</span></a>
-
                             </li>
-
                             <li class="rightmenu">
-
                                 <a href="tel:1800865845" class="call-link"> <i class="fa fa-mobile-phone"></i> <span>1800 865
-
                       845</span></a>
-
                             </li>
-
                         </ul>
-
                     </div>
-
                 </nav>
-
             </div>
-
             <!--==== End Container ====-->
-
         </div>
-
-
     </div>
-
-
 </header>
 
 <!--==== End Header ====-->
@@ -198,43 +172,25 @@
 
                     <div class="social-icons">
 
-                        <a href="#">
+                        <a href="https://www.facebook.com/Shelly-Touring-Company-117350219667453/" target="_blank">
 
                             <i class="fa fa-facebook"></i>
-
                         </a>
-
                         <a href="#">
-
                             <i class="fa fa-twitter"></i>
-
                         </a>
-
                         <a href="#">
-
                             <i class="fa fa-youtube-play"></i>
-
                         </a>
-
-
                         <a href="#">
-
                             <i class="fa fa-instagram"></i>
-
                         </a>
-
                         <a href="#">
-
                             <i class="fa fa-linkedin"></i>
-
                         </a>
-
                     </div>
-
                 </div>
-
             </div>
-
     </footer>
 
     <!--==== End Footer ====-->

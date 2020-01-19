@@ -41,7 +41,18 @@
 			<div class="col-lg-4 col-md-4" style="" id="infosDiv">
 				<div class="package-detail-wrap bgWhite">
 					<h3>{{ $tour[0]->title }}</h3>
-					{!! $tour[0]->infos !!}
+					<div class="title-captions">
+						{!! $tour[0]->infos !!}
+					</div>
+					<h4 class="section-title"> Cost </h4>
+					<div class="rates">
+						<p> <label>$<span id="adult-rate"></span>.00</label> per Adult </p>
+						<p><label> $<span id="child-rate"></span>.00</label> per Child (under 16 years)
+					</div>
+					<div class="rates-caption mb-30">
+						<span> *PRICE IS FULLY INCLUSIVE OF GOODS AND SERVICES TAX (GST)</span> <br>
+						<span> *PRICES ARE QUOTED IN AUSTRALIAN DOLLARS </span>
+					</div>
 					<button class="btn btn-danger mgbottom15" type="button">Book Now</button>
 					<button class="btn btn-danger mgbottom15" type="button">Check Availabiliy</button>
 				</div>
@@ -107,7 +118,7 @@
 						</div>
 						<div id="sa" class="col-md-8">
 							<div id="bookingbtnDiv" style="display: none">
-								<button id="BookNowBtn" class="btn btn-success" type="button">Book Now</button></div>
+								<button id="BookNowBtn" class="btn btn-danger"  type="button" data-backdrop="static" >Book Now</button></div>
 							<div id="bookingnotAvailable" style="display: none">
 								<button disabled="disabled" class="btn btn-danger">Booking Not Available</button>
 							</div>
@@ -187,10 +198,10 @@
 	<div class="modal-dialog">
 		<div class="modal-content" id="modales">
 			<div class="modal-header">
-				<h4 class="modal-title">Confirm Booking</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
+				<h4 class="modal-title">Confirm Booking</h4>
 			</div>
 			<div class="modal-body">
 				<form class="row flex-row" method="POST" id="bookingForm" action="{{ route('bookingsubmit')}}">
@@ -201,20 +212,20 @@
 
 					<input type="hidden" name="_token" id="tokenn" value="{{ csrf_token() }}">
 					<div class="form-group col-xs-12 col-md-6">
-						<label>First Name</label>
+						<label>First Name <span class="required"> *</span> </label>
 						<input type="text" class="form-control" name="firstname" id="firstname" placeholder="First Name"
 							required>
 						<span class="form_error" id="invalid_firstname" style="display:none">First Name is required</span>
 					</div>
 					<div class="form-group col-xs-12 col-md-6">
-						<label>Last Name</label>
+						<label>Last Name <span class="required"> *</span></label>
 						<input type="text" class="form-control" name="lastname" id="lastname" placeholder="Last Name"
 							required>
 						<span class="form_error" id="invalid_lastname" style="display:none">Last Name is required</span>
 					</div>
 					<div class="form-group col-xs-12 col-md-6">
-						<label>Mobile Number</label>
-						<input type="text" class="form-control" name="mobilenos" id="mobilenos" placeholder="phone number"
+						<label>Mobile Number <span class="required"> *</span> </label>
+						<input type="text" class="form-control" name="mobilenos" id="mobilenos" placeholder="Phone Number"
 							required>
 						<span class="form_error" id="invalid_mobilenos" style="display:none">Mobile Number is
 							required</span>
@@ -222,43 +233,43 @@
 					<div class="form-group col-xs-12 col-md-6">
 						<label>Alternate Mobile Number</label>
 						<input type="text" class="form-control" name="alt_mobilenos" id="alt_mobilenos"
-							placeholder="alternate phone number">
+							placeholder="Alternate Phone Number">
 					</div>
 					<div class="form-group col-xs-12 col-md-6">
-						<label>Email Address</label>
-						<input type="email" class="form-control" name="email" id="email" placeholder="email" required>
+						<label>Email Address <span class="required"> *</span> </label>
+						<input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
 						<span class="form_error" id="invalid_email" style="display:none">Email is required</span>
 						<span class="form_error" id="invalid_email_invalid" style="display:none">Email is invalid</span>
 					</div>
-					<div class="form-group col-xs-12 col-md-6">
+					<div class="form-group col-xs-12 col-md-6 hidden">
 						<label>From / to which Cruise Terminal?</label>
 						<br>
 						<label class="radio-inline">
-							<input type="radio" name="cruiseterminal" value="circularQuay"> Circular Quay
+							<input type="radio" name="cruiseterminal" value=" " checked> Circular Quay
 						</label>
 						<label class="radio-inline">
 							<input type="radio" name="cruiseterminal" value="whiteBay"> White Bay
 						</label>
 					</div>
-					<div class="form-group col-xs-12 col-md-6">
+					<div class="form-group col-xs-12 col-md-6 hidden">
 						<label>From / to which Airport?</label>
 						<br>
 						<label class="radio-inline">
-							<input type="radio" name="airport" value="domestic"> Domestic
+							<input type="radio" name="airport" value=" " checked> Domestic
 						</label>
 						<label class="radio-inline">
 							<input type="radio" name="airport" value="international"> International
 						</label>
 					</div>
-					<div class="form-group col-xs-12 col-md-6">
+					<div class="form-group col-xs-12 col-md-6 hidden">
 						<label>Other</label>
-						<input type="text" class="form-control" name="other">
+						<input type="text" class="form-control" name="other" value="">
 					</div>
-					<div class="form-group col-xs-12 col-md-6" id="triptypeDiv">
+					<div class="form-group col-xs-12 col-md-6 hidden" id="triptypeDiv">
 						<label>Is this a Single or Return trip?</label>
 						<br>
 						<label class="radio-inline">
-							<input type="radio" id="triptyperdr" name="triptype" value="Single Trip"> Single Trip
+							<input type="radio" id="triptyperdr" name="triptype" value=" " checked> Single Trip
 						</label>
 						<label class="radio-inline">
 							<input type="radio" name="triptype" value="Return Trip"> Return Trip
@@ -269,48 +280,47 @@
 						</div>
 					</div>
 	
-					<div class="form-group col-xs-12 col-md-6">
+					<div class="form-group col-xs-12 col-md-6 hidden">
 						<label>Travel Date/ Time</label>
-						<input type="text" class="form-control" name="traveldate" required
-							placeholder="Travel Date and Time" readonly id="traveldate">
+						<input type="text" class="form-control" name="traveldate" required placeholder="Travel Date and Time" readonly id="traveldate" value="2020/01/01">
 						<input type="hidden" hidden readonly name="traveldatetime" id="traveldatetime">
 						<span class="form_error" id="invalid_traveldate" style="display:none">Travel Date Time is
 							required</span>
 					</div>
 	
-					<div class="form-group col-xs-12 col-md-6">
+					<div class="form-group col-xs-12 col-md-6 hidden">
 						<label>Pickup/ Destination Address</label>
 						<input type="text" name="pickupaddress" id="pickupaddress" class="form-control"
-							placeholder="pickup or destination address" required>
+							placeholder="pickup or destination address" value="">
 						<span class="form_error" id="invalid_pickupaddress" style="display:none">Pickup/Destination is
 							required</span>
 					</div>
 	
-					<div class="form-group col-xs-12 col-md-6">
+					<div class="form-group col-xs-12 col-md-6 hidden">
 						<label>Flight Number/ Cruise Name</label>
 						<input type="text" name="flightinfo" id="flightinfo" class="form-control"
-							placeholder="flight number or cruise name">
+							placeholder="flight number or cruise name" value=" ">
 						<span class="form_error" id="invalid_flightinfo" style="display:none">Flight / Cruise Information is
 							required</span>
 					</div>
 	
-					<div class="form-group col-xs-12 col-md-6">
+					<div class="form-group col-xs-12 col-md-6 hidden">
 						<label>Child Seats</label>
 						<br>
 	
 						<label class="checkbox-inline">
-							<input type="checkbox" name="childseats[]" value="1">Baby Seat Required
+							<input type="checkbox" name="childseats[]" value=" " checked>Baby Seat Required
 						</label>
 						<label class="checkbox-inline">
 							<input type="checkbox" name="childseats[]" value="2"> Booster Seat Required
 						</label>
 					</div>
 	
-					<div class="form-group col-xs-12 col-md-6" id="privatecharterDiv">
+					<div class="form-group col-xs-12 col-md-6" id="privatecharterDiv" hidden>
 						<label>Private Charter</label>
 						<br>
 						<label class="radio-inline">
-							<input type="radio" id="pvtcharter" name="privatecharter" value="1"> Yes
+							<input type="radio" id="pvtcharter" name="privatecharter" value=" " checked> Yes
 						</label>
 						<label class="radio-inline">
 							<input type="radio" name="privatecharter" value="0"> No
@@ -322,15 +332,17 @@
 	
 					<div class="form-group col-xs-12 col-md-12">
 						<label>Additional Info</label>
-						<textarea name="additionalinfo" class="form-control" id="adInfos" rows="5"></textarea>
+						<textarea name="additionalinfo" class="form-control" placeholder="Additional Informations" id="adInfos" rows="5"></textarea>
 					</div>
-	
+					<div class="form-group col-xs-12 col-md-12">
+						<span class="required"> *</span> are required fields.
+					</div>
 				</form>
 			</div>
 			<div class="modal-footer justify-content-between">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				{{-- <button type="button" class="btn btn-primary" id="closeModalBtn">Save changes</button> --}}
-				<button type="button" class="submitbtn btn btn-danger btn-lg">Confirm & Submit</button>
+				<button type="button" class="submitbtn btn btn-danger">Confirm & Submit</button>
 			</div>
 		</div>
 		<!-- /.modal-content -->
@@ -350,6 +362,7 @@
 <script type="text/javascript">
 	$('#images').viewer({
     // options here
-    });
+		});
+	// $('#modal-overlaysss').modal({backdrop: 'static', keyboard: false})  
 </script>
 @endsection

@@ -338,3 +338,14 @@ footer .social-icons {
         text-align: center;
     }
 }
+
+textarea {
+    resize: none;
+}
+.form_error {
+    color: red;
+}
+
+.required {
+    color: red;
+}

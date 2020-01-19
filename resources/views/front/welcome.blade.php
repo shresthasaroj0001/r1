@@ -28,27 +28,6 @@
     </div>
 
   </div>
-{{--     
-    <div class="ms-slide">
-
-      <img src="img/service/night/night-party-3.jpg " alt="">
-
-      <div class="ms-layer desc-box" data-ease="easeOutBack" data-effect="skewbottom(-30,50,0,50)"
-
-        data-duration="1800" data-delay="0" data-hide-effect="skewbottom(0,180,0,0,l)" data-parallax="3">
-
-        <h1>Do you need a ride?</h1>
-
-        <p>The Shelly Touring Company provides car rental for late night party</p>
-
-        <a class="btn btn-danger" href="#">How it Works <i class="fa fa-angle-right"></i></a>
-
-      </div>
-
-    </div> --}}
-
-
-
   </section>
   <section class="bgWhite section-pad-top section-pad-bottom destination-section-wrap">
     <div class="container">
@@ -59,7 +38,7 @@
     </div>
   </section>
   <!-- *************** End Hero Banner *************** -->
-
+{{-- 
   <section class="section-pad-top section-pad-bottom">
 
     <div class="container">
@@ -234,7 +213,7 @@
 
     </div>
 
-  </section>
+  </section> --}}
 
   <section class="featured-product-slide">
 
@@ -258,7 +237,7 @@
 
         </div>
 
-        <a class="featured-product-link" href="#">more info</a>
+        <a class="featured-product-link" href="/airport">more info</a>
 
       </div>
 
@@ -284,111 +263,7 @@
 
         </div>
 
-        <a class="featured-product-link" href="#">more info</a>
-
-      </div>
-
-    </div>
-
-    <div class="product-wrap">
-
-      <img src="img/prortraiteImage/wedding.jpg" alt="" />
-
-      <div class="featured-product-content">
-
-        <div class="featured-product-content-inner">
-
-          <span class="featured-product-number">03</span>
-
-          <h5><a href="#">Wedding Hire</a></h5>
-
-          <div class="featured-product-text">
-
-            <p>Take the stress out of transporting your wedding party!</p>
-
-          </div>
-
-        </div>
-
-        <a class="featured-product-link" href="#">more info</a>
-
-      </div>
-
-    </div>
-
-    <div class="product-wrap">
-
-      <img src="img/prortraiteImage/hens.jpg" alt="" />
-
-      <div class="featured-product-content">
-
-        <div class="featured-product-content-inner">
-
-          <span class="featured-product-number">04</span>
-
-          <h5><a href="#">Hens Party hire</a></h5>
-
-          <div class="featured-product-text">
-
-            <p>Take the stress out of transporting your friends to your special function</p>
-
-          </div>
-
-        </div>
-
-        <a class="featured-product-link" href="#">more info</a>
-
-      </div>
-
-    </div>
-
-    <div class="product-wrap">
-
-      <img src="img/prortraiteImage/night.jpg" alt="" />
-
-      <div class="featured-product-content">
-
-        <div class="featured-product-content-inner">
-
-          <span class="featured-product-number">05</span>
-
-          <h5><a href="#">Sydney by night hire</a></h5>
-
-          <div class="featured-product-text">
-
-            <p>Experience Australia's iconic city with us!</p>
-
-          </div>
-
-        </div>
-
-        <a class="featured-product-link" href="#">more info</a>
-
-      </div>
-
-    </div>
-
-    <div class="product-wrap">
-
-      <img src="img/prortraiteImage/private-function.jpg" alt="" />
-
-      <div class="featured-product-content">
-
-        <div class="featured-product-content-inner">
-
-          <span class="featured-product-number">06</span>
-
-          <h5><a href="#">Private or corporate function hire</a></h5>
-
-          <div class="featured-product-text">
-
-            <p>Attending a Private, Corporate, Sporting or Social Function?</p>
-
-          </div>
-
-        </div>
-
-        <a class="featured-product-link" href="#">more info</a>
+        <a class="featured-product-link" href="/cruise">more info</a>
 
       </div>
 
@@ -490,7 +365,7 @@
 
             <p>We warmly welcome you to <strong>Shelly Touring Company</strong>. Shelly touring company is dedicated to provide admirable and personalized service. We plan together with you and supply you with all information necessary for your security, luxury and happiness. Our goal is to make your holiday better with us.</p>
 
-            <a class="btn btn-danger" href="about.html">Discover More</a>
+            <a class="btn btn-danger" href="/about">Discover More</a>
 
           </div>
 

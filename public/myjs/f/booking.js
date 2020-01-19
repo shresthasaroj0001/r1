@@ -178,7 +178,10 @@ $(function () {
         childrate = parseFloat(dayData[parsedValue].rate_child);
         seatsleft = parseInt(dayData[parsedValue].paxs);
         $('#AdultRate').html('$ ' + adultrate);
+        $('#adult-rate').html(adultrate)
         $('#ChildRate').html('$ ' + childrate);
+        $('#child-rate').html(childrate)
+
     }
 
     $('#bookingtimeselection').on('change', function (e) {
