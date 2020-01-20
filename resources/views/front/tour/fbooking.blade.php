@@ -46,12 +46,8 @@
                 @endif
             </div>
 
-            <form class="row flex-row" method="POST" id="bookingForm" action="{{ route('bookingsubmit')}}">
+            <form class="row flex-row" method="POST" id="bookingForm" action="{{ route('enquirysubmit')}}">
                 <input type="hidden" name="_token" id="tokkken" value="{{ csrf_token() }}">
-
-                <input type="hidden" name="calId" id="calId" value="{{ $ids }}">
-                <input type="hidden" name="adults" id="adults" value="{{ $adults }}">
-                <input type="hidden" name="childs" id="childs" value="{{ $childs }}">
 
                 <div class="form-group col-xs-12 col-md-6">
                     <label>First Name</label>
@@ -145,6 +141,16 @@
                         placeholder="flight number or cruise name">
                     <span class="form_error" id="invalid_flightinfo" style="display:none">Flight / Cruise Information is
                         required</span>
+                </div>
+
+                <div class="form-group col-xs-12 col-md-12">
+                    <label>Number of Passengers</label>
+                    <select name="noofpassenger" id="noofpassenger"   class="form-control" required>
+                        <option value="">Select Passenger Number</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                    </select>
+                    <span class="form_error" id="invalid_noofpassenger" style="display:none">Passenger Number is required</span>
                 </div>
 
                 <div class="form-group col-xs-12 col-md-12">

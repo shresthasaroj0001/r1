@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use App\Http\Controllers\homeController;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,6 +26,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+
+        view()->composer('front.master', function ($view) {
+            $homes = new homeController();
+            $images = $homes->index();
+            $view->with('menuss', $images);
+        });
 
         //
     }

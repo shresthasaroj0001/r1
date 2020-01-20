@@ -249,23 +249,6 @@ $(function () {
     });
 
     //nxt
-    $('#traveldate').daterangepicker({
-        timePicker: true,
-        minDate: new Date(),
-        singleDatePicker: true,
-        autoUpdateInput: false,
-        maxYear: parseInt(moment().format('YYYY'), 10)
-    });
-
-    $('#traveldate').val('');
-    $('input[name="traveldate"]').on('apply.daterangepicker', function (ev, picker) {
-        $(this).val(picker.startDate.format('MMM D, YYYY hh:mm A'));
-        // $('#traveldate').val(picker.format('MMM D, YYYY hh:mm A'));
-        var r = picker.startDate.format('YYYY-M-DD HH:mm:ss');
-        console.log(r)
-        $('#traveldatetime').val(r);
-    });
-
     $('#modal-overlaysss').on('click', '.submitbtn', function (event) {
         var res = validateForm();
         // $('#bookingForm #redirectFrmId').val(dayData[parseInt(finaltime)].ids);
@@ -332,7 +315,7 @@ $(function () {
     function validateForm() {
         if ($('#calId').val() == '' || $('#adults').val() == '' || $('#childs').val() == '') {
             alert("Internal Error.. Please Report us");
-            window.location = "/toursss";
+            window.location = "/tours";
         }
 
         var isValid = true;
@@ -381,62 +364,6 @@ $(function () {
                 isFocusSet = true;
                 $('#email').focus();
             }
-        }
-
-        var tripvalue = $('input[name=triptype]:checked').val();
-        if (tripvalue == undefined) {
-            isValid = false;
-            $('#invalid_triptype').show();
-            if (!isFocusSet) {
-                $('#triptyperdr').focus();
-            }
-            isFocusSet = true;
-        } else {
-            $('#invalid_triptype').hide();
-        }
-
-        if ($('#traveldatetime').val() == '') {
-            isValid = false;
-            $('#invalid_traveldate').show();
-            if (!isFocusSet) {
-                $('#traveldate').focus();
-            }
-            isFocusSet = true;
-        } else {
-            $('#invalid_traveldate').hide();
-        }
-
-        if ($('#pickupaddress').val() == '' || $('#pickupaddress').val().length < 3) {
-            isValid = false;
-            $('#invalid_pickupaddress').show();
-            if (!isFocusSet) {
-                $('#pickupaddress').focus();
-            }
-            isFocusSet = true;
-        } else {
-            $('#invalid_pickupaddress').hide();
-        }
-
-        if ($('#flightinfo').val() == '') {
-            isValid = false;
-            $('#invalid_flightinfo').show();
-            if (!isFocusSet) {
-                $('#flightinfo').focus();
-            }
-        } else {
-            $('#invalid_flightinfo').hide();
-        }
-
-        var privatecharters = $('input[name=privatecharter]:checked').val();
-        if (privatecharters == undefined) {
-            isValid = false;
-            $('#invalid_privatecharter').show();
-            if (!isFocusSet) {
-                $('#pvtcharter').focus();
-            }
-            isFocusSet = true;
-        } else {
-            $('#invalid_privatecharter').hide();
         }
 
         return isValid;

@@ -105,6 +105,9 @@
                             <!-- <li><a href="service"></a></li> -->
                             <li><a href="/tours" class="@if( $activevar == 'tours' ) active @endif">Tours  <span class="arrow"></span></a>
                                 <ul class="wsmenu-submenu" id="tours-menu">
+                                    @foreach ($menuss as $item)
+                                         <li><a href="/tours/{{ $item->slug }}"><i class="fa fa-angle-right"></i>{{ $item->title}}</a></li>
+                                    @endforeach
                                 </ul>
                             </li>
 

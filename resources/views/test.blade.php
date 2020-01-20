@@ -15,19 +15,7 @@
             <td width="100%" cellpadding="0" cellspacing="0">
                 <p><b>From:</b> {{ $from_name }} <i>({{ $from_email }})</i></p>
                 <p><b>Mobile No:</b> {{ $mobilenos }}</p>
-                <p><b>Cruise Terminal:</b> {{ $cruiseterminal }}</p>
-                <p><b>Airport:</b> {{ $airport }}</p>
-                <p><b>other:</b> {{ $other }}</p>
-                <p><b>Trip Type:</b> {{ $triptype }}</p>
-                <p><b>Travel Date:</b> {{ $traveldate }}</p>
-                <p><b>Pickup Address:</b> {{ $pickupaddress }}</p>
-                <p><b>No ofpassenger:</b> {{ $noofpassenger }}</p>
-                <p><b>flightinfo:</b> {{ $flightinfo }}</p>
-                <p><b>privatecharter:</b> {{ $privatecharter }}</p>
-                <p><b>Child Seats:</b>
-                {{$childseats}}
-                </p>
-                <p><b>Message:</b></p>
+                <p><b>Additional Information:</b></p>
                 <p>{{ $additionalinfo }}</p>
                 <br>
                 <br>

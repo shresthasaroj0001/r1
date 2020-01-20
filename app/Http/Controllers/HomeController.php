@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Enquiry;
+use App\fbooking;
 use App\payments;
 use App\Jobs\SendMailJob;
 use Carbon\Carbon;
@@ -17,7 +17,7 @@ use Session;
 class homeController extends Controller
 {
 
-    public function index(Request $request)
+    public function index()
     {
         $response = DB::Select("select m.title,m.slug,m.infos, IFNUll(c.title,'') as featureimg from menus as m  left join ( select galleries.title,galleries.menu_id from galleries where isfeatureimg=1 and isdeleted=0 and stats=1 group by menu_id,title having max(updated_at))  c on m.id =c.menu_id ORDER BY m.orderb ASC");
         return $response;
@@ -159,14 +159,7 @@ class homeController extends Controller
             'mobilenos' => 'required|max:190',
             'altmobilenumber' => 'max:190',
             'email' => 'required|email|max:190',
-            'cruiseterminal' => 'required',
-            'airport' => 'required',
-
-            'triptype' => 'required|max:190',
-            'traveldatetime' => 'required',
-            'pickupaddress' => 'required|string|min:3|max:255',
-            'flightinfo' => 'required|max:190',
-            'privatecharter' => 'required|boolean',
+            
             'additionalinfo' => 'max:190',
         ], [
             "firstname.required" => trans('Full Name is required'),
@@ -179,44 +172,20 @@ class homeController extends Controller
             return redirect()->back()->withInput($request->input())->withErrors($validator);
         }
 
-        $enquiryss = new Enquiry();
+        $enquiryss = new fbooking();
         // $enquiryss->calenderId = $res[0]-    >id;
         $enquiryss->calenderId = $request->calId;
         $enquiryss->adults = $request->adults;
         $enquiryss->childs = $request->childs;
-        $enquiryss->noofpassenger =  $enquiryss->adults + $enquiryss->childs;
         
         $enquiryss->firstname = $request->firstname;
         $enquiryss->lastname = $request->lastname;
         $enquiryss->mobilenos = $request->mobilenos;
         $enquiryss->alt_mobilenos = $request->alt_mobilenos;
         $enquiryss->email = $request->email;
-        $enquiryss->other = $request->other;
-        $enquiryss->cruiseterminal = $request->cruiseterminal;
-        $enquiryss->airport = $request->airport;
-
-        $enquiryss->other = $request->other;
-
-        $enquiryss->triptype = $request->triptype;
-        $enquiryss->traveldate = $request->traveldatetime;
-        $enquiryss->pickupaddress = $request->pickupaddress;
-        $enquiryss->flightinfo = $request->flightinfo;
-        $enquiryss->privatecharter = $request->privatecharter;
+        
         $enquiryss->additionalinfo = $request->additionalinfo;
-        $varres = Input::get('childseats');
-        DB::beginTransaction();
         $enquiryss->save();
-
-        if (!(is_null($varres))) {
-            $data = array();
-            foreach ($varres as $value) {
-                $tempModel = array('enquiryno' => $enquiryss->id, 'childSeatid' => $value, 'created_at' => new DateTime(), 'updated_at' => new DateTime());
-                array_push($data, $tempModel);
-            }
-            DB::table('enquirychildseats')->insert($data);
-        }
-
-        DB::commit();
 
         $job = (new SendMailJob($enquiryss->id))->delay(Carbon::now()->addSeconds(3));
         // $job = (new SendMailJob($enquiryss, $tempo))->delay(Carbon::now()->addSeconds(3));

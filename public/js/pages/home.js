@@ -64,29 +64,5 @@ $(document).ready(function () {
         centerMode: true,
         focusOnSelect: true
     });
-    // <li><a href="/airport"><i class="fa fa-angle-right"></i>Door-to-door airport hire
-    // </a></li>
-    $.ajax({
-        headers: {
-            'X-CSRF-TOKEN': $('#tokken').val()
-        },
-        url: '/tours',
-        type: 'POST',
-        success: function (tours) {
-            div = "";
-            if (tours != null) {
-                tours.forEach(function (item, index, array) {
-                    div += `<li><a href="/tours/` + item.slug +`"><i class="fa fa-angle-right"></i>` + item.title + `</a></li>`;
-                });
-            }
-            $('#tours-menu').html(div);
-
-        },
-        error: function (err) {
-            console.log(err);
-        },
-        complete: function () {
-            $("#tours-menu").LoadingOverlay("hide");
-        },
-    }); //ajax ending
+    
 });

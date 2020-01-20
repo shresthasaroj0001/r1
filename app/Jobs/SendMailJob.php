@@ -58,20 +58,10 @@ class SendMailJob implements ShouldQueue
         $Enquirys->mobilenos = $resss[0]->mobilenos;
         $Enquirys->alt_mobilenos = $resss[0]->alt_mobilenos;
         $Enquirys->email = $resss[0]->email;
-        $Enquirys->cruiseterminal = $resss[0]->cruiseterminal;
-        $Enquirys->airport = $resss[0]->airport;
-        $Enquirys->other = $resss[0]->other;
-        $Enquirys->triptype = $resss[0]->triptype;
-        $Enquirys->traveldate = $resss[0]->traveldate;
-        $Enquirys->pickupaddress = $resss[0]->pickupaddress;
-        $Enquirys->noofpassenger = $resss[0]->noofpassenger;
-        $Enquirys->flightinfo = $resss[0]->flightinfo;
-        $Enquirys->privatecharter = $resss[0]->privatecharter;
         $Enquirys->additionalinfo = $resss[0]->additionalinfo;
         $Enquirys->tourdate = $resss[0]->tourdate;
         $Enquirys->rate_children = $resss[0]->rate_children;
         $Enquirys->rate_adult = $resss[0]->rate_adult;
-        $Enquirys->ts = $resss[0]->ts;
         $Enquirys->title = $resss[0]->title;
 
         // return $this->from($enquiryss)
@@ -96,15 +86,6 @@ class SendMailJob implements ShouldQueue
             'to_email' => 'sher@shellytours.com',
             'mobilenos' => $Enquirys->mobilenos,
             'alt_mobilenos' => $Enquirys->alt_mobilenos == null ? '' : $Enquirys->alt_mobilenos,
-            'cruiseterminal' => $Enquirys->cruiseterminal,
-            'airport' => $Enquirys->airport,
-            'other' => $Enquirys->other,
-            'triptype' => $Enquirys->triptype,
-            'traveldate' => $Enquirys->traveldate,
-            'pickupaddress' => $Enquirys->pickupaddress,
-            'noofpassenger' => $Enquirys->noofpassenger,
-            'flightinfo' => $Enquirys->flightinfo,
-            'privatecharter' => $Enquirys->privatecharter == 1 ? 'Yes' : 'No',
             'additionalinfo' => $Enquirys->additionalinfo,
             'childseats' => $Enquirys->ts,
             'tourdate' => $Enquirys->tourdate,

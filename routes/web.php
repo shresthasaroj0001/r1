@@ -69,11 +69,10 @@ Route::post('/book-final', [
 //     return view('front/booking')->with('activevar','tours');
 // });
 
-Route::post('/enquiry', 'bookingController@store')->name('enquirysubmit');
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::post('/enquiry', 'SendEnquiryController@storeenquriy')->name('enquirysubmit');
+Route::get('/enquiry', function () {
+    return view('front.tour.fbooking')->with('activevar','airport');
+});
 
 Route::get('/airport', function () {
     return view('front/services/airport')->with('activevar', 'airport');
