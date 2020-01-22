@@ -60,10 +60,10 @@
 									<label> Adult </label>
 								</td>
 								<td>
-									<span id="AdultRate"><span>
+									<span id="TempAdultRate">$ 0.00<span>
 								</td>
 								<td>
-									<select name="" class="changeqty" id="adultqty">
+									<select name="" class="Tempchangeqty" id="Tempadultqty">
 										<option value="0">0</option>
 										<option value="1" selected="">1</option>
 										<option value="2">2</option>
@@ -74,7 +74,7 @@
 									</select>
 								</td>
 								<td>
-									<span id="adultfinalr"></span>
+									<span id="Tempadultfinalr">$ 0.00</span>
 								</td>
 							</tr>
 							<tr>
@@ -82,10 +82,10 @@
 									<label> Child </label>
 								</td>
 								<td>
-									<span id="ChildRate"><span>
+									<span id="TempChildRate">$ 0.00<span>
 								</td>
 								<td>
-									<select name="" class="changeqty" id="adultqty">
+									<select name="" class="Tempchangeqty" id="Tempchildqty">
 										<option value="0" selected="">0</option>
 										<option value="1">1</option>
 										<option value="2">2</option>
@@ -96,26 +96,13 @@
 									</select>
 								</td>
 								<td>
-									<span id="childfinalr"></span>
+									<span id="Tempchildfinalr">$ 0.00</span>
 								</td>
 							</tr>
-							{{-- <tr>
-								<td colspan="4">
-									<span id="datepicker"></span>
-								</td>
-							</tr> --}}
-							{{-- <tr>
-								<td colspan="4">
-									<select name="t" id="bookingtimeselection" class="form-control">
-										<option value="0">Select Time</option>
-										<option value=""></option>
-									</select>
-								</td>
-							</tr> --}}
 							<tr>
 								<td colspan="4">
 									<label for="">Total: </label>
-									<span id="totalprice"></span>
+									<span id="Temptotalprice">$ 0.00</span>
 								</td>
 							</tr>
 						

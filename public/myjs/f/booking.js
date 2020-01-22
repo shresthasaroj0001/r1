@@ -96,11 +96,13 @@ $(function () {
                 if (monthdatas.find(x => x.tdate == $("#datepicker").val()) != undefined) {
                     DateSelectEvent($("#datepicker").val());
                 }
+                
             }
         }); //ajax ending
     }
 
     var dayData = [];
+    var IsItFresh = true;
 
     function DateSelectEvent(datees) {
         $.ajax({
@@ -147,6 +149,10 @@ $(function () {
             },
             complete: function () {
                 $("#datepicker").datepicker('refresh');
+                if(IsItFresh){
+                    IsItFresh = false;
+                    onLoadShowRates();
+                }
             }
         }); //ajax ending
     }
@@ -246,6 +252,39 @@ $(function () {
                 }
             }
         }
+    });
+
+    var TempFinalRate=0,Tempadulttimes = 0,Tempchildtimes = 0,Tempadultrrate = 0,Tempchildrrate = 0;
+    function onLoadShowRates(){
+        if (dayData.length != 0) {
+            Tempadultrrate = dayData[0].rate_adult; 
+            Tempchildrrate = dayData[0].rate_child; 
+            $('#TempAdultRate').html('$ '+Tempadultrrate);
+            $('#Tempadultfinalr').html('$ 0.00');
+
+            $('#TempChildRate').html('$ '+Tempchildrrate);
+            $('#Tempchildfinalr').html('$ 0.00');
+
+        } 
+        calculateTempAmount();
+    };
+   function calculateTempAmount(){
+        try {
+            Tempadulttimes = parseInt($("#Tempadultqty").val());
+            Tempchildtimes = parseInt($("#Tempchildqty").val());
+        } catch (e) {
+            Tempadulttimes = 0;
+            Tempchildtimes = 0;
+        }
+
+        $("#Tempadultfinalr").html('$ ' + (Tempadulttimes * Tempadultrrate));
+        $("#Tempchildfinalr").html('$ ' + (Tempchildtimes * Tempchildrrate));
+        totalPricess = ((Tempadulttimes * Tempadultrrate) + (Tempchildtimes * Tempchildrrate));
+        $('#Temptotalprice').html('$ ' + totalPricess);
+    }
+
+    $('.Tempchangeqty').on('change', function (e) {
+        calculateTempAmount();
     });
 
     //nxt
