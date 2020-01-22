@@ -27,6 +27,7 @@ $(function () {
                     i += '<a class="featured-product-link" href="/tours/' + item.slug + '" tabindex="0">more info</a></div></div></div>';
                 });
             }
+            i += '<div class="clearfix"></div>'
             $('#tourss').html(i);
             $("#tourss").LoadingOverlay("hide");
 

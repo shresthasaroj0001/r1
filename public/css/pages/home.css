@@ -185,9 +185,6 @@
     overflow: hidden;
     position: relative;
 }
-.destination-section-wrap .product-wrap {
-    max-height: 274px;
-}
 .product-wrap:before {
     content: '';
     position: absolute;
