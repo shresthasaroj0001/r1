@@ -184,10 +184,16 @@ class homeController extends Controller
         $enquiryss->alt_mobilenos = $request->alt_mobilenos;
         $enquiryss->email = $request->email;
         
-        $enquiryss->additionalinfo = $request->additionalinfo;
-        $enquiryss->save();
+        $enquiryss->additionalinfo = $request->additionalinfo == null ? "" :$request->additionalinfo;
+        // $enquiryss->save();
+        $datess = new DateTime();
+        $idss = DB::table('fbookings')->insertGetId(
+            [ 
+            'calenderId' => $enquiryss->calenderId, 'adults' => $enquiryss->adults, 'childs' => $enquiryss->childs, 'firstname' => $enquiryss->firstname, 'lastname' => $enquiryss->lastname, 'mobilenos' => $enquiryss->mobilenos, 'alt_mobilenos' => $enquiryss->alt_mobilenos, 'email' => $enquiryss->email, 'additionalinfo' => $enquiryss->additionalinfo, 'created_at' => $datess, 'updated_at'=>$datess
+            ]
+        );
 
-        $job = (new SendMailJob($enquiryss->id))->delay(Carbon::now()->addSeconds(3));
+        $job = (new SendMailJob($idss))->delay(Carbon::now()->addSeconds(3));
         // $job = (new SendMailJob($enquiryss, $tempo))->delay(Carbon::now()->addSeconds(3));
         dispatch($job);
 
@@ -198,7 +204,7 @@ class homeController extends Controller
 
     // public function RedirectToPays($enqId)
     //{
-        $enqId = $enquiryss->id;
+        $enqId = $idss;
         $ress = DB::select('call testprocedure(?)', [$enqId]);
         // dd($ress);
         if ($ress != null) {
