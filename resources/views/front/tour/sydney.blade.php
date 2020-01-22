@@ -45,10 +45,86 @@
 						{!! $tour[0]->infos !!}
 					</div>
 					<h4 class="section-title"> Cost </h4>
-					<div class="rates">
+					<table class="table table-responsive">
+						<thead>
+							<tr>
+								<th> Type </th>
+								<th> Per Price </th>
+								<th> Qty </th>
+								<th> Total </th>	
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<label> Adult </label>
+								</td>
+								<td>
+									<span id="AdultRate"><span>
+								</td>
+								<td>
+									<select name="" class="changeqty" id="adultqty">
+										<option value="0">0</option>
+										<option value="1" selected="">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+										<option value="6">6</option>
+									</select>
+								</td>
+								<td>
+									<span id="adultfinalr"></span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label> Child </label>
+								</td>
+								<td>
+									<span id="ChildRate"><span>
+								</td>
+								<td>
+									<select name="" class="changeqty" id="adultqty">
+										<option value="0" selected="">0</option>
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+										<option value="6">6</option>
+									</select>
+								</td>
+								<td>
+									<span id="childfinalr"></span>
+								</td>
+							</tr>
+							{{-- <tr>
+								<td colspan="4">
+									<span id="datepicker"></span>
+								</td>
+							</tr> --}}
+							{{-- <tr>
+								<td colspan="4">
+									<select name="t" id="bookingtimeselection" class="form-control">
+										<option value="0">Select Time</option>
+										<option value=""></option>
+									</select>
+								</td>
+							</tr> --}}
+							<tr>
+								<td colspan="4">
+									<label for="">Total: </label>
+									<span id="totalprice"></span>
+								</td>
+							</tr>
+						
+						</tbody>
+					</table>
+					{{-- <div class="rates">
 						<p> <label>$<span id="adult-rate"></span>.00</label> per Adult </p>
 						<p><label> $<span id="child-rate"></span>.00</label> per Child (under 16 years)
-					</div>
+					</div> --}}
 					<div class="rates-caption mb-30">
 						<span> *PRICE IS FULLY INCLUSIVE OF GOODS AND SERVICES TAX (GST)</span> <br>
 						<span> *PRICES ARE QUOTED IN AUSTRALIAN DOLLARS </span>

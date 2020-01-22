@@ -32,7 +32,7 @@
   <section class="bgWhite section-pad-top section-pad-bottom destination-section-wrap">
     <div class="container">
       <h1 class="text-center section-title">OUR MOST POPULAR TOURS</h1>
-      <div class="row" id="tourss">
+      <div class="row-flex" id="tourss">
         
       </div>
     </div>
@@ -219,7 +219,7 @@
 
     <div class="product-wrap">
 
-      <img src="img/prortraiteImage/airport.jpg" alt="" />
+      <img src="img/service/airport/sydney-airport-1.jpg" alt="" />
 
       <div class="featured-product-content">
 
@@ -245,7 +245,7 @@
 
     <div class="product-wrap">
 
-      <img src="img/prortraiteImage/cruise.jpg" alt="" />
+      <img src="img/service/cruise/cruise-3.jpg" alt="" />
 
       <div class="featured-product-content">
 

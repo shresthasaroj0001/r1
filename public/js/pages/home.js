@@ -16,7 +16,7 @@ $(document).ready(function () {
     });
     //Product Slide
     $('.featured-product-slide').slick({
-        slidesToShow: 4,
+        slidesToShow: 2,
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 2000,

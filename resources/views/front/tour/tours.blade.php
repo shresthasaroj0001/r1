@@ -26,7 +26,7 @@
 </div>
 @endif
 
-<section class="bgWhite section-pad-top section-pad-bottom">
+<section class="bgWhite section-pad-top">
 
     <div class="container">
 
@@ -36,9 +36,9 @@
 
                 <div class="about-wrap">
 
-                    <h6>Tours</h6>
+                    <h2 class="section-title">Tours</h2>
 
-                    <h2> PRIVATE TOUR & LUXURY EXPERIENCE SPECIALISTS</h2>
+                    {{-- <h2> PRIVATE TOUR & LUXURY EXPERIENCE SPECIALISTS</h2>
                     <p>
                         At Sydney Private Day Tours we only offer private charters. Being a private charter you will
                         have your own comfortable vehicle and your own experienced driver - guide. You can choose a
@@ -67,7 +67,7 @@
                         Day Private Tour options including Sydney City and Beaches Tours, Hunter Valley Private
                         Winery Tours, Blue Mountains Private Tours, Foodie Tours and 'Off the Beaten Path - Non
                         Touristy' options.
-                    </p>
+                    </p> --}}
                 </div>
             </div>
         </div>
@@ -79,7 +79,7 @@
 <input type="text" hidden value="{{ csrf_token()}}" id="tokken">
 <section class="bgWhite section-pad-bottom">
     <div class="container">
-        <div class="row" id="tourss">
+        <div class="row-flex" id="tourss">
             <div class="col-md-4 mb-30">
                 <div class="product-wrap">
                     <img src="img/destination.jpg" alt="">

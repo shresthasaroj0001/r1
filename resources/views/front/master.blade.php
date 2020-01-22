@@ -44,7 +44,7 @@
         <a class="smallogo">
             <img src="/img/logo.png" width="87" alt=""/>
         </a>
-        <a class="cta-icon call" href="tel:123456789"><span class="fa fa-mobile-phone"></span></a>
+        <a class="cta-icon call" type="button" href="tel:1800865845"><span class="fa fa-mobile-phone"></span></a>
         <a class="cta-icon book" type="button" href="/tours"><span
                 class="fa fa-calendar-o"></span></a>
     </div>
