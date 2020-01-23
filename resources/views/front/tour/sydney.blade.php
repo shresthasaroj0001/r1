@@ -99,19 +99,19 @@
 									<span id="childfinalr"></span>
 								</td>
 							</tr>
-							{{-- <tr>
-								<td colspan="4">
+							<tr>
+								<td colspan="4" style="display: none" id="boksDiv">
 									<span id="datepicker"></span>
 								</td>
-							</tr> --}}
-							{{-- <tr>
-								<td colspan="4">
+							</tr>
+							<tr>
+								<td colspan="4" style="display: none" id="boksDiv">
 									<select name="t" id="bookingtimeselection" class="form-control">
 										<option value="0">Select Time</option>
 										<option value=""></option>
 									</select>
 								</td>
-							</tr> --}}
+							</tr>
 							<tr>
 								<td colspan="4">
 									<label for="">Total: </label>
@@ -120,7 +120,9 @@
 							</tr>
 						
 						</tbody>
+						
 					</table>
+					
 					{{-- <div class="rates">
 						<p> <label>$<span id="adult-rate"></span>.00</label> per Adult </p>
 						<p><label> $<span id="child-rate"></span>.00</label> per Child (under 16 years)
@@ -133,28 +135,8 @@
 					<button class="btn btn-danger mgbottom15" type="button">Book Now</button>
 					<button class="btn btn-danger mgbottom15" type="button">Check Availabiliy</button>
 					</div>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-4" style="display: none" id="boksDiv">
-				<div class="package-detail-wrap bgWhite" style="padding: 10px !important;">
-					{{-- <h3>Start Booking now</h3> --}}
-					<input type="text" hidden value="{{ $tour[0]->id}}" id="product-id">
-
-					<div class="row">
-						<div id="datepicker" class="col-md-12"></div>
-					</div>
-					<div class="row" style="margin-top: 0.5em;">
-						<div class="col-md-12" style="margin-bottom: 5px;">
-							<select name="t" id="bookingtimeselection" class="form-control" style="height: auto">
-								<option value="0">Select Time</option>
-								<option value=""></option>
-							</select>
-						</div>
-						<div class="col-md-4">
-							<label for="">Total</label>
-							<p id="totalprice"></p>
-						</div>
-						<div id="sa" class="col-md-8">
+					<div class="book-now-btn" style="display: none" id="boksDiv" >
+						<div id="sa">
 							<div id="bookingbtnDiv" style="display: none">
 								<button id="BookNowBtn" class="btn btn-danger"  type="button" data-backdrop="static" >Book Now</button></div>
 							<div id="bookingnotAvailable" style="display: none">
@@ -168,6 +150,29 @@
 							</div>
 						</div>
 					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-4" style="display: none" id="boksDiv">
+				<div class="package-detail-wrap bgWhite" style="padding: 10px !important;">
+					{{-- <h3>Start Booking now</h3> --}}
+					<input type="text" hidden value="{{ $tour[0]->id}}" id="product-id">
+
+					{{-- <div class="row">
+						<div id="datepicker" class="col-md-12"></div>
+					</div> --}}
+					{{-- <div class="row" style="margin-top: 0.5em;">
+						<div class="col-md-12" style="margin-bottom: 5px;">
+							<select name="t" id="bookingtimeselection" class="form-control" style="height: auto">
+								<option value="0">Select Time</option>
+								<option value=""></option>
+							</select>
+						</div>
+						<div class="col-md-4">
+							<label for="">Total</label>
+							<p id="totalprice"></p>
+						</div>
+						
+					</div> --}}
 				</div>
 			</div>
 		</div>
