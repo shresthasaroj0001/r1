@@ -105,7 +105,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td colspan="4" style="display: none" id="boksDiv">
+								<td colspan="4" class="booking-select-time" style="display: none" id="boksDiv">
 									<select name="t" id="bookingtimeselection" class="form-control">
 										<option value="0">Select Time</option>
 										<option value=""></option>
