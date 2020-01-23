@@ -60,10 +60,10 @@
 									<label> Adult </label>
 								</td>
 								<td>
-									<span id="TempAdultRate">$ 0.00<span>
+									<span id="AdultRate"><span>
 								</td>
 								<td>
-									<select name="" class="Tempchangeqty" id="Tempadultqty">
+									<select name="" class="changeqty" id="adultqty">
 										<option value="0">0</option>
 										<option value="1" selected="">1</option>
 										<option value="2">2</option>
@@ -74,7 +74,7 @@
 									</select>
 								</td>
 								<td>
-									<span id="Tempadultfinalr">$ 0.00</span>
+									<span id="adultfinalr"></span>
 								</td>
 							</tr>
 							<tr>
@@ -82,10 +82,10 @@
 									<label> Child </label>
 								</td>
 								<td>
-									<span id="TempChildRate">$ 0.00<span>
+									<span id="ChildRate"><span>
 								</td>
 								<td>
-									<select name="" class="Tempchangeqty" id="Tempchildqty">
+									<select name="" class="changeqty" id="childqty">
 										<option value="0" selected="">0</option>
 										<option value="1">1</option>
 										<option value="2">2</option>
@@ -96,13 +96,26 @@
 									</select>
 								</td>
 								<td>
-									<span id="Tempchildfinalr">$ 0.00</span>
+									<span id="childfinalr"></span>
 								</td>
 							</tr>
+							{{-- <tr>
+								<td colspan="4">
+									<span id="datepicker"></span>
+								</td>
+							</tr> --}}
+							{{-- <tr>
+								<td colspan="4">
+									<select name="t" id="bookingtimeselection" class="form-control">
+										<option value="0">Select Time</option>
+										<option value=""></option>
+									</select>
+								</td>
+							</tr> --}}
 							<tr>
 								<td colspan="4">
 									<label for="">Total: </label>
-									<span id="Temptotalprice">$ 0.00</span>
+									<span id="totalprice"></span>
 								</td>
 							</tr>
 						
@@ -116,53 +129,15 @@
 						<span> *PRICE IS FULLY INCLUSIVE OF GOODS AND SERVICES TAX (GST)</span> <br>
 						<span> *PRICES ARE QUOTED IN AUSTRALIAN DOLLARS </span>
 					</div>
+					<div id="checkavailabityBtn">
 					<button class="btn btn-danger mgbottom15" type="button">Book Now</button>
 					<button class="btn btn-danger mgbottom15" type="button">Check Availabiliy</button>
+					</div>
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-4" style="display: none" id="boksDiv">
 				<div class="package-detail-wrap bgWhite" style="padding: 10px !important;">
-					<h3>Start Booking now</h3>
-					<div class="row">
-						<div class="col-md-3">Adult</div>
-						<div class="col-md-3">
-							<p id="AdultRate"></p>
-						</div>
-						<div class="col-md-3">
-							<select name="" class="changeqty" id="adultqty">
-								<option value="0">0</option>
-								<option value="1" selected>1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-								<option value="5">5</option>
-								<option value="6">6</option>
-							</select>
-						</div>
-						<div class="col-md-3">
-							<p id="adultfinalr"></p>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3">Child</div>
-						<div class="col-md-3">
-							<p id="ChildRate"></p>
-						</div>
-						<div class="col-md-3">
-							<select name="" class="changeqty" id="childqty">
-								<option value="0">0</option>
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-								<option value="5">5</option>
-								<option value="6">6</option>
-							</select>
-						</div>
-						<div class="col-md-3">
-							<p id="childfinalr"></p>
-						</div>
-					</div>
+					{{-- <h3>Start Booking now</h3> --}}
 					<input type="text" hidden value="{{ $tour[0]->id}}" id="product-id">
 
 					<div class="row">
