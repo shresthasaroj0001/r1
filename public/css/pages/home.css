@@ -185,6 +185,9 @@
     overflow: hidden;
     position: relative;
 }
+.destination-section-wrap .product-wrap, #tourss .product-wrap {
+    max-height: 265px;
+}
 .product-wrap:before {
     content: '';
     position: absolute;

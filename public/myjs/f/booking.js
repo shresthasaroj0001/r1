@@ -2,6 +2,8 @@ $(function () {
     $('.mgbottom15').on('click', function () {
         $('#checkavailabityBtn').hide();
         $('#boksDiv').show();
+        $('.book-now-btn').show();
+        $('.booking-select-time').show();
         // $('#iti1').show();
         // $('.iti li').removeClass('active');
         // $('.tab-pane    .sa123').removeClass('active');
