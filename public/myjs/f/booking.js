@@ -230,7 +230,8 @@ $(function () {
         }
     });
     finaltime=0;
-    $('#boksDiv').on("click", "#BookNowBtn", function () {
+    $("#BookNowBtn").click(function () {
+    // $('#boksDiv').on("click", "#BookNowBtn", function () {
         if (totalPrice > 0) {
             if ((adulttimes + childtimes) <= seatsleft) {
                 finaltime = $('#bookingtimeselection').val();
