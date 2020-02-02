@@ -70,12 +70,10 @@ $(function () {
     });
 
     function validateRateInput() {
-        var r1 = parseFloat($('#rateFor1_4').val());
-        var r2 = parseFloat($('#rateFor5_7').val());
-        var r3 = parseFloat($('#rateFor9_11').val());
-        var r4 = parseFloat($('#rateFor12_23').val());
-        var r5 = parseInt($('#noOfAvailable').val());
-        if (r1 > 1 && r2 > 1 && r3 > 0 && r4 > 0 && r5 > 0) {
+        var r1 = parseFloat($('#rateForAdult').val());
+        var r2 = parseFloat($('#rateForChild').val());
+        var r3 = parseInt($('#noOfAvailable').val());
+        if (r1 > 1 && r2 > 1 && r3 > 0) {
             return true;
         }
         return false;
@@ -89,11 +87,9 @@ $(function () {
         }
         var obj = {
             "Time": TimePickerValue,
-            "r1": parseFloat($('#rateFor1_4').val()),
-            "r2": parseFloat($('#rateFor5_7').val()),
-            "r3": parseFloat($('#rateFor9_11').val()),
-            "r4": parseFloat($('#rateFor12_23').val()),
-            "r5": parseInt($('#noOfAvailable').val()),
+            "r1": parseFloat($('#rateForAdult').val()),
+            "r2": parseFloat($('#rateForChild').val()),
+            "r3": parseInt($('#noOfAvailable').val())
         };
         TimeSelected.push(obj);
         $('#rateinputDiv').hide();
@@ -109,12 +105,8 @@ $(function () {
         $("#dataTbl").empty();
 
         TimeSelected.forEach(function (item, index, array) {
-            i += "<tr><td>" + item.Time + "</td>";
-            i+="<td>"+item.r1+"</td>";
-            i+="<td>"+item.r2+"</td>";
-            i+="<td>"+item.r3+"</td>";
-            i+="<td>"+item.r4+"</td>";
-            i+="<td>"+item.r5+"</td>";
+            i += "<tr><td>" + item.Time + "</td><td>" + item.r1;
+            i += "</td><td>" + item.r2 + "</td><td>" + item.r3;
             i += "</td><td><button class='btn btn-danger deleterow' data-ids='" + index + "' type='button'>Remove</button></td></tr>";
         });
         // console.log(TimeSelected);
@@ -148,11 +140,9 @@ $(function () {
                     var reqO = {
                         "tourdetails_id":menuId,
                         "tourdatetime":itemm +" "+item.Time,
-                        "r5":item.r5,
-                        "r4":item.r4,
-                        "r3":item.r3,
-                        "r2":item.r2,
-                        "r1":item.r1,
+                        "paxs":item.r3,
+                        "rate_children":item.r2,
+                        "rate_adult":item.r1,
                         "stats":1,
                     };
                     finalObj.push(reqO);

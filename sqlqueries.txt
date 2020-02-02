@@ -1,0 +1,26 @@
+GetAvailabiltyForMonth
+//old
+BEGIN
+select t1.tourdatetime as tdate from (
+select tours.id,tours.tourdetails_id, date_format(tours.tourdatetime,'%Y-%m-%d') as tourdatetime,tours.paxs,tours.rate_children,tours.rate_adult,tours.stats,max(tours.created_at) maxDate 
+from tourcalenderdatetimeinfos as tours 
+where tours.tourdetails_id=tourId
+AND (date_format(tours.tourdatetime, '%Y-%m-%d') >= CURRENT_DATE()) AND date_format(datees, '%Y-%m')=date_format(tours.tourdatetime, '%Y-%m') GROUP BY tours.tourdatetime) t1 WHERE t1.stats=1 group by t1.tourdatetime;
+END
+
+//new
+BEGIN
+select t1.tourdatetime as tdate from (
+select tours.id,tours.tourdetails_id, date_format(tours.tourdatetime,'%Y-%m-%d') as tourdatetime,tours.paxs,tours.rate_1_4,tours.rate_5_7,tours.rate_9_11,tours.rate_12_23,tours.stats,max(tours.created_at) maxDate 
+from tourcalenderdatetimeinfos as tours 
+where tours.tourdetails_id=tourId
+AND (date_format(tours.tourdatetime, '%Y-%m-%d') >= CURRENT_DATE()) AND date_format(datees, '%Y-%m')=date_format(tours.tourdatetime, '%Y-%m') GROUP BY tours.tourdatetime) t1 WHERE t1.stats=1 group by t1.tourdatetime;
+END
+
+GetAvailabilityForGivenDate
+//new 
+BEGIN
+select tourcalenderdatetimeinfos.id,tourcalenderdatetimeinfos.rate_1_4, tourcalenderdatetimeinfos.rate_5_7, tourcalenderdatetimeinfos.rate_9_11, tourcalenderdatetimeinfos.rate_12_23,tourcalenderdatetimeinfos.paxs,DATE_FORMAT(tourcalenderdatetimeinfos.tourdatetime, '%h:%i %p') tourdatetime,tourcalenderdatetimeinfos.stats,(SELECT COUNT(reservations.id) from reservations WHERE reservations.tour_calenderid=tourcalenderdatetimeinfos.id) as cnt from ( select distinct tourdatetime,max(id) ID from tourcalenderdatetimeinfos where date(tourdatetime)=datees and tourdetails_id=tourId group by tourdatetime ) t1 inner join tourcalenderdatetimeinfos on t1.ID=tourcalenderdatetimeinfos.id
+order by tourcalenderdatetimeinfos.tourdatetime;
+END
+

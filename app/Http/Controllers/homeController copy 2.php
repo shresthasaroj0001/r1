@@ -14,7 +14,7 @@ use PayPal\Api\Payment;
 use Validator;
 use Session;
 
-class homeController extends Controller
+class homeController_latest extends Controller
 {
 
     public function index()
@@ -70,11 +70,8 @@ class homeController extends Controller
             foreach ($response as $tour) {
                 if ((int) $tour->stats == 1) {
                     $var = (object) [
-                        'rate_1_4'  => $tour->rate_1_4,
-                        'rate_5_7'  => $tour->rate_5_7,
-                        'rate_9_11'  => $tour->rate_9_11,
-                        'rate_12_23'  => $tour->rate_12_23,
-                        
+                        'rate_child' => $tour->rate_children,
+                        'rate_adult' => $tour->rate_adult,
                         'paxs' => (int) $tour->paxs - (int) $tour->cnt,
                         'tourdatetime' => $tour->tourdatetime,
                         'ids' => $tour->id,

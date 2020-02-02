@@ -120,7 +120,7 @@ $(function () {
             },
             success: function (datas) {
                 //monthdatas = datas;
-                // console.log(datas);
+                 console.log(datas);
                 dayData = [];
                 dayData = datas;
                 $('#bookingtimeselection').empty();
@@ -163,8 +163,11 @@ $(function () {
         $('#bookingtimeNotselected').show();
     }
 
-    var adultrate = 0;
-    var childrate = 0;
+    var rrate_1_4 = 0;
+    var rrate_5_7 = 0;
+    var rrate_9_11 = 0;
+    var rrate_12_23 = 0;
+
     var optionSelectedd = "";
     var seatsleft = 0;
     var totalPrice = 0;
@@ -176,14 +179,18 @@ $(function () {
 
         var parsedValue = parseInt(valueSelected);
         optionSelectedd = optionSelected;
-        adultrate = parseFloat(dayData[parsedValue].rate_adult);
-        childrate = parseFloat(dayData[parsedValue].rate_child);
+        
+        console.log(dayData[parsedValue]);
+ 
         seatsleft = parseInt(dayData[parsedValue].paxs);
-        $('#AdultRate').html('$ ' + adultrate);
-        $('#adult-rate').html(adultrate)
-        $('#ChildRate').html('$ ' + childrate);
-        $('#child-rate').html(childrate)
-
+        rrate_1_4 = dayData[parsedValue].rate_1_4;
+        rrate_5_7 = dayData[parsedValue].rate_5_7;
+        rrate_9_11 = dayData[parsedValue].rate_9_11;
+        rrate_12_23 = dayData[parsedValue].rate_12_23;
+        $('#Grp1').html('Group 1 - 4 $ ' + rrate_1_4);
+        $('#Grp2').html('Group 5 - 7 $ ' + rrate_5_7);
+        $('#Grp3').html('Group 9 - 11 $ ' + rrate_9_11);
+        $('#Grp4').html('Group 12 - 23 $ ' + rrate_12_23);
     }
 
     $('#bookingtimeselection').on('change', function (e) {
@@ -202,10 +209,21 @@ $(function () {
             adulttimes = 0;
             childtimes = 0;
         }
-
-        $("#adultfinalr").html('$ ' + (adulttimes * adultrate));
-        $("#childfinalr").html('$ ' + (childtimes * childrate));
-        totalPrice = ((adulttimes * adultrate) + (childtimes * childrate));
+        tempo = parseInt(adulttimes + childtimes);
+        if(tempo > 0)
+        {
+            if(tempo >= 1 && tempo <=4 ){
+                totalPrice = rrate_1_4;
+            }else if(tempo >= 5 && tempo <=7 ){
+                totalPrice = rrate_5_7;
+            }else if(tempo >= 8 && tempo <=11 ){
+                totalPrice = rrate_9_11;
+            }else {
+                totalPrice = rrate_12_23;
+            }
+        }else{
+            totalPrice = 0; 
+        }
         $('#totalprice').html('$ ' + totalPrice);
 
         if (totalPrice > 0) {

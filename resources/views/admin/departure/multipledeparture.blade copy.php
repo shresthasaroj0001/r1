@@ -67,20 +67,12 @@
                 <div class="row" style="display: none; width: 100%; padding-left: 1em; margin-bottom: 2pm"
                   id="rateinputDiv">
                   <div class="col-md-12" style="margin-top: 1em;">
-                    <label for="">Rate For 1-4 people</label>
-                    <input type="text" class="moneyValidator" id="rateFor1_4">
+                    <label for="">Rate For Adult</label>
+                    <input type="text" class="moneyValidator" id="rateForAdult">
                   </div>
-                  <div class="col-md-12" style="margin-top: 1em;">
-                    <label for="">Rate For 5-7 people</label>
-                    <input type="text" class="moneyValidator" id="rateFor5_7">
-                  </div>
-                  <div class="col-md-12" style="margin-top: 1em;">
-                    <label for="">Rate For 9-11 people</label>
-                    <input type="text" class="moneyValidator" id="rateFor9_11">
-                  </div>
-                  <div class="col-md-12" style="margin-top: 1em;">
-                    <label for="">Rate For 12-23 people</label>
-                    <input type="text" class="moneyValidator" id="rateFor12_23">
+                  <div class="col-md-12">
+                    <label for="">Rate For Child</label>
+                    <input type="text" class="moneyValidator" id="rateForChild">
                   </div>
                   <div class="col-md-12">
                     <label for="">Number Of Availability</label>
@@ -98,10 +90,8 @@
                   <thead>
                     <tr>
                       <th>Time</th>
-                      <th>Rate 1 - 4</th>
-                      <th>Rate 5 - 7</th>
-                      <th>Rate 9 - 11</th>
-                      <th>Rate 12 - 23</th>
+                      <th>Rate Adult</th>
+                      <th>Rate Child</th>
                       <th>No of Seats</th>
                       <th>Action</th>
                     </tr>

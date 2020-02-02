@@ -45,7 +45,7 @@
 						<h4 class="section-title"> Cost </h4>
 					</div>
 					
-					<div class="row col-md-12">
+					<div class="rates-caption mb-30">
 						<span id="Grp1"> </span><br>
 						<span id="Grp2"> </span><br>
 						<span id="Grp3"> </span><br>
@@ -57,12 +57,16 @@
 								<th> Type </th>
 								{{-- <th> Per Price </th> --}}
 								<th> Qty </th>
+								<th> Total </th>	
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
 								<td>
 									<label> Adult </label>
+								</td>
+								<td>
+									<span id="AdultRate"><span>
 								</td>
 								<td>
 									<select name="" class="changeqty" id="adultqty">
@@ -75,11 +79,16 @@
 										<option value="6">6</option>
 									</select>
 								</td>
-								
+								<td>
+									<span id="adultfinalr"></span>
+								</td>
 							</tr>
 							<tr>
 								<td>
 									<label> Child </label>
+								</td>
+								<td>
+									<span id="ChildRate"><span>
 								</td>
 								<td>
 									<select name="" class="changeqty" id="childqty">
@@ -91,6 +100,9 @@
 										<option value="5">5</option>
 										<option value="6">6</option>
 									</select>
+								</td>
+								<td>
+									<span id="childfinalr"></span>
 								</td>
 							</tr>
 							<tr>

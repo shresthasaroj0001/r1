@@ -100,6 +100,7 @@ Route::post('/contactus', 'SendEnquiryController@store')->name('contactus');
 // Route::get('/home', 'homeController@index')->name('home');
 
 Auth::routes();
+// Auth::routes(['register' => false]);
 
 Route::middleware(['auth'])->group(function () {
 

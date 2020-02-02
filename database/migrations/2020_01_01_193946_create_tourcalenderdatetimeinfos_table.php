@@ -18,8 +18,10 @@ class CreateTourcalenderdatetimeinfosTable extends Migration
             $table->integer('tourdetails_id');
             $table->dateTime('tourdatetime');
             $table->integer('paxs');
-            $table->decimal('rate_children', 8, 2);
-            $table->decimal('rate_adult', 8, 2);
+            $table->decimal('rate_1_4', 8, 2);
+            $table->decimal('rate_5_7', 8, 2);
+            $table->decimal('rate_9_11', 8, 2);
+            $table->decimal('rate_12_23', 8, 2);
             $table->boolean('stats')->default(1); 
             $table->dateTime('created_at');
         });

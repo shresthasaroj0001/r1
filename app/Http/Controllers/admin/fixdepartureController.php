@@ -69,11 +69,14 @@ class fixdepartureController extends Controller
             // $info->tourdetails_id = $event['tourdetails_id'];
             // $info->created_at = $now;
             // $info->stats = 1;
+            
            $temp = array(
-               'tourdatetime'=> $event['tourdatetime'], 
-               'paxs'=> $event['paxs'], 
-               'rate_children'=> $event['rate_children'], 
-               'rate_adult'=> $event['rate_adult'], 
+               'tourdatetime'=> $event['tourdatetime'],
+               'rate_1_4' => $event['r1'],
+               'rate_5_7' => $event['r2'],
+               'rate_9_11' => $event['r3'],
+               'rate_12_23' => $event['r4'],
+               'paxs'=> $event['r5'], 
                'stats'=> 1, 
                'tourdetails_id'=> $event['tourdetails_id'], 
                'created_at'=> $now);
