@@ -41,10 +41,81 @@
 			<div class="col-lg-4 col-md-4" style="" id="infosDiv">
 				<div class="package-detail-wrap bgWhite">
 					<h3>{{ $tour[0]->title }}</h3>
+					
 					<div class="title-captions">
 						<h4 class="section-title"> Cost </h4>
 					</div>
-					
+					<table class="table table-responsive">
+						<thead>
+							<tr>
+								<th> No. of Passenger </th>
+								<th> Cost </th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<label> 1 - 4 </label>
+								</td>
+								<td>
+									<label> $899.00 </label>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label> 5 - 7 </label>
+								</td>
+								<td>
+									<label> $1099.00 </label>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label> 8 - 11 </label>
+								</td>
+								<td>
+									<label> $1399.00 </label>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label> 12 - 23 </label>
+								</td>
+								<td>
+									<label> $2999.00 </label>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="title-captions">
+						<h4 class="section-title"> Booking </h4>
+					</div>
+					<table class="table table-responsive">
+						<thead>
+							<tr>
+								<th> Group Size </th>
+								<th> Cost </th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<select name="groupSize" id="groupSize">
+										<option disabled selected>Select Group Size</option>
+										<option value="1-4"> 1 - 4 </option>
+										<option value="1-4"> 5 - 7 </option>
+										<option value="1-4"> 8 - 11 </option>
+										<option value="1-4"> 12 - 23 </option>
+									</select>
+								</td>
+								<td>
+									<label>
+										$899.00
+									</label>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 					<div class="row col-md-12">
 						<span id="Grp1"> </span><br>
 						<span id="Grp2"> </span><br>
