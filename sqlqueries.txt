@@ -1,3 +1,81 @@
+//stored PROCEDURE
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAvailabilityForGivenDate`(IN `tourId` INT, IN `datees` VARCHAR(255))
+BEGIN
+select FRate.description, DATE_FORMAT(T1.tourdatetime,'%h:%i %p') tourdatetime from (
+select distinct tourdatetime,max(id) ID,stats from tourcalenderdatetimeinfos where date(tourdatetime)=date(datees) and tourdetails_id=tourId group by tourdatetime  
+) T1 
+inner join
+(
+select
+fee_rates.calenderId,
+GROUP_CONCAT(concat("R",fee_rates.id,", " ,fee_names.grpLow,' - ',fee_names.grpHigh,' $', fee_rates.rates) order by fee_names.id SEPARATOR '<br> ') as description 
+from fee_rates inner join fee_names on fee_rates.feenameId=fee_names.id group by fee_rates.calenderId 
+ ) FRate
+ on FRate.calenderId = T1.ID where T1.stats=1;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAvailabiltyForMonth`(IN `tourId` INT, IN `datees` VARCHAR(255))
+BEGIN
+select t1.tourdatetime as tdate from (
+select tours.id,tours.tourdetails_id, date_format(tours.tourdatetime,'%Y-%m-%d') as tourdatetime,tours.paxs,tours.stats,max(tours.created_at) maxDate 
+from tourcalenderdatetimeinfos as tours 
+where tours.tourdetails_id=tourId
+AND (date_format(tours.tourdatetime, '%Y-%m-%d') >= CURRENT_DATE()) AND date_format(datees, '%Y-%m')=date_format(tours.tourdatetime, '%Y-%m') GROUP BY tours.tourdatetime) t1 WHERE t1.stats=1 group by t1.tourdatetime;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetDataForCalenderIO`(
+IN `tourId` INT, 
+IN `startd` VARCHAR(255),
+IN `endd` VARCHAR(255)
+)
+BEGIN
+select fRate.description,s1.id,s1.start,s1.title from ( 
+SELECT tourcalenderdatetimeinfos.id,tourcalenderdatetimeinfos.stats, DATE_FORMAT(tourcalenderdatetimeinfos.tourdatetime, '%h:%i %p') as title,DATE_FORMAT(tourcalenderdatetimeinfos.tourdatetime, '%Y-%m-%d') as start FROM tourcalenderdatetimeinfos INNER JOIN ( select distinct tourdatetime,max(id) ID from tourcalenderdatetimeinfos WHERE tourcalenderdatetimeinfos.tourdetails_id=tourId AND ( DATE(tourcalenderdatetimeinfos.tourdatetime) BETWEEN DATE(startd) AND DATE(endd)) group by tourdatetime 
+) t1 ON tourcalenderdatetimeinfos.id=t1.ID ORDER BY tourcalenderdatetimeinfos.tourdatetime ) s1 INNER JOIN (select fee_rates.id,fee_rates.calenderId,GROUP_CONCAT( concat('Group ',fee_names.grpLow,' - ',fee_names.grpHigh,' $', fee_rates.rates) order by fee_names.id SEPARATOR '<br> ') as description from fee_rates inner join fee_names on fee_rates.feenameId=fee_names.id group by fee_rates.calenderId order by fee_names.id) fRate on s1.id=fRate.calenderId where s1.stats=1;
+END$$
+DELIMITER ;
+
+//feb-11
+old
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAvailabilityForGivenDate`(IN `tourId` INT, IN `datees` VARCHAR(255))
+BEGIN
+select tourcalenderdatetimeinfos.id,tourcalenderdatetimeinfos.rate_1_4, tourcalenderdatetimeinfos.rate_5_7, tourcalenderdatetimeinfos.rate_9_11, tourcalenderdatetimeinfos.rate_12_23,tourcalenderdatetimeinfos.paxs,DATE_FORMAT(tourcalenderdatetimeinfos.tourdatetime, '%h:%i %p') tourdatetime,tourcalenderdatetimeinfos.stats,(SELECT COUNT(reservations.id) from reservations WHERE reservations.tour_calenderid=tourcalenderdatetimeinfos.id) as cnt from ( select distinct tourdatetime,max(id) ID from tourcalenderdatetimeinfos where date(tourdatetime)=datees and tourdetails_id=tourId group by tourdatetime ) t1 inner join tourcalenderdatetimeinfos on t1.ID=tourcalenderdatetimeinfos.id
+order by tourcalenderdatetimeinfos.tourdatetime;
+END
+
+new
+select FRate.description, DATE_FORMAT(T1.tourdatetime,'%h:%i %p') tourdatetime from (
+select distinct tourdatetime,max(id) ID,stats from tourcalenderdatetimeinfos where date(tourdatetime)='2020-02-23' and tourdetails_id=1 group by tourdatetime  
+) T1 
+inner join
+(
+select
+fee_rates.calenderId,
+GROUP_CONCAT(concat("R",fee_rates.id,", " ,fee_names.grpLow,' - ',fee_names.grpHigh,' $', fee_rates.rates) order by fee_names.id SEPARATOR '<br> ') as description 
+from fee_rates inner join fee_names on fee_rates.feenameId=fee_names.id group by fee_rates.calenderId 
+ ) FRate
+ on FRate.calenderId = T1.ID where T1.stats=1;
+
+ //to calculate nos
+ select fee_rates.id as feeRateIds from (
+select tourcalenderdatetimeinfos.id from tourcalenderdatetimeinfos
+inner join 
+(
+select tourcalenderdatetimeinfos.tourdatetime from tourcalenderdatetimeinfos 
+inner join fee_rates 
+on tourcalenderdatetimeinfos.id=fee_rates.calenderId
+where fee_rates.id=64
+) T1
+ where tourcalenderdatetimeinfos.tourdatetime=T1.tourdatetime
+ ) T2
+ inner join fee_rates on T2.id = fee_rates.calenderId
+ 
+
 GetAvailabiltyForMonth
 //old
 BEGIN
@@ -23,4 +101,3 @@ BEGIN
 select tourcalenderdatetimeinfos.id,tourcalenderdatetimeinfos.rate_1_4, tourcalenderdatetimeinfos.rate_5_7, tourcalenderdatetimeinfos.rate_9_11, tourcalenderdatetimeinfos.rate_12_23,tourcalenderdatetimeinfos.paxs,DATE_FORMAT(tourcalenderdatetimeinfos.tourdatetime, '%h:%i %p') tourdatetime,tourcalenderdatetimeinfos.stats,(SELECT COUNT(reservations.id) from reservations WHERE reservations.tour_calenderid=tourcalenderdatetimeinfos.id) as cnt from ( select distinct tourdatetime,max(id) ID from tourcalenderdatetimeinfos where date(tourdatetime)=datees and tourdetails_id=tourId group by tourdatetime ) t1 inner join tourcalenderdatetimeinfos on t1.ID=tourcalenderdatetimeinfos.id
 order by tourcalenderdatetimeinfos.tourdatetime;
 END
-

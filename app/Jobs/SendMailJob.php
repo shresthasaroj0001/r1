@@ -45,57 +45,21 @@ class SendMailJob implements ShouldQueue
      */
     public function handle()
     {
-        //$resss = DB::select("select calenderId, adults, childs, firstname, lastname, mobilenos, alt_mobilenos, email, cruiseterminal, airport, other, triptype,DATE_FORMAT(traveldate,'%Y-%b-%d %h:%i %p') as traveldate, pickupaddress, noofpassenger, flightinfo, privatecharter, additionalinfo, DATE_FORMAT(tourdatetime,'%Y-%b-%d %h:%i %p') as tourdate, rate_children, rate_adult, ( SELECT GROUP_CONCAT(child_seats.name SEPARATOR ' , ') FROM enquirychildseats INNER JOIN child_seats ON enquirychildseats.childSeatid=child_seats.id where enquirychildseats.enquiryno=enquiries.id) ts from enquiries INNER JOIN tourcalenderdatetimeinfos on enquiries.calenderId=tourcalenderdatetimeinfos.id WHERE enquiries.id=?", [1]);
-        $resss = DB::select('call testprocedure(?)',[$this->enquiryNo]);
+        $resss = DB::select("select menus.title,fbookings.id,fbookings.firstname,fbookings.lastname,fbookings.mobilenos,fbookings.alt_mobilenos,fbookings.email,fbookings.additionalinfo,fee_names.grpLow,fee_names.grpHigh,fee_rates.rates,DATE_FORMAT(tourcalenderdatetimeinfos.tourdatetime,'%Y-%b-%d %h:%i %p') as tourdate from fbookings inner join fee_rates on fbookings.calenderId=fee_rates.id inner join tourcalenderdatetimeinfos on fee_rates.calenderId=tourcalenderdatetimeinfos.id inner join menus on tourcalenderdatetimeinfos.tourdetails_id=menus.id inner join fee_names on fee_rates.feenameId=fee_names.id where fbookings.id=?",[$this->enquiryNo]);
 
-        $Enquirys = new Enquiry();
-
-        $Enquirys->calenderId = $resss[0]->calenderId;
-        $Enquirys->adults = $resss[0]->adults;
-        $Enquirys->childs = $resss[0]->childs;
-        $Enquirys->firstname = $resss[0]->firstname;
-        $Enquirys->lastname = $resss[0]->lastname;
-        $Enquirys->mobilenos = $resss[0]->mobilenos;
-        $Enquirys->alt_mobilenos = $resss[0]->alt_mobilenos;
-        $Enquirys->email = $resss[0]->email;
-        $Enquirys->additionalinfo = $resss[0]->additionalinfo;
-        $Enquirys->tourdate = $resss[0]->tourdate;
-        $Enquirys->rate_children = $resss[0]->rate_children;
-        $Enquirys->rate_adult = $resss[0]->rate_adult;
-        $Enquirys->title = $resss[0]->title;
-
-        // return $this->from($enquiryss)
-        //         ->name('New Guest Mail')
-        //         ->view('test')->with('$enquiryss',$enquiryss);
-        // 'adults' => $Enquirys->adults,
-        //     'childs' => $Enquirys->childs,
-        //     'rate_children' => $Enquirys->rate_children,
-        //     'rate_adult' => $Enquirys->rate_adult,
-
-        $chidtotal =  $Enquirys->childs * $Enquirys->rate_children;
-        $adulttotols = $Enquirys->adults * $Enquirys->rate_adult;
-        $finalTotals = $chidtotal+$adulttotols;
-
-        $data = array();
         $data = array(
-            'from_email' => $Enquirys->email,
-            'title' => $Enquirys->title,
-            'from_name' => $Enquirys->firstname . ' ' . $Enquirys->lastname,
+            'from_email' => $resss[0]->email,
+            'title' => $resss[0]->title,
+            'from_name' => $resss[0]->firstname . ' ' . $resss[0]->lastname,
             'to_name' => 'Admin',
             'subject' => 'New Booking',
             'to_email' => 'sher@shellytours.com',
-            'mobilenos' => $Enquirys->mobilenos,
-            'alt_mobilenos' => $Enquirys->alt_mobilenos == null ? '' : $Enquirys->alt_mobilenos,
-            'additionalinfo' => $Enquirys->additionalinfo,
-            'childseats' => $Enquirys->ts,
-            'tourdate' => $Enquirys->tourdate,
-            'adults' => $Enquirys->adults,
-            'childs' => $Enquirys->childs,
-            'rate_children' => $Enquirys->rate_children,
-            'rate_adult' => $Enquirys->rate_adult,
-            'childtotal' => $chidtotal,
-            'adulttotal' => $adulttotols,
-            'finalTotals' => $finalTotals
+            'mobilenos' => $resss[0]->mobilenos,
+            'alt_mobilenos' => $resss[0]->alt_mobilenos == null ? '' : $resss[0]->alt_mobilenos,
+            'additionalinfo' => $resss[0]->additionalinfo,
+            'tourdate' => $resss[0]->tourdate,
+            'grpSize' => 'Group '.$resss[0]->grpLow.' - '.$resss[0]->grpHigh,
+            'ratess' => $resss[0]->rates,
         );
 
         Mail::send('test', $data, function ($m) use ($data) {

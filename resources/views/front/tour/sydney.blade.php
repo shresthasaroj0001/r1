@@ -8,6 +8,11 @@
 @endsection
 
 @section('bodycontent')
+<style>
+	.table {
+    margin-bottom: 0% !important;
+}
+</style>
 <section class="inner-header img-pos" style="background-image: url('/img/slider3.jpg');">
 	<div class="overlay">
 		<div class="container">
@@ -17,7 +22,7 @@
 				<li class="active"> <a>{{ $tour[0]->title }}</a> </li>
 			</ul>
 		</div>
-		
+
 	</div>
 </section>
 
@@ -41,136 +46,52 @@
 			<div class="col-lg-4 col-md-4" style="" id="infosDiv">
 				<div class="package-detail-wrap bgWhite">
 					<h3>{{ $tour[0]->title }}</h3>
-					
+
 					<div class="title-captions">
 						<h4 class="section-title"> Cost </h4>
 					</div>
-					<table class="table table-responsive">
+					<table class="table table-responsive" id="costDiv">
 						<thead>
 							<tr>
 								<th> No. of Passenger </th>
 								<th> Cost </th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="costDivtBody">
 							<tr>
-								<td>
-									<label> 1 - 4 </label>
-								</td>
-								<td>
-									<label> $899.00 </label>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<label> 5 - 7 </label>
-								</td>
-								<td>
-									<label> $1099.00 </label>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<label> 8 - 11 </label>
-								</td>
-								<td>
-									<label> $1399.00 </label>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<label> 12 - 23 </label>
-								</td>
-								<td>
-									<label> $2999.00 </label>
+								<td colspan="2" style="vertical-align : middle;text-align:center;">
+									<h1 id="123">Loading...</h1>
 								</td>
 							</tr>
 						</tbody>
 					</table>
+
 					<div class="title-captions">
 						<h4 class="section-title"> Booking </h4>
 					</div>
-					<table class="table table-responsive">
+					<table class="table table-responsive" id="grpInfo">
 						<thead>
 							<tr>
 								<th> Group Size </th>
 								<th> Cost </th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="grpSelectionTble">
 							<tr>
-								<td>
-									<select name="groupSize" id="groupSize">
-										<option disabled selected>Select Group Size</option>
-										<option value="1-4"> 1 - 4 </option>
-										<option value="1-4"> 5 - 7 </option>
-										<option value="1-4"> 8 - 11 </option>
-										<option value="1-4"> 12 - 23 </option>
-									</select>
-								</td>
-								<td>
-									<label>
-										$899.00
-									</label>
+								<td colspan="2" style="vertical-align : middle;text-align:center;">
+									<h1 id="123">Loading...</h1>
 								</td>
 							</tr>
 						</tbody>
 					</table>
-					<div class="row col-md-12">
-						<span id="Grp1"> </span><br>
-						<span id="Grp2"> </span><br>
-						<span id="Grp3"> </span><br>
-						<span id="Grp4"> </span>
-					</div>
-					<table class="table table-responsive">
-						<thead>
-							<tr>
-								<th> Type </th>
-								{{-- <th> Per Price </th> --}}
-								<th> Qty </th>
-							</tr>
-						</thead>
+
+					<table class="table table-responsive" style="display: none" id="TimselectionDiv">
 						<tbody>
 							<tr>
-								<td>
-									<label> Adult </label>
-								</td>
-								<td>
-									<select name="" class="changeqty" id="adultqty">
-										<option value="0">0</option>
-										<option value="1" selected="">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										<option value="6">6</option>
-									</select>
-								</td>
-								
+								<td><label>Departure Time</label></td>
 							</tr>
 							<tr>
-								<td>
-									<label> Child </label>
-								</td>
-								<td>
-									<select name="" class="changeqty" id="childqty">
-										<option value="0" selected="">0</option>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										<option value="6">6</option>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="4" style="display: none" id="boksDiv">
-									<span id="datepicker"></span>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="4" class="booking-select-time" style="display: none" id="boksDiv">
+								<td colspan="4" class="booking-select-time" >
 									<select name="t" id="bookingtimeselection" class="form-control">
 										<option value="0">Select Time</option>
 										<option value=""></option>
@@ -178,68 +99,28 @@
 								</td>
 							</tr>
 							<tr>
-								<td colspan="4">
-									<label for="">Total: </label>
-									<span id="totalprice"></span>
+								<td colspan="4" >
+									<span id="datepicker"></span>
 								</td>
 							</tr>
-						
 						</tbody>
-						
 					</table>
-					
-					{{-- <div class="rates">
-						<p> <label>$<span id="adult-rate"></span>.00</label> per Adult </p>
-						<p><label> $<span id="child-rate"></span>.00</label> per Child (under 16 years)
-					</div> --}}
+
 					<div class="rates-caption mb-30">
 						<span> *PRICE IS FULLY INCLUSIVE OF GOODS AND SERVICES TAX (GST)</span> <br>
 						<span> *PRICES ARE QUOTED IN AUSTRALIAN DOLLARS </span>
 					</div>
 					<div id="checkavailabityBtn">
-					<button class="btn btn-danger mgbottom15" type="button">Book Now</button>
-					<button class="btn btn-danger mgbottom15" type="button">Check Availabiliy</button>
+						<button class="btn btn-danger mgbottom15" type="button">Book Now</button>
+						<button class="btn btn-danger mgbottom15" type="button">Check Availabiliy</button>
 					</div>
-					<div class="book-now-btn" style="display: none" id="boksDiv" >
-						<div id="sa">
-							<div id="bookingbtnDiv" style="display: none">
-								<button id="BookNowBtn" class="btn btn-danger"  type="button" data-backdrop="static" >Book Now</button></div>
-							<div id="bookingnotAvailable" style="display: none">
-								<button disabled="disabled" class="btn btn-danger">Booking Not Available</button>
-							</div>
-							<div id="bookingExced" style="display: none">
-								<button disabled="disabled" class="btn btn-danger">Booking Exceed</button>
-							</div>
-							<div id="bookingtimeNotselected">
-								<div class="alert alert-danger">Please Select Time</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-4" style="display: none" id="boksDiv">
-				<div class="package-detail-wrap bgWhite" style="padding: 10px !important;">
-					{{-- <h3>Start Booking now</h3> --}}
-					<input type="text" hidden value="{{ $tour[0]->id}}" id="product-id">
 
-					{{-- <div class="row">
-						<div id="datepicker" class="col-md-12"></div>
-					</div> --}}
-					{{-- <div class="row" style="margin-top: 0.5em;">
-						<div class="col-md-12" style="margin-bottom: 5px;">
-							<select name="t" id="bookingtimeselection" class="form-control" style="height: auto">
-								<option value="0">Select Time</option>
-								<option value=""></option>
-							</select>
-						</div>
-						<div class="col-md-4">
-							<label for="">Total</label>
-							<p id="totalprice"></p>
-						</div>
-						
-					</div> --}}
+					<div class="book-now-btn" style="display: none" id="bookingFinal">
+						<button id="BookNowBtn" class="btn btn-danger" type="button" data-backdrop="static">Book Now</button>
+					</div>
 				</div>
 			</div>
+			<input type="text" hidden value="{{ $tour[0]->id}}" id="product-id">
 		</div>
 		<div class="row" style="margin-top: 1em;">
 			<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
@@ -299,7 +180,7 @@
 			</div>
 
 		</div>
-<input type="text" hidden value="{{ $dates }}" id="mydates">
+		<input type="text" hidden value="{{ $dates }}" id="mydates">
 	</div>
 </section>
 <div class="modal fade" id="modal-overlaysss">
@@ -314,16 +195,14 @@
 			<div class="modal-body">
 				<form class="row flex-row" method="POST" id="bookingForm" action="{{ route('bookingsubmit')}}">
 					<input type="text" hidden id="redirectFrmId" value="" name="calId">
-					<input type="text" hidden id="redirectFrmadults" value="" name="adults">
-					<input type="text" hidden id="redirectFrmchilds" value="" name="childs">
-					<input type="text" hidden value="0" name="noofpassenger ">
 
 					<input type="hidden" name="_token" id="tokenn" value="{{ csrf_token() }}">
 					<div class="form-group col-xs-12 col-md-6">
 						<label>First Name <span class="required"> *</span> </label>
 						<input type="text" class="form-control" name="firstname" id="firstname" placeholder="First Name"
 							required>
-						<span class="form_error" id="invalid_firstname" style="display:none">First Name is required</span>
+						<span class="form_error" id="invalid_firstname" style="display:none">First Name is
+							required</span>
 					</div>
 					<div class="form-group col-xs-12 col-md-6">
 						<label>Last Name <span class="required"> *</span></label>
@@ -333,8 +212,8 @@
 					</div>
 					<div class="form-group col-xs-12 col-md-6">
 						<label>Mobile Number <span class="required"> *</span> </label>
-						<input type="text" class="form-control" name="mobilenos" id="mobilenos" placeholder="Phone Number"
-							required>
+						<input type="text" class="form-control" name="mobilenos" id="mobilenos"
+							placeholder="Phone Number" required>
 						<span class="form_error" id="invalid_mobilenos" style="display:none">Mobile Number is
 							required</span>
 					</div>
@@ -349,10 +228,11 @@
 						<span class="form_error" id="invalid_email" style="display:none">Email is required</span>
 						<span class="form_error" id="invalid_email_invalid" style="display:none">Email is invalid</span>
 					</div>
-	
+
 					<div class="form-group col-xs-12 col-md-12">
 						<label>Additional Info</label>
-						<textarea name="additionalinfo" class="form-control" placeholder="Additional Informations" id="adInfos" rows="5"></textarea>
+						<textarea name="additionalinfo" class="form-control" placeholder="Additional Informations"
+							id="adInfos" rows="5"></textarea>
 					</div>
 					<div class="form-group col-xs-12 col-md-12">
 						<span class="required"> *</span> are required fields.
@@ -377,12 +257,12 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script src="/myjs/f/booking.js"></script>
-{{-- <script type="text/javascript" src="/myjs/f/booknow.js"></script> --}}
-<!-- <script src="/dist/jquery-viewer.min.js"></script> -->
 <script type="text/javascript">
 	$('#images').viewer({
     // options here
 		});
 	// $('#modal-overlaysss').modal({backdrop: 'static', keyboard: false})  
 </script>
+<script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.6/dist/loadingoverlay.min.js">
+</script> 
 @endsection

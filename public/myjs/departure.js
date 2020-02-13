@@ -1,5 +1,6 @@
 $(function () {
     var menuId = parseInt($('#menuids').val());
+
     var date = new Date();
     $('#mdp-demoo').multiDatesPicker({
         dateFormat: "yy-mm-dd",
@@ -39,18 +40,22 @@ $(function () {
         }
         TimePickerValue = datees;
         rateinputDivShow();
-        console.log(datees);
+        $('#headingss').html('Update Rate For Tour Time: '+datees);
+        
+        // console.log(datees);
     });
+    // $('#modal-overlays').modal('show');
 
     function rateinputDivShow() {
         $("#addtime").attr("disabled", true);
         $("#addtime").prop("disabled", true);
-        $('#rateinputDiv').show();
+        // $('#rateinputDiv').show();
         $(".moneyValidator").val('');
-        $("#noOfAvailable").val('');
+        // $("#noOfAvailable").val('');
+        $('#modal-overlays').modal('show');
     }
 
-    $('#rateinputDiv').on('keyup', ".moneyValidator", function (event) {
+    $('#modal-overlays').on('keyup', ".moneyValidator", function (event) {
         var ress = $(this).val();
         var valid = /^\d{0,16}(\.\d{0,2})?$/.test(ress);
         if (!valid && ress != null) {
@@ -70,16 +75,39 @@ $(function () {
     });
 
     function validateRateInput() {
-        var r1 = parseFloat($('#rateFor1_4').val());
-        var r2 = parseFloat($('#rateFor5_7').val());
-        var r3 = parseFloat($('#rateFor9_11').val());
-        var r4 = parseFloat($('#rateFor12_23').val());
-        var r5 = parseInt($('#noOfAvailable').val());
-        if (r1 > 1 && r2 > 1 && r3 > 0 && r4 > 0 && r5 > 0) {
-            return true;
-        }
-        return false;
+        var Isvalid = true;
+        $('#feeratetbl tbody tr').each(function () {
+            var tds = $(this).find('input');
+
+            if (tds != null) {
+                var tdsid = tds[0]['id'];
+
+                if(tds[0].value != null){
+                    var r = $.trim(tds[0].value);
+                    if(r.length <= 0){
+                        Isvalid = false;
+                        return false;
+                    }
+                    
+                }
+               
+            }
+        });
+
+        return Isvalid;
     }
+
+    var tempi="<tr><th>Time</th>";
+    $('#feeratetbl tbody tr').each(function () {
+        var tds = $(this).find('input');
+        if (tds != null) {
+            var tdsname = tds[0]['name'];
+            tempi+="<th>"+tdsname+"</th>";
+        }
+    });
+    tempi+="<th>Action</th>";
+    $('#dataTbl_head').html(tempi);
+
     var TimeSelected = [];
     $('#addTOlistBtn').click(function () {
         var r = validateRateInput();
@@ -87,21 +115,32 @@ $(function () {
             alert('All Fields Are Mandatory');
             return false;
         }
-        var obj = {
-            "Time": TimePickerValue,
-            "r1": parseFloat($('#rateFor1_4').val()),
-            "r2": parseFloat($('#rateFor5_7').val()),
-            "r3": parseFloat($('#rateFor9_11').val()),
-            "r4": parseFloat($('#rateFor12_23').val()),
-            "r5": parseInt($('#noOfAvailable').val()),
-        };
-        TimeSelected.push(obj);
-        $('#rateinputDiv').hide();
+
+        var size=0;
+        var ls=[];
+        $('#feeratetbl tbody tr').each(function () {
+            var tds = $(this).find('input');
+            if (tds != null) {
+                var tdsid = tds[0]['id'];
+                if(tds[0].value != null){
+                    var r = $.trim(tds[0].value);
+                    var rates = parseFloat(r).toFixed(2);
+                    var a = {"name":tds[0]['name'], "id": parseInt(tdsid), "rates":rates};
+                    ls.push(a);
+                    size += 1;
+                }
+            }
+        });
+        //console.log(ls);
+        TimeSelected.push({ "ddata" : ls, "Time": TimePickerValue, "mId":menuId})
+        // $('#rateinputDiv').hide();
+        $('#modal-overlays').modal('hide');
         $('#timepicker1').timepicker('setTime', '');
         $("#addtime").prop("disabled", false);
         $("#addtime").removeAttr("disabled");
 
         RefreshTimeList();
+        console.log(TimeSelected);
     });
 
     function RefreshTimeList() {
@@ -109,16 +148,15 @@ $(function () {
         $("#dataTbl").empty();
 
         TimeSelected.forEach(function (item, index, array) {
+            var items = item.ddata;
             i += "<tr><td>" + item.Time + "</td>";
-            i+="<td>"+item.r1+"</td>";
-            i+="<td>"+item.r2+"</td>";
-            i+="<td>"+item.r3+"</td>";
-            i+="<td>"+item.r4+"</td>";
-            i+="<td>"+item.r5+"</td>";
+            items.forEach(function (iteme, indexx, array) {
+                i+="<td>"+iteme.rates+"</td>";
+            });
             i += "</td><td><button class='btn btn-danger deleterow' data-ids='" + index + "' type='button'>Remove</button></td></tr>";
         });
         // console.log(TimeSelected);
-
+        
         $("#dataTbl").html(i);
 
         if (TimeSelected.length > 0) {
@@ -136,29 +174,10 @@ $(function () {
     $("#finalsubmitbtn").attr("disabled", true);
     $("#finalsubmitbtn").prop("disabled", true);
 
-    console.log(window.location.href);
+    // console.log(window.location.href);
 
     $('#finalsubmitbtn').click(function () {
         if (TimeSelected.length > 0) {
-            // $("#finalsubmitbtn").attr("disabled", true);
-            // $("#finalsubmitbtn").prop("disabled", true);
-            var finalObj = [];
-            TimeSelected.forEach(function (item, index, array) {
-                selectedDates.forEach(function (itemm, indexx, arrayy) {
-                    var reqO = {
-                        "tourdetails_id":menuId,
-                        "tourdatetime":itemm +" "+item.Time,
-                        "r5":item.r5,
-                        "r4":item.r4,
-                        "r3":item.r3,
-                        "r2":item.r2,
-                        "r1":item.r1,
-                        "stats":1,
-                    };
-                    finalObj.push(reqO);
-                });
-            });
-            console.log(finalObj)
 
             $.ajax(
                 {
@@ -167,7 +186,11 @@ $(function () {
                     type: "POST",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    data:JSON.stringify(finalObj),
+                    data:JSON.stringify({"TimeSelected":TimeSelected, "selectedDates":selectedDates}),
+                    beforeSend:function(){
+                        $("#finalsubmitbtn").attr("disabled", true);
+                        $("#finalsubmitbtn").prop("disabled", true);
+                    },
                     success: function (datas) {
                         if(parseInt(datas)==1){
                             alert("Success");
@@ -176,7 +199,10 @@ $(function () {
                         }
                         location.reload(true);
                     },
-                    complete: function () { },
+                    complete: function () { 
+                        $("#finalsubmitbtn").prop("disabled", false); 
+                        $("#finalsubmitbtn").removeAttr("disabled");
+                    },
                     error: function (jqXHR, textStatus, errorThrown) { console.log('error'); }
                 });
         }

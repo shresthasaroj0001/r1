@@ -16,8 +16,6 @@ class CreateFbookingsTable extends Migration
         Schema::create('fbookings', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('calenderId');
-            $table->integer('adults');
-            $table->integer('childs');
 
             $table->string('firstname');
             $table->string('lastname');

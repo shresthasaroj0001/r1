@@ -3,17 +3,16 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use DateTime;
 use DB;
 use Illuminate\Http\Request;
-use App\tourcalenderdatetimeinfo;
-use DateTime;
 
 class fixdepartureController extends Controller
 {
     public function showalltours()
     {
         $responses = DB::select("SELECT id,title,DATE_FORMAT(menus.updated_at,'%Y-%b-%d') days,infos as descriptions FROM menus WHERE menus.isdeleted=0 ORDER BY menus.orderb ASC");
-        return view('admin.departure.allmenus')->with('datas',$responses);
+        return view('admin.departure.allmenus')->with('datas', $responses);
     }
 
     public function index($id)
@@ -23,7 +22,7 @@ class fixdepartureController extends Controller
             if ($response != null) {
                 return view('admin.departure.index')->with('menu_id', $id)->with('menu_title', $response[0]->title);
             }
-        } 
+        }
         return view('admin.404');
     }
 
@@ -32,7 +31,12 @@ class fixdepartureController extends Controller
         if ($id > 0) {
             $response = DB::select('SELECT menus.id,menus.title FROM menus WHERE menus.isdeleted=0 and menus.id=?', [$id]);
             if ($response != null) {
-                return view('admin.departure.multipledeparture')->with('menu_id', $id)->with('menu_title', $response[0]->title);
+                $feeNames = DB::select('select id,fee_names.grpLow,fee_names.grpHigh from fee_names ORDER BY id ASC');
+                if ($response == null) {
+                    return redirect()->route('admin.dashboard')->with('error', "Please contact developer");
+                }
+
+                return view('admin.departure.multipledeparture')->with('menu_id', $id)->with('menu_title', $response[0]->title)->with('feeNames', $feeNames);
             }
         } else {
             return view('admin.404');
@@ -44,49 +48,66 @@ class fixdepartureController extends Controller
         $start = $request->start;
         $end = $request->end;
         $menuId = $request->tId;
-        // return array();
-        try {
 
-            $responses = DB::select("SELECT tourcalenderdatetimeinfos.id, CONCAT('Rate Adult ',tourcalenderdatetimeinfos.rate_adult,'<br>','Rate Child',' ',tourcalenderdatetimeinfos.rate_children,'<br>','Seats ',tourcalenderdatetimeinfos.paxs,'<br> Updated ',DATE_FORMAT(tourcalenderdatetimeinfos.created_at, '%Y-%b-%d')) as description,DATE_FORMAT(tourcalenderdatetimeinfos.tourdatetime, '%h:%i %p') as title,DATE_FORMAT(tourcalenderdatetimeinfos.tourdatetime, '%Y-%m-%d') as start FROM tourcalenderdatetimeinfos INNER JOIN ( select distinct tourdatetime,max(id) ID from tourcalenderdatetimeinfos WHERE tourcalenderdatetimeinfos.tourdetails_id=? AND (tourcalenderdatetimeinfos.tourdatetime  BETWEEN ? AND ?) group by tourdatetime ) t1 ON                 tourcalenderdatetimeinfos.id=t1.ID ORDER BY tourcalenderdatetimeinfos.tourdatetime", [$menuId,$start, $end]);
-            return $responses;
+        try {
+            $response = DB::select('call GetDataForCalenderIO(?,?,?)', array($menuId,$start,$end));
+            return $response;
         } catch (\Illuminate\Database\QueryException $ex) {
-            // dd($ex);
+             //dd($ex);
             return array();
         }
     }
 
     public function updateEventInfo(Request $request)
-    {   
+    {
+
         $events = $request->all();
         $now = new DateTime();
-        $data = array();
-        foreach($events as $event){
-            // $info = new tourcalenderdatetimeinfo();
-            // $info->tourdatetime = $event['tourdatetime'];
-            // $info->paxs = $event['paxs'];
-            // $info->rate_children = $event['rate_children'];
-            // $info->rate_adult = $event['rate_adult'];
-            // $info->tourdetails_id = $event['tourdetails_id'];
-            // $info->created_at = $now;
-            // $info->stats = 1;
+        $selectedDates = $events['selectedDates'];
+        $TimeSelected = $events['TimeSelected'];
+
+        try {
+            $ids = [];
+            DB::beginTransaction();
+
+            foreach ($TimeSelected as $TimeOfDay) {
+                foreach ($selectedDates as $eventDate) {
+                    $temp = array(
+                        'tourdetails_id' => $TimeOfDay['mId'],
+                        'tourdatetime' => $eventDate . " " . $TimeOfDay['Time'],
+                        'paxs' => 1,
+                        'stats' => 1,
+                        'created_at' => $now);
+                    $id = DB::table('tourcalenderdatetimeinfos')->insertGetId($temp);
+                    array_push($ids, $id);
+                }
+            }
+
+            $ratesData = [];
+
+            $index=0;
+            foreach ($TimeSelected as $TimeOfDay) { 
+                foreach ($selectedDates as $eventDate) { 
+                    foreach ($TimeOfDay['ddata'] as $rate) { // 2pm 4pm 4
+                        $temp = array(
+                            'calenderId' => $ids[$index],
+                            'feenameId' => $rate['id'],
+                            'rates' => $rate['rates'],
+                            'createdDate' => $now);
+                        array_push($ratesData, $temp);
+                    }
+                  $index = $index+1;
+                }
+            }
+
             
-           $temp = array(
-               'tourdatetime'=> $event['tourdatetime'],
-               'rate_1_4' => $event['r1'],
-               'rate_5_7' => $event['r2'],
-               'rate_9_11' => $event['r3'],
-               'rate_12_23' => $event['r4'],
-               'paxs'=> $event['r5'], 
-               'stats'=> 1, 
-               'tourdetails_id'=> $event['tourdetails_id'], 
-               'created_at'=> $now);
-               array_push($data,$temp);
-        }
-        try {        
-            DB::table('tourcalenderdatetimeinfos')->insert($data);
+            DB::table('fee_rates')->insert($ratesData);
+            // dd($ids);
+            DB::commit();
             return "1";
         } catch (\Illuminate\Database\QueryException $ex) {
-            return $ex;
+            DB::rollback();
+            // return $ex;
             return "0";
         }
         return "0";

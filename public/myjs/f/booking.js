@@ -1,20 +1,11 @@
 $(function () {
+    var IscheckavailabityBtnPressed = false;
     $('.mgbottom15').on('click', function () {
+        IscheckavailabityBtnPressed = true;
         $('#checkavailabityBtn').hide();
-        $('#boksDiv').show();
+        $('#TimselectionDiv').show();
         $('.book-now-btn').show();
         $('.booking-select-time').show();
-        // $('#iti1').show();
-        // $('.iti li').removeClass('active');
-        // $('.tab-pane    .sa123').removeClass('active');
-        // $('.tab-content .sa123').removeClass('active');
-        //.addClass('notSelectedTab');
-        //$('.tab-pane .sa123').find('a[href="'+active_tab+'"]').parent().addClass('active');
-        // $(".sa123 li").addClass('active').siblings().removeClass('active');
-        // $(".iti li").eq(0).addClass('active'); 
-        // $('.iti li').trigger('change');
-
-        // $(".sa123").eq(0).addClass('active'); 
     });
 
     var initLoad = true;
@@ -64,12 +55,12 @@ $(function () {
     }
 
     var mnts = $('#mydates').val();
-    if(mnts == ""){
+    if (mnts == "") {
         monthchangeEvent(currentmonth);
-    }else{
+    } else {
         monthchangeEvent(mnts);
     }
-    
+
 
     function monthchangeEvent(month) {
         $.ajax({
@@ -84,21 +75,18 @@ $(function () {
             },
             success: function (datas) {
                 monthdatas = datas;
-                // console.log(datas);
-            },
-            error: function (eror) {
-
-            },
-            complete: function () {
-                if(initLoad){
+                console.log(datas);
+                if (initLoad) {
                     $("#datepicker").datepicker("setDate", mnts);
-                    initLoad=false;
+                    initLoad = false;
                 }
                 $("#datepicker").datepicker('refresh');
                 if (monthdatas.find(x => x.tdate == $("#datepicker").val()) != undefined) {
                     DateSelectEvent($("#datepicker").val());
                 }
-            }
+            },
+            error: function (eror) {},
+            complete: function () {}
         }); //ajax ending
     }
 
@@ -116,22 +104,24 @@ $(function () {
                 "month": datees
             },
             beforeSend: function () {
-                bookingSelectionDateChange();
+                $('#bookingtimeselection').empty();
+                $("#TimselectionDiv").LoadingOverlay("show", {
+                    background: "rgba(165, 190, 100, 0.5)"
+                });
+                $("#TimselectionDiv").LoadingOverlay("show");
+                $("#costDiv").LoadingOverlay("show");
+                $(".booking-select-time").LoadingOverlay("show");
+
+                $("#bookingFinal").hide();
             },
             success: function (datas) {
-                //monthdatas = datas;
-                 console.log(datas);
+                // console.log("asdf",datas);
                 dayData = [];
                 dayData = datas;
-                $('#bookingtimeselection').empty();
                 i = "";
                 if (datas.length != 0) {
                     datas.forEach(function (item, index, array) {
-                        if (parseInt(item.paxs) > 0) {
-                            i += "<option value='" + index + "'>" + item.tourdatetime + " -" + item.paxs + " Available " + "</option>";
-                        } else {
-                            i += "<option value=''>" + "<b>Sold Out</b>" + "</option>";
-                        }
+                        i += "<option value='" + index + "'>" + item.tourdatetime + "</option>";
                     });
                 }
                 $('#bookingtimeselection').append(i);
@@ -139,9 +129,6 @@ $(function () {
                 if (datas.length != 0) {
                     $('#bookingtimeselection').val(0);
                     bookingTimechange();
-                    CalculateAmount();
-                    $('#bookingtimeNotselected').hide();
-                    $('#bookingbtnDiv').show();
                 }
             },
             error: function (eror) {
@@ -149,28 +136,17 @@ $(function () {
             },
             complete: function () {
                 $("#datepicker").datepicker('refresh');
+                $("#TimselectionDiv").LoadingOverlay("hide", true);
+                $("#costDiv").LoadingOverlay("hide", true);
+                $(".booking-select-time").LoadingOverlay("hide", true);
+
+                if (IscheckavailabityBtnPressed)
+                    $("#bookingFinal").show();
             }
         }); //ajax ending
     }
 
-    function bookingSelectionDateChange() {
-        $('#bookingtimeselection').empty();
-        $('#AdultRate').html('Please Select Time');
-        $('#ChildRate').html('Please Select Time');
-
-        $('#bookingbtnDiv').hide();
-        $('#bookingnotAvailable').hide();
-        $('#bookingtimeNotselected').show();
-    }
-
-    var rrate_1_4 = 0;
-    var rrate_5_7 = 0;
-    var rrate_9_11 = 0;
-    var rrate_12_23 = 0;
-
     var optionSelectedd = "";
-    var seatsleft = 0;
-    var totalPrice = 0;
 
     function bookingTimechange() {
         var optionSelected = $("#bookingtimeselection option:selected").text();
@@ -179,18 +155,43 @@ $(function () {
 
         var parsedValue = parseInt(valueSelected);
         optionSelectedd = optionSelected;
-        
+
         console.log(dayData[parsedValue]);
- 
-        seatsleft = parseInt(dayData[parsedValue].paxs);
-        rrate_1_4 = dayData[parsedValue].rate_1_4;
-        rrate_5_7 = dayData[parsedValue].rate_5_7;
-        rrate_9_11 = dayData[parsedValue].rate_9_11;
-        rrate_12_23 = dayData[parsedValue].rate_12_23;
-        $('#Grp1').html('Group 1 - 4 $ ' + rrate_1_4);
-        $('#Grp2').html('Group 5 - 7 $ ' + rrate_5_7);
-        $('#Grp3').html('Group 9 - 11 $ ' + rrate_9_11);
-        $('#Grp4').html('Group 12 - 23 $ ' + rrate_12_23);
+
+        var descrptions = dayData[parsedValue].description;
+        var rates = descrptions.split("<br>");
+
+        $('#costDiv tr:not(:first)').remove();
+        $('#grpSelectionTble tr:not(:first)').remove();
+        var i = "";
+        var grpSelectionTblehtml = "<tr><td><select name='groupSize' id='groupSize' class='form-control' style='max-width: 75%;'><option disabled selected>Select Group Size</option>";
+        rates.forEach(function (item, index, array) {
+            var parts = item.split(',');
+            var rateId = parts[0].split('R')[1];
+            var fpart = parts[1].split('$');
+
+            i += '<tr> <td> <label> ' + fpart[0] + ' </label></td><td> <label> $ ' + fpart[1] + '</label></td></tr>';
+            grpSelectionTblehtml += '<option value="' + fpart[1] + '" rId="' + rateId + '"> ' + fpart[0] + ' </option>'
+        });
+        $('#costDiv #costDivtBody').html(i);
+        grpSelectionTblehtml += '</select></td><td><h3 class="finalRate"></h3></td></tr>';
+        $('#grpInfo #grpSelectionTble').html(grpSelectionTblehtml);
+
+        $("#grpSelectionTble #groupSize").prop("selectedIndex", 1);
+
+        GrpSizeChangeEvnt();
+    }
+
+    $('#grpSelectionTble').on('change', '#groupSize', function (e) {
+        GrpSizeChangeEvnt();
+    });
+
+    var rId = 0;
+
+    function GrpSizeChangeEvnt() {
+        var r = $("#grpSelectionTble #groupSize").val();
+        $('.finalRate').html("$" + r);
+        rId = $("#grpSelectionTble #groupSize").find(':selected').attr('rid');
     }
 
     $('#bookingtimeselection').on('change', function (e) {
@@ -198,95 +199,31 @@ $(function () {
         CalculateAmount();
     });
 
-    var adulttimes = 0;
-    var childtimes = 0;
-
-    function CalculateAmount() {
-        try {
-            adulttimes = parseInt($("#adultqty").val());
-            childtimes = parseInt($("#childqty").val());
-        } catch (e) {
-            adulttimes = 0;
-            childtimes = 0;
-        }
-        tempo = parseInt(adulttimes + childtimes);
-        if(tempo > 0)
-        {
-            if(tempo >= 1 && tempo <=4 ){
-                totalPrice = rrate_1_4;
-            }else if(tempo >= 5 && tempo <=7 ){
-                totalPrice = rrate_5_7;
-            }else if(tempo >= 8 && tempo <=11 ){
-                totalPrice = rrate_9_11;
-            }else {
-                totalPrice = rrate_12_23;
-            }
-        }else{
-            totalPrice = 0; 
-        }
-        $('#totalprice').html('$ ' + totalPrice);
-
-        if (totalPrice > 0) {
-            if ((adulttimes + childtimes) > seatsleft) {
-                $("#bookingExced").show();
-                $("#bookingbtnDiv").hide();
-                $("#BookNowBtn").prop("disabled", true);
-                $("#BookNowBtn").attr("disabled", true);
-            } else {
-                $("#bookingExced").hide();
-                $("#bookingbtnDiv").show();
-                $("#BookNowBtn").prop("disabled", false);
-                $("#BookNowBtn").removeAttr("disabled");
-
-            }
-        }
-    }
-
-    $('.changeqty').on('change', function (e) {
-        CalculateAmount();
-        if (adulttimes > 0 || childtimes > 0) {} else {
-            $('#bookingExced').hide();
-            $('#bookingnotAvailable').hide();
-        }
-    });
-    finaltime=0;
     $("#BookNowBtn").click(function () {
-    // $('#boksDiv').on("click", "#BookNowBtn", function () {
-        if (totalPrice > 0) {
-            if ((adulttimes + childtimes) <= seatsleft) {
-                finaltime = $('#bookingtimeselection').val();
-                if (finaltime != null) {
-                    // $('#redirectForm').submit();
+        // $('#boksDiv').on("click", "#BookNowBtn", function () {
+        if (rId > 0 && IscheckavailabityBtnPressed) {
+            // $('#redirectForm').submit();
 
-                    
-                    $('#bookingForm #redirectFrmId').val(dayData[parseInt(finaltime)].ids);
-                    $('#bookingForm #redirectFrmadults').val(adulttimes);
-                    $('#bookingForm #redirectFrmchilds').val(childtimes);
-
-                    $('#modal-overlaysss').modal('show');
-                }
-            }
+            $('#bookingForm #redirectFrmId').val(parseInt(rId));
+            $('#modal-overlaysss').modal('show');
         }
     });
 
     //nxt
     $('#modal-overlaysss').on('click', '.submitbtn', function (event) {
         var res = validateForm();
-        // $('#bookingForm #redirectFrmId').val(dayData[parseInt(finaltime)].ids);
-        // $('#bookingForm #redirectFrmadults').val(adulttimes);
-        // $('#bookingForm #redirectFrmchilds').val(childtimes);
+        
         console.log($('#redirectFrmId').val());
-        console.log($('#redirectFrmadults').val());
-        console.log($('#redirectFrmchilds').val());
+       
         console.log(res);
         if (res == true) {
-            $('#redirectFrmId').val(dayData[parseInt(finaltime)].ids);
-            $('#redirectFrmadults').val(adulttimes);
-            $('#redirectFrmchilds').val(childtimes);
+            // $('#redirectFrmId').val(dayData[parseInt(finaltime)].ids);
+            // $('#redirectFrmadults').val(adulttimes);
+            // $('#redirectFrmchilds').val(childtimes);
             var obj = {
                 calId: $('#redirectFrmId').val(),
-                adults: $('#redirectFrmadults').val(),
-                childs: $('#redirectFrmchilds').val(),
+                // adults: $('#redirectFrmadults').val(),
+                // childs: $('#redirectFrmchilds').val(),
                 firstname: $('#firstname').val(),
                 lastname: $('#lastname').val(),
                 mobilenos: $('#mobilenos').val(),
@@ -334,7 +271,7 @@ $(function () {
     });
 
     function validateForm() {
-        if ($('#calId').val() == '' || $('#adults').val() == '' || $('#childs').val() == '') {
+        if ($('#redirectFrmId').val() == '') {
             alert("Internal Error.. Please Report us");
             window.location = "/tours";
         }

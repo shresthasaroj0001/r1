@@ -14,7 +14,8 @@ use PayPal\Api\Payment;
 use Validator;
 use Session;
 
-class homeController extends Controller
+//FEB 12
+class homeController_latest extends Controller
 {
 
     public function index()
@@ -213,7 +214,7 @@ class homeController extends Controller
         $resss = DB::select("select menus.title,fbookings.id,fbookings.firstname,fbookings.lastname,fbookings.mobilenos,fbookings.alt_mobilenos,fbookings.email,fbookings.additionalinfo,fee_names.grpLow,fee_names.grpHigh,fee_rates.rates,DATE_FORMAT(tourcalenderdatetimeinfos.tourdatetime,'%Y-%b-%d %h:%i %p') as tourdate from fbookings inner join fee_rates on fbookings.calenderId=fee_rates.id inner join tourcalenderdatetimeinfos on fee_rates.calenderId=tourcalenderdatetimeinfos.id inner join menus on tourcalenderdatetimeinfos.tourdetails_id=menus.id inner join fee_names on fee_rates.feenameId=fee_names.id where fbookings.id=?",[$enqId]);
 
         // dd($ress);
-        if ($resss != null) {
+        if ($ress != null) {
 
             $apiContext = new \PayPal\Rest\ApiContext(
                 new \PayPal\Auth\OAuthTokenCredential(
@@ -226,16 +227,32 @@ class homeController extends Controller
             $payer->setPaymentMethod('paypal');
 
             $itemList = new \PayPal\Api\ItemList();
-            $item1 = new \PayPal\Api\Item();
+            $temparray=array();
+            if ($ress[0]->adults > 0) {
+                $item1 = new \PayPal\Api\Item();
+                $item1->setName('Adult')
+                    ->setCurrency('AUD')
+                    ->setQuantity($ress[0]->adults)
+                    ->setSku($ress[0]->calenderId)
+                    ->setPrice($ress[0]->rate_adult);
+                    array_push($temparray,$item1);
+                // $itemList->setItems(array($item1));
+            }
 
-            $item1->setName('Tour Package:- Group '.$resss[0]->grpLow.' - '.$resss[0]->grpHigh)
-                ->setCurrency('AUD')
-                ->setQuantity(1)
-                ->setSku($resss[0]->rates)
-                ->setPrice($resss[0]->rates);
-            
-            $itemList->setItems(array($item1));
-            $totalamt = $resss[0]->rates;
+            if ($ress[0]->childs > 0) {
+                $item2 = new \PayPal\Api\Item();
+                $item2->setName('Children')
+                    ->setCurrency('AUD')
+                    ->setQuantity($ress[0]->childs)
+                    ->setSku($ress[0]->calenderId) // Similar to `item_number` in Classic API
+                    ->setPrice($ress[0]->rate_children);
+                    array_push($temparray,$item2);
+
+                // $itemList->setItems(array($item2));
+            }
+            $itemList->setItems($temparray);
+            $totalamt = 0;
+            $totalamt = ($ress[0]->adults * $ress[0]->rate_adult) + ($ress[0]->childs * $ress[0]->rate_children);
 
             $details = new \PayPal\Api\Details();
              $details->setShipping(0)
@@ -250,7 +267,7 @@ class homeController extends Controller
             // $transaction->setAmount($amount);
             $transaction->setAmount($amount)
                 ->setItemList($itemList)
-                ->setDescription($resss[0]->title . " " . $resss[0]->tourdate)
+                ->setDescription($ress[0]->title . " " . $ress[0]->tourdate)
                 // ->setInvoiceNumber("R".$enqId);
                 ->setInvoiceNumber(uniqid());
 
@@ -294,7 +311,7 @@ class homeController extends Controller
     public function executepayment()
     {
         $ids = Session::get('id');
-        $ress = DB::select("select menus.title,fbookings.id,fbookings.firstname,fbookings.lastname,fbookings.mobilenos,fbookings.alt_mobilenos,fbookings.email,fbookings.additionalinfo,fee_names.grpLow,fee_names.grpHigh,fee_rates.rates,DATE_FORMAT(tourcalenderdatetimeinfos.tourdatetime,'%Y-%b-%d %h:%i %p') as tourdate from fbookings inner join fee_rates on fbookings.calenderId=fee_rates.id inner join tourcalenderdatetimeinfos on fee_rates.calenderId=tourcalenderdatetimeinfos.id inner join menus on tourcalenderdatetimeinfos.tourdetails_id=menus.id inner join fee_names on fee_rates.feenameId=fee_names.id where fbookings.id=?",[$ids]);
+        $ress = DB::select('call testprocedure(?)', [$ids]);
 
         $apiContext = new \PayPal\Rest\ApiContext(
             new \PayPal\Auth\OAuthTokenCredential(
@@ -314,10 +331,10 @@ class homeController extends Controller
         $details = new \PayPal\Api\Details();
         $details->setShipping(0)
            ->setTax(0)
-           ->setSubtotal($ress[0]->rates);
-           
+           ->setSubtotal(($ress[0]->adults * $ress[0]->rate_adult) + ($ress[0]->childs * $ress[0]->rate_children));
+
         $amount->setCurrency('AUD');
-        $amount->setTotal($ress[0]->rates);
+        $amount->setTotal(($ress[0]->adults * $ress[0]->rate_adult) + ($ress[0]->childs * $ress[0]->rate_children));
         $amount->setDetails($details);
         $transaction->setAmount($amount);
 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTourcalenderdatetimeinfosTable extends Migration
+class CreateFeeRatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,17 @@ class CreateTourcalenderdatetimeinfosTable extends Migration
      */
     public function up()
     {
-        Schema::create('tourcalenderdatetimeinfos', function (Blueprint $table) {
+        Schema::create('fee_rates', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('tourdetails_id'); //tour name
-            $table->dateTime('tourdatetime'); //tour time
 
-            $table->integer('paxs')->default(1); //max number
-            // $table->decimal('rate_1_4', 8, 2);
+            $table->integer('calenderId'); //tour datetime Id
+            $table->integer('feenameId'); //tour datetime Id
+
+            $table->decimal('rates', 8, 2);
             // $table->decimal('rate_5_7', 8, 2);
             // $table->decimal('rate_9_11', 8, 2);
             // $table->decimal('rate_12_23', 8, 2);
-            $table->boolean('stats')->default(1); 
-            $table->dateTime('created_at');
+            $table->dateTime('createdDate'); //tour time
         });
     }
 
@@ -35,6 +34,6 @@ class CreateTourcalenderdatetimeinfosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tourcalenderdatetimeinfos');
+        Schema::dropIfExists('fee_rates');
     }
 }

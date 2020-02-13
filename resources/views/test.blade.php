@@ -20,40 +20,9 @@
                 <br>
                 <br>
                 <hr>
-                <h3>TOUR: {{ $title}}</h3>
-                <table class="table table-bordered">
-                    <thead>
-                        <th>
-                            <tr>
-                                <td>Particular</td>
-                                <td>Rate</td>
-                                <td></td>
-                                <td>Qty</td>
-                                <td>Total</td>
-                            </tr>
-                        </th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td> Adults </td>
-                             <td> $ {{ $rate_adult }} </td>
-                             <td> *</td>
-                             <td> {{ $adults }} </td>
-                            <td> $ {{ $adulttotal }} </td>
-                        </tr>
-                        <tr>
-                            <td> Child </td>
-                             <td> $ {{ $rate_children }} </td>
-                             <td> *</td>
-                             <td> {{ $childs }}</td>
-                            <td> $ {{ $childtotal }} </td>
-                        </tr>
-                        <tr>
-                            <td colspan="4"> Total </td>
-                            <td> $ {{ $finalTotals }} </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <h3>TOUR: {{ $title}}</h3><br>
+            <h2>{{ $grpSize}} ${{$ratess}}</h2>
+                
             </td>
         </tr>
         <tr>
